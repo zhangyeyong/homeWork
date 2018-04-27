@@ -22,7 +22,7 @@ class MyFTP(FTP):
         try:  
             ftp.set_debuglevel(0)  # 打开调试级别2，显示详细信息;0为关闭调试信息 
 #             ftp.connect(remoteip, remoteport, 60)  #超时时间
-            ftp.connect(remoteip, remoteport, 60)  
+            ftp.connect(remoteip, remoteport, 300)  
             print 'connect success' 
         except Exception, e:
             print >> sys.stderr, "conncet failed1 - %s" % e
@@ -158,6 +158,32 @@ class MyFTP(FTP):
             ftp.close()
         return flag
  
+    def getFilesize(self, remotehost, remoteport, loginname, loginpassword, remotepath):
+        res = self.ConnectFTP(remotehost, remoteport, loginname, loginpassword)
+        if res[0] != 1:
+            return 0L
+        rsize = 0L
+        try:
+            ftp = res[1]
+            remote = self.splitpath(remotepath)
+            if remote and remote[0]:    
+                chdir(remote[0], ftp)
+            start = time.time()
+            try:
+                rsize = ftp.size(remote[1])
+            except:
+                pass
+            end = time.time()
+            print "---------------call size :%d" % (end - start)
+        except Exception, e:
+                print >> sys.stderr, '----------ftp.ntransfercmd-------- : %s\n' % e
+                traceback.print_exc()
+        finally:
+            try:
+                ftp.quit()
+            except:
+                pass
+        return rsize
     def upload(self, remotehost, remoteport, loginname, loginpassword, remotepath, localpath, callback=None):
         print "\nremotepath: %s------->localpath:%s" % (remotepath, localpath)
         flag = False
@@ -172,6 +198,7 @@ class MyFTP(FTP):
         print "---------------call connect Ftp :%d" % (end - start)
         if res[0] != 1:
             return False
+        lsize = os.stat(localpath).st_size
         try:
             ftp = res[1]
             start = time.time()
@@ -190,8 +217,7 @@ class MyFTP(FTP):
             print "---------------call size :%d" % (end - start)
             start = time.time()
             if (rsize == None):
-                rsize = 0L
-            lsize = os.stat(localpath).st_size
+                rsize = 0L            
             print('rsize : %d, lsize : %d' % (rsize, lsize))
             if (rsize == lsize):
                 print 'remote filesize is equal with local'
@@ -238,21 +264,27 @@ class MyFTP(FTP):
                     print 'close local file handle'
                 count =0
                 isOK = False
-                while(count<100 and not isOK):
-                    try:
-                        time.sleep(0.01)
-                        count=count+1
-                        print "------------count:",count
-                        ftp.voidcmd('NOOP')
-                        isOK=True
-                    except Exception, e:
-                        print >> sys.stderr, '----------ftp.NOOP-------- : %s\n' % e
-#                 print 'keep alive cmd success'
-#                 ftp.voidresp()
-                print 'No loop cmd'
+                ftp.voidcmd('NOOP')
+#                 while(count<100 and not isOK):
+#                     try:
+#                         time.sleep(0.1)
+#                         count=count+1
+#                         print "------------count:",count
+#                         ftp.voidcmd('NOOP')
+#                         isOK=True
+#                     except Exception, e:
+#                         print >> sys.stderr, '----------ftp.NOOP-------- : %s\n' % e
+# #                 print 'keep alive cmd success'
+# #                 ftp.voidresp()
+#                 print 'No loop cmd------------',remote[1]
+#                 print '------------remote  file size-----',ftp.size(remote[1])
                 ftp.quit()
             except:
                 pass
+        uploadedSize = self.getFilesize(remotehost, remoteport, loginname, loginpassword, remotepath)
+        print('uploadedSize : %d, lsize : %d' % (uploadedSize, lsize))
+        if(lsize != uploadedSize):
+            self.upload(remotehost, remoteport, loginname, loginpassword, remotepath, localpath, callback)
         return flag
     def getRemoteFileSize(self, remotePath):
         if not remotePath:
@@ -340,17 +372,17 @@ if __name__ == "__main__":
 #     localPath = "D:/temp/com.zte.jbundle.builder.zip"
 #     remotePath = "zyy/tools/test/com.zte.jbundle.builder.zip"
 #     remotePath2 = "/zyy/tools/test2/com.zte.jbundle.builder.zip"
-    loginname = "zyy"
-    loginpassword = "123456"
-    remoteHost = "127.0.0.1"
-#     loginname = "xtsp"
-#     loginpassword = "1"
-#     remoteHost = "203.175.149.183"
+#     loginname = "zyy"
+#     loginpassword = "123456"
+#     remoteHost = "127.0.0.1"
+    loginname = "xtsp"
+    loginpassword = "1"
+    remoteHost = "203.175.149.183"
     remotePort = "21"
     myftp = MyFTP()
     try:
-            remotepath = "zyy/006.jpg"
-            localpath = "D:/temp/006.jpg"
+            remotepath = "zyy/upload/test.pdf"
+            localpath = "D:/temp/test.pdf"
 #             localpath = "D:/work/scan_new/eis_scan/static/images/scan/test10/10000_20161208142624010.jpg"
             t1 = time.time()
 #             ret = myftp.upload(remoteHost, remotePort, loginname, loginpassword, remotepath, localpath)
@@ -359,6 +391,7 @@ if __name__ == "__main__":
 #             ret = myftp.deletedir(remoteHost, remotePort, loginname, loginpassword, remotepath)
             t2 = time.time()
             print "call uploadTaskDao time :%f" % (t2 - t1)
+            print myftp.getFilesize(remoteHost, remotePort, loginname, loginpassword, remotepath)
              
 #         for i in range(4):
 #             localpath = "D:/temp/image/%d.jpg" % (i + 1)

@@ -110,7 +110,7 @@ class dailyScan:
         groupInfo = {}
         userform = app.get("form")
         for f in userform:
-            if f.get("groupBy") and f.get("groupBy") == "1":
+            if f.get("groupBy") and str(f.get("groupBy")) == "1":
                 groupInfo["groupBy"] = f.get("name")
                 groupInfo["value"] = f.get("value")
                 groupInfo["autoOcr"] = f.get("autoOcr").upper() if f.get("autoOcr", "") else ""

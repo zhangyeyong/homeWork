@@ -1,0 +1,225 @@
+$def with(head, lines,headJson, linesJson)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>欢迎使用自动投递</title>
+    <link rel="stylesheet" type="text/css" href="./css/delivery_base.css?r=2"/>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+
+function show(){
+/*
+  $$.getJSON('delivery/edit?method=getImages&headId=1&d='+new Date, function(json){
+  layer.photos({
+    photos: json //格式见API文档手册页
+    ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机
+  });*/
+  $$.ajax({
+        url : "/delivery/edit",
+        type : "post",
+        async : true,
+        data : {
+            method:"getImages",
+           headId:1
+        },
+        success : function(d) {
+            d = eval("(" + d + ")");
+            if (d.isSuccess) {
+                layer.photos({
+                    photos: d.data //格式见API文档手册页
+                    ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机
+                    ,closeBtn:1
+                 });
+            } else {
+                alert(d.msg);
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            hideLoading();
+        }
+    });
+}
+function promptHeadNum(){
+var headNumBox = new Dialog({
+		target : jQuery('#promptHeadNum'),
+		title : _('单据编号修改'),
+		width : 600,
+		height : 500,
+		yesFn : function() {
+			return scan.confirmNoTaskAddScan();
+		}
+	});
+	headNumBox.show();
+}
+function submit(){
+    showLoading();
+    $$.ajax({
+        url : "/delivery/edit",
+        type : "post",
+        async : true,
+        data : {
+            method:"submit",
+            headId:$head.get("headId"),
+        },
+        success : function(d) {
+            d = eval("(" + d + ")");
+            if (d.isSuccess) {
+                alert("上传成功");
+                back();
+            } else {
+                alert(d.msg);
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            hideLoading();
+        }
+    });
+}
+function back(){
+  window.location.href = "/delivery/scan";
+}
+var endTime = 300;
+function clock()
+{
+	endTime = endTime-1;
+	if(endTime<1){
+	    back();
+	}
+	document.getElementById("endTime").innerText=endTime;
+}
+
+
+function init(){
+	clock();
+	var int=self.setInterval("clock()",1000);
+}
+
+
+
+    </script>
+</head>
+<body onload="init()">
+<div class="delivery_main">
+    <table cellspacing="20" class="tb_main">
+        <tr>
+            <td colspan="2" align="right" valign="bottom" class="top">
+                <table>
+                    <tr>
+                        <td align="center">
+                            <div class="div_bt" onclick='back();'>返回</div>
+                        </td>
+                        <td align="center" width="70%">
+                            <div class="div_font_green">客户投递</div>
+                        </td>
+                        <td align="center">
+                            <div id="endTime" class="div_bt">119</div>
+                        </td>
+                    </tr>
+                </table>
+                <hr class="top"/>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="3" class="lable" width="50%">
+                <table>
+                    <tr>
+                        <td valign="bottom">
+                            <table>
+                                <tr>
+                                    <td align="center">
+                                        <table>
+                                            <tr>
+                                                <td align="center"><img src="/static/images/first.png" width="160px"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    <div id="headnum" class="div_label">$head.get("headNum")
+                                                        (${head.get("imgQty") if head.get("imgQty") else 0})</div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="div_title"> 温馨提示</div>
+                                        <hr style="border:1px dashed #000; height:1px; margin-bottom: -1px;">
+                                    </td>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <div class="div_label">
+                                请确保票据不粘在一起<br/>
+                                请确保票据间没有杂物<br/>
+                                如：别针、 订书针、 回形针<br/>
+                                封面 底页<br/>
+                                然后点击【扫描】<br/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td class="yellow">
+                <table>
+                    <tr onclick="show()" style="cursor:pointer">
+                        <td width="50%" align="center"><img src="/static/images/view.png" width="40%"/></td>
+                        <td>
+                            <div class="div_font_while"> 预 览<br/>
+                                Edit
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="edit">
+                <table>
+                    <tr  onclick="promptHeadNum()" style="cursor:pointer;">
+                        <td width="50%" align="center"><img src="/static/images/edit.png" width="40%"/></td>
+                        <td>
+                            <div class="div_font_while"> 编 辑<br/>
+                                Edit
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="edit">
+                <table>
+                    <tr>
+                        <td width="50%" align="center">
+                            <div class="div_submit" onclick="submit()"> √<br/>提交<br/></div>
+                        </td>
+                        <td align="center">
+                            <div class="div_back"> ×<br/>退票</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+	<!--无任务补扫弹出层-->
+	<div class="pop " id="promptHeadNum">
+        hello
+	</div>
+</body>
+</html>

@@ -10,6 +10,7 @@ threshold = 230
 tickerDict={}
 CODE_SUCCESS = "S"
 CODE_FAILURE = "F"
+RESULT_CONFIG = True
 imgType = Storage({
                    "ADDED":'ADDED',
                    "COMMON":"COMMON"

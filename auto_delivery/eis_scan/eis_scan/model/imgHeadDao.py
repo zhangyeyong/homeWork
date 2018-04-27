@@ -36,7 +36,7 @@ class ImgHeadDao:
     def deleteByHeadIds(self, headIds):
         ids = ""
         for headId in headIds:
-            ids += "," + headId
+            ids += "," + str(headId)
         ids = ids[1:]
         lineList = db.select("imgLine", where="headId in (" + ids + ")").list()
         for line in lineList:
@@ -181,6 +181,30 @@ class ImgHeadDao:
     def uploadFail(self, headId, errorMsg):
         if headId:
             db.query("update imgHead set status='FAILURE', errorMsg='"+str(errorMsg)+"'  where headId = " + str(headId))
+    def findImgHead(self, cond):
+        where = "1=1 "
+        order = None
+        if cond:
+            if cond.get("userNum"):
+                where = where + " and userNum=$userNum "
+            if cond.get("noStatus"):
+                where = where + " and status not in $noStatus "
+            if cond.get("status"):
+                where = where + " and status = $status "
+            if cond.get("headNum"):
+                where = where + " and headNum like '%' || $headNum  || '%' "
+            if cond.get("order"):
+                order = cond.get("order")
+            if cond.get("uploadTimeStart") and cond.get("uploadTimeEnd"):
+                where = where + "and uploadTime >= $uploadTimeStart and uploadTime <= $uploadTimeEnd "
+            elif cond.get("uploadTimeStart"):
+                where = where + "and uploadTime >= $uploadTimeStart "
+            elif cond.get("uploadTimeEnd"):
+                where = where + "and uploadTime <= $uploadTimeEnd "
+            if cond.get("company"):
+                where = where + "and company like '%' || $company || '%' "
+        imgHeadList = db.select('imgHead', where=where, vars=cond, order=order,).list()
+        return imgHeadList
 if __name__ == "__main__":
     imgHeadDao = ImgHeadDao()
 #     imgHeadDao.update({"headId":8, "status":"UPLOADING","uploadTime": time.strftime('%Y-%m-%d %H:%M:%S')})

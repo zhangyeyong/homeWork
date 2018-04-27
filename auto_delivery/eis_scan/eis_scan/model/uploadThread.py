@@ -104,8 +104,7 @@ class UploadThread(threading.Thread):  # The timer class is derived from the cla
                         iconList.append(pathJoin(iconPath,fileName))                        
                     jsonParam["imageList"] = imageList
                     jsonParam["iconList"] = iconList
-#                     uploadLogFlag = self.evsInterface.UploadLog(self.ticket,imgHead.get("belong"), json.dumps(jsonParam))
-                    uploadLogFlag = True
+                    uploadLogFlag = self.evsInterface.UploadLog(self.ticket,imgHead.get("belong"), json.dumps(jsonParam))
                     t2 = time.time()
                     print "call client.service.UploadLog time :%d" % (t2 - t1)
                     print "---------->uploadLogFlag:" + str(uploadLogFlag)
