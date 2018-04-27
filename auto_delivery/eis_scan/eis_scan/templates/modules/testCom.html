@@ -1,0 +1,137 @@
+$def with(rtn) 
+$var title: $_("测试串口")
+<script type="text/javascript">
+	if (window != top) top.location.href = location.href;
+	var initComFlag = true;
+</script>
+$if not rtn.get("isSuccess"):
+	<script type="text/javascript">
+		initComFlag = false;
+		alert('$rtn.get("info")');
+	</script>
+<body class="login_body_bg">
+	<div align="center" style="margin-top: 30PX">
+		<table border="1" style="width: 60%">
+		
+			<tr>
+				<td colspan="2" align="center"><FONT size="6">串口测试</FONT></td>
+			</tr>
+			<tr>
+				<td colspan="2">串口：<input id="port" value="COM1" />波特率：<input
+					id="baudrate" value="9600" /> <input type="button" value="保存"
+					onclick="saveConf()" /></td>
+			</tr>
+			<tr>
+				<td>发送数据</td>
+				<td>接收数据</td>
+			</tr>
+			<tr>
+				<td align="right" valign="top"><textarea id="sendDataHis" readonly="readonly"
+						rows="40" cols="120"></textarea></td>
+				<td valign="top"><textarea id="recvDataHis" rows="40" readonly="readonly"
+						cols="120"></textarea></td>
+			</tr>
+			<tr>
+				<td><input id="sendStr" style="width: 80%;" /> <input
+					type="button" value="发送" onclick="sendData()"></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+</body>
+<script type="text/javascript">
+	function saveConf() {
+		showLoading();
+		var baudrate = jQuery("#baudrate").val();
+		var port = jQuery("#port").val();
+		jQuery.ajax({
+			type : "post",
+			async : false,
+			url : "/testCom",
+			data : {
+				"method" : "saveConf",
+				"port" : port,
+				"baudrate" : baudrate
+			},
+			success : function(data) {
+				data = eval("(" + data + ")");
+				if (data.isSuccess) {
+					initComFlag = true;
+					alert("保存成功");
+				} else {
+					initComFlag = false;
+					alert("保存失败");
+				}
+			},
+			error : function() {
+				alert(_("未知错误"));
+			},
+			complete : function() {
+				hideLoading();
+			}
+		});
+	}
+	function sendData() {
+		var sendStr = jQuery("#sendStr").val();
+		jQuery.ajax({
+			type : "post",
+			async : false,
+			url : "/testCom",
+			data : {
+				"method" : "sendData",
+				"sendStr" : sendStr,
+			},
+			success : function(data) {
+				data = eval("(" + data + ")");
+				if (data.isSuccess) {
+					jQuery("#sendDataHis").append(data.data + "\n");
+				} else {
+					jQuery("#sendDataHis").append(data.info + "\n");
+				}
+			},
+			error : function() {
+				alert(_("未知错误"));
+			},
+			complete : function() {
+				jQuery("#sendStr").select();
+			}
+		});
+	}
+	function getData() {
+		if(!initComFlag){
+			return;
+		}
+		jQuery.ajax({
+			type : "post",
+			async : false,
+			url : "/testCom",
+			data : {
+				"method" : "recvDate",
+			},
+			success : function(data) {
+				data = eval("(" + data + ")");
+				if (data.isSuccess&&data.data.length>0) {
+					jQuery("#recvDataHis").append(data.data + "\n");
+				} 
+				if (!data.isSuccess&&data.info.length>0) {
+					jQuery("#recvDataHis").append(data.info + "\n");
+				} 
+			},
+			error : function() {
+				alert(_("未知错误"));
+			},
+			complete : function() {
+			}
+		});
+	}
+
+	jQuery(function() {
+		
+		jQuery('#sendStr').bind('keypress', function(event) {
+			if (event.keyCode == "13") {
+				sendData();
+			}
+		});
+		setInterval(getData, 1000);
+	});
+</script>
