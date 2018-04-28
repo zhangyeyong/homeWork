@@ -1,5 +1,5 @@
 $def with(configDict)
-$var title: $_("历史记录")
+$var title: $_("系统配置")
 $ scannable = session.get('cust') is not None and session.get('biz') is not None
 $ companyCodeKey='COMPANY_CODE_'+session.user.get('userNum')
 $ siteIdKey='SITE_ID_'+session.user.get('userNum')
@@ -19,12 +19,16 @@ $ operationTypeCodeKey='OPERATION_TYPE_CODE_'+session.user.get('userNum')
 				<dd><input type="text" class="input_text" value="$configDict.get('BARCODE_RULE')" id="BARCODE_RULE"></dd>
 				<dt class="cb"><h3>$_("非空白率：")</h3>($_("说明：用于判断图片是否是空白的参数"))</dt>
 				<dd><input type="text" class="input_text" value="$configDict.get('PIXERRATIO','0.5')" id="PIXERRATIO">%</dd>
+				<dt class="cb"><h3>$_("串口名：")</h3>($_("说明：串口通信参数"))</dt>
+				<dd><input type="text" class="input_text" value="$configDict.get('SERIAL_PORT','COM1')" id="SERIAL_PORT">%</dd>
+				<dt class="cb"><h3>$_("波特率：")</h3>($_("说明：说明：串口通信参数"))</dt>
+				<dd><input type="text" class="input_text" value="$configDict.get('SERIAL_BAUDRATE','9600')" id="SERIAL_BAUDRATE">%</dd>
 				<dt class="cb"><h3>$_("扫描仪：")</h3>($_("说明：选择一台适合的扫描仪"))</dt>
 				<dd>
 					<div class="fields">
 						<div class="cont">
 							<select id="dsList" value="$configDict.get('DS_NAME')">
-<!-- 								<option value="">&nbsp;</option> -->
+ 								<option value="test">test</option>
 							</select>
 							</div>
 					</div>
@@ -100,6 +104,8 @@ $ operationTypeCodeKey='OPERATION_TYPE_CODE_'+session.user.get('userNum')
 					"DS_NAME":ds_name,
 					"IS_PASV":String(jQuery("#IS_PASV").is(':checked')==true),
 					"BARCODE_RULE":jQuery("#BARCODE_RULE").val(),
+					"SERIAL_PORT":jQuery("#SERIAL_PORT").val(),
+					"SERIAL_BAUDRATE":jQuery("#SERIAL_BAUDRATE").val(),
 					"PIXERRATIO":pixer_ratio,
 					"$companyCodeKey":jQuery("#$companyCodeKey").val(),
 					"$siteIdKey":jQuery("#"+jQuery("#$companyCodeKey").val()).val(),

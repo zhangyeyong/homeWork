@@ -1,4 +1,4 @@
-$def with(head, lines,headJson, linesJson)
+$def with(head)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -22,7 +22,7 @@ function show(){
         async : true,
         data : {
             method:"getImages",
-           headId:1
+           headId:$head.get("headId")
         },
         success : function(d) {
             d = eval("(" + d + ")");
@@ -33,7 +33,7 @@ function show(){
                     ,closeBtn:1
                  });
             } else {
-                alert(d.msg);
+                alert(d.info);
             }
          },
         error : function(e) {
@@ -72,7 +72,34 @@ function submit(){
                 alert("上传成功");
                 back();
             } else {
-                alert(d.msg);
+                alert(d.info);
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            hideLoading();
+        }
+    });
+}
+function cancel(){
+    showLoading();
+    $$.ajax({
+        url : "/delivery/edit",
+        type : "post",
+        async : true,
+        data : {
+            method:"cancel",
+            headId:$head.get("headId"),
+        },
+        success : function(d) {
+            d = eval("(" + d + ")");
+            if (d.isSuccess) {
+                alert("退件成功");
+                back();
+            } else {
+                alert(d.info);
             }
          },
         error : function(e) {
@@ -208,7 +235,7 @@ function init(){
                             <div class="div_submit" onclick="submit()"> √<br/>提交<br/></div>
                         </td>
                         <td align="center">
-                            <div class="div_back"> ×<br/>退票</div>
+                            <div class="div_back" onclick="cancel()"> ×<br/>退票</div>
                         </td>
                     </tr>
                 </table>

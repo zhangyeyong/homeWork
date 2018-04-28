@@ -12,8 +12,32 @@ function clock()
 	document.getElementById("endTime").innerText=endTime;
 }
 function doScan(){
-  scan["scanCallback"]=scanCallback;
-  scan.execute('dailyScan');
+    //扫描之前先检查 机器是否初始化成功
+    showLoading();
+    $$.ajax({
+        url : "/delivery/scan",
+        type : "post",
+        async : true,
+        data : {
+            method:"initMachine"
+        },
+        success : function(d) {
+            d = eval("(" + d + ")");
+            if (d.isSuccess) {
+                scan["scanCallback"]=scanCallback;
+                scan.execute('dailyScan');
+            } else {
+                alert(d.info);
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            hideLoading();
+        }
+    });
+
 }
 function scanCallback(headId){
     if(headId){

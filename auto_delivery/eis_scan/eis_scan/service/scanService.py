@@ -323,6 +323,8 @@ class dailyScan:
         print " 保存数据：%d" % (t3 - t2)         
         # 查询出当前用户的全部展示信息
         retDict["info"] = renderScan2(belongType.DAILY_SCAN)
+        if len(allLines) > 0:
+            retDict["headId"] = allLines[0].get("headId")
         return json.dumps(retDict)
     
 class rescan:

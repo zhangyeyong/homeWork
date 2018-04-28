@@ -6,6 +6,12 @@ Created on 2014-9-10
 '''
 import os
 from config import config
+
+import sys
+
+if sys.getdefaultencoding() != 'utf-8':
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 projPath = config.rootPath
 # i18nToolsPath = "C:/Python27/Tools/i18n/"
 i18nToolsPath = os.path.join(config.rootPath, "i18n/")
