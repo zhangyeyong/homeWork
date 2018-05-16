@@ -9,12 +9,18 @@ import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
 public class Main {
+	static int count = 0;
 	public static void main(String[] args) throws IOException {
 		File s = new File("E:/Workspaces_MyEclipse2014/projectUtil/src/projectUtil/Main.java");
 		File t = new File("E:/Main.java");
 		Main main = new Main();
 		// main.fileChannelCopy(s, t);
-		main.copyFolder(new File("D:\\svn"), new File("d:\\code\\svn"));
+		System.out.println("start");
+		Long start = System.currentTimeMillis();
+		String src = "D:\\code\\easrainbow";
+		main.copyFolder(new File(src), new File("d:\\code\\erp_code\\easrainbow"));
+		Long end = System.currentTimeMillis();
+		System.out.println(src+"\nend   time:"+(end-start)/1000);
 	}
 
 	/**
@@ -64,6 +70,13 @@ public class Main {
 	 * @throws IOException
 	 */
 	private void copyFolder(File src, File dest) throws IOException {
+		count++;
+		if(count%200==0) {
+			System.out.println("count----->"+count);
+		}
+		if(src.getName().endsWith(".svn")) {
+			return ;
+		}
 		if (src.isDirectory()) {
 			if (!dest.exists()) {
 				dest.mkdir();
