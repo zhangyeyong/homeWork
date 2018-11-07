@@ -3,13 +3,43 @@ package test.redis;
 import redis.clients.jedis.Jedis;
 
 public class RedisTest {
+	public static void RedisDB() {
+
+		String host = "192.168.2.100";
+		int port = 6379;
+		Jedis jedis = null;
+		try {
+			jedis = new Jedis(host, port);
+			jedis.auth("ztescc_123");
+			jedis.select(1);
+			jedis.set("name", "å¼ ä¸‰");
+			String name = jedis.get("name");
+			System.out.println("name = " + name);
+			jedis.flushDB();
+			String name2 = jedis.get("name");
+			System.out.println("name2 = " + name2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (null != jedis) {
+				try {
+					jedis.close();
+				} catch (Exception e) {
+					System.out.println("redisè¿æ¥å…³é—­å¤±è´¥");
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	public static void main(String[] args) {
-		 //Á¬½Ó±¾µØµÄ Redis ·şÎñ
-        Jedis jedis = new Jedis("203.175.149.182",6379);
-        System.out.println("Á¬½Ó³É¹¦");
-        //²é¿´·şÎñÊÇ·ñÔËĞĞ
-        System.out.println("·şÎñÕıÔÚÔËĞĞ: "+jedis.ping());
+		// // è¿æ¥æœ¬åœ°çš„ Redis æœåŠ¡
+		// Jedis jedis = new Jedis("192.168.2.100", 6379);
+		// jedis.auth("ztescc_123");
+		// System.out.println("è¿æ¥æˆåŠŸ");
+		// // æŸ¥çœ‹æœåŠ¡æ˜¯å¦è¿è¡Œ
+		// System.out.println("æœåŠ¡æ­£åœ¨è¿è¡Œ: " + jedis.ping());
+		RedisDB();
 	}
 
 }

@@ -8,11 +8,21 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
+/**
+ * 
+ * @author ZhangYeyong
+ *
+ *         2018年9月29日
+ */
 public class Main {
-	static int count = 0;
+	private static int count = 0;
+	private static int PRINT_COUNT = 0;
+	private static String EXT_JAVA = ".java";
+	private static String EXT_SVN = ".svn";
+
 	public static void main(String[] args) throws IOException {
-		File s = new File("E:/Workspaces_MyEclipse2014/projectUtil/src/projectUtil/Main.java");
-		File t = new File("E:/Main.java");
+//		File s = new File("E:/Workspaces_MyEclipse2014/projectUtil/src/projectUtil/Main.java");
+//		File t = new File("E:/Main.java");
 		Main main = new Main();
 		// main.fileChannelCopy(s, t);
 		System.out.println("start");
@@ -20,7 +30,7 @@ public class Main {
 		String src = "D:\\code\\easrainbow";
 		main.copyFolder(new File(src), new File("d:\\code\\erp_code\\easrainbow"));
 		Long end = System.currentTimeMillis();
-		System.out.println(src+"\nend   time:"+(end-start)/1000);
+		System.out.println(src + "\nend   time:" + (end - start) / 1000);
 	}
 
 	/**
@@ -45,9 +55,12 @@ public class Main {
 		try {
 			fi = new FileInputStream(s);
 			fo = new FileOutputStream(t);
-			in = fi.getChannel();// 得到对应的文件通道
-			out = fo.getChannel();// 得到对应的文件通道
-			in.transferTo(0, in.size(), out);// 连接两个通道，并且从in通道读取，然后写入out通道
+			// 得到对应的文件通道
+			in = fi.getChannel();
+			// 得到对应的文件通道
+			out = fo.getChannel();
+			// 连接两个通道，并且从in通道读取，然后写入out通道
+			in.transferTo(0, in.size(), out);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -71,17 +84,17 @@ public class Main {
 	 */
 	private void copyFolder(File src, File dest) throws IOException {
 		count++;
-		if(count%200==0) {
-			System.out.println("count----->"+count);
+		if (count % PRINT_COUNT == 0) {
+			System.out.println("count----->" + count);
 		}
-		if(src.getName().endsWith(".svn")) {
-			return ;
+		if (src.getName().endsWith(EXT_SVN)) {
+			return;
 		}
 		if (src.isDirectory()) {
 			if (!dest.exists()) {
 				dest.mkdir();
 			}
-			String files[] = src.list();
+			String[] files = src.list();
 			for (String file : files) {
 				File srcFile = new File(src, file);
 				File destFile = new File(dest, file);
@@ -89,7 +102,7 @@ public class Main {
 				copyFolder(srcFile, destFile);
 			}
 		} else {
-			if (src.getAbsolutePath().endsWith(".java")) {
+			if (src.getAbsolutePath().endsWith(EXT_JAVA)) {
 				InputStream in = new FileInputStream(src);
 				OutputStream out = new FileOutputStream(dest);
 				byte[] buffer = new byte[1024];
