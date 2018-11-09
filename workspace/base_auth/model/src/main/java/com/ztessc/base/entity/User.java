@@ -1,23 +1,31 @@
 package com.ztessc.base.entity;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- *@author linzf
- **/
+ * 
+ * All rights Reserved, Designed By www.ztessc.com
+ * 
+ * @Title: User.java
+ * @Package com.ztessc.base.entity
+ * @Description:
+ * @author: 张业勇
+ * @date: 2018年11月9日
+ * @version V1.0
+ * @Copyright: 2018 www.ztessc.com Inc. All rights reserved.
+ */
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -880218717499238863L;
 
-	public User(){
+	public User() {
 		super();
 	}
 
-	public User(int id){
+	public User(int id) {
 		this.id = id;
 	}
 
@@ -82,7 +90,6 @@ public class User implements Serializable {
 	public String getPassword() {
 		return password;
 	}
-
 
 	public List<UserRole> getRoles() {
 		return roles;
@@ -194,14 +201,15 @@ public class User implements Serializable {
 
 	/**
 	 * 功能描述：组装角色数据集合
+	 * 
 	 * @param roleArray
 	 */
-	public void packagingRoles(String roleArray){
+	public void packagingRoles(String roleArray) {
 		List<UserRole> roles = new ArrayList<UserRole>();
-		if(roleArray!=null){
+		if (roleArray != null) {
 			UserRole userRole = null;
-			for(String roleId:roleArray.split(",")){
-				if(!roleId.isEmpty()){
+			for (String roleId : roleArray.split(",")) {
+				if (!roleId.isEmpty()) {
 					userRole = new UserRole();
 					userRole.setId(Long.parseLong(roleId));
 					roles.add(userRole);

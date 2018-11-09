@@ -4,15 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *@author linzf
- **/
+ * 
+ * All rights Reserved, Designed By www.ztessc.com
+ * 
+ * @Title: Tree.java
+ * @Package com.ztessc.base.entity
+ * @Description:
+ * @author: 张业勇
+ * @date: 2018年11月9日
+ * @version V1.0
+ * @Copyright: 2018 www.ztessc.com Inc. All rights reserved.
+ */
 public class Tree implements Comparable<Tree> {
 
-	public Tree(){
+	public Tree() {
 		super();
 	}
 
-	public Tree(Long id){
+	public Tree(Long id) {
 		this.id = id;
 	}
 
@@ -129,12 +138,13 @@ public class Tree implements Comparable<Tree> {
 
 	/**
 	 * 功能描述：实现集合根据treeOrder字段进行排序的功能
+	 * 
 	 * @param o
 	 * @return
 	 */
 	@Override
 	public int compareTo(Tree o) {
 		long i = this.getTreeOrder() - o.getTreeOrder();
-		return Integer.parseInt(i+"");
+		return Integer.parseInt(i + "");
 	}
 }

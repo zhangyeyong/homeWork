@@ -5,7 +5,15 @@ import java.util.List;
 import com.ztessc.base.common.QueryBase;
 
 /**
- * Dao通用模版
+ * 
+ * All rights Reserved, Designed By www.ztessc.com
+ * @Title:  GenericDao.java   
+ * @Package com.ztessc.produce.common.base.dao   
+ * @Description:  
+ * @author: 张业勇     
+ * @date:   2018年11月7日   
+ * @version V1.0 
+ * @Copyright: 2018 www.ztessc.com Inc. All rights reserved.
  */
 public interface GenericDao<T, Q extends QueryBase> {
 
