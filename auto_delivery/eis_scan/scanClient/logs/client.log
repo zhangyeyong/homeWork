@@ -1,0 +1,20 @@
+[2018-12-02 12:08:12,542](DEBUG)scanSocketServer : Start 8001
+[2018-12-02 12:08:12,548](DEBUG)scanSocketServer : start server
+[2018-12-02 12:08:29,937](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111049817440672528335_1543723709911', 'method': 'isAlive', '_': '1543723709912'}
+[2018-12-02 12:08:29,937](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-02 12:08:29,937](DEBUG)scanSocketServer : send mes 0
+[2018-12-02 12:08:29,937](DEBUG)scanSocketServer : start server
+[2018-12-02 15:16:36,861](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111017584569273212347_1543734996838', 'method': 'isAlive', '_': '1543734996839'}
+[2018-12-02 15:16:36,862](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-02 15:16:36,862](DEBUG)scanSocketServer : send mes 0
+[2018-12-02 15:16:36,862](DEBUG)scanSocketServer : start server
+[2018-12-02 15:16:48,562](DEBUG)scanSocketServer : time out
+[2018-12-02 15:16:48,562](DEBUG)scanSocketServer : start server
+[2018-12-02 15:22:21,569](DEBUG)scanSocketServer : start: {'callback': 'jQuery111105318356697536499_1543735341519', 'method': 'isAlive', '_': '1543735341520'}
+[2018-12-02 15:22:21,569](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-02 15:22:21,569](DEBUG)scanSocketServer : send mes 0
+[2018-12-02 15:22:21,569](DEBUG)scanSocketServer : start server
+[2018-12-02 15:28:15,703](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111091061114579603_1543735695645', 'method': 'isAlive', '_': '1543735695646'}
+[2018-12-02 15:28:15,703](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-02 15:28:15,704](DEBUG)scanSocketServer : send mes 0
+[2018-12-02 15:28:15,704](DEBUG)scanSocketServer : start server

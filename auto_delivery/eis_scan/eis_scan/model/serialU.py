@@ -27,7 +27,7 @@ class ComU:
             rtn = common.buildSuccess(u"初始串口成功", "")
         except Exception:
             traceback.print_exc()
-        rtn["data"] = {"port": port, "baudrate": baudrate}
+        rtn["data"] = {"port": self.port, "baudrate": self.baudrate}
         return rtn
 
     def closeCom(self):
@@ -82,16 +82,17 @@ class ComU:
 
 
 if __name__ == '__main__':
-    # comU = ComU()
-    # comU.sendAndWaitRecvDate("zyy")
-    # comU.closeCom()
-    import serial.tools.list_ports
-
-    port_list = list(serial.tools.list_ports.comports())
-    print(port_list[0])
-    if len(port_list) <= 0:
-        print
-        "The Serial port can't find!"
-    else:
-        print
-        len(port_list)
+    comU = ComU()
+    rtn = comU.sendAndWaitRecvDate("zyy")
+    print("the recv data is ",rtn)
+    comU.closeCom()
+    # import serial.tools.list_ports
+    #
+    # port_list = list(serial.tools.list_ports.comports())
+    # print(port_list[0])
+    # if len(port_list) <= 0:
+    #     print
+    #     "The Serial port can't find!"
+    # else:
+    #     print
+    #     len(port_list)
