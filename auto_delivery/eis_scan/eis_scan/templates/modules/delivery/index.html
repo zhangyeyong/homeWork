@@ -72,7 +72,7 @@ function login(){
 				}
 			},
 			error : function() {
-				alert(_("未知错误"));
+				alert(_("登录失败，请联系管理员"));
 			},complete : function (){
 				hideLoading();
 			}
@@ -81,6 +81,14 @@ function login(){
 function gotoDelivery()
 {
     login();
+}
+function gotoRefund()
+{
+    window.location.href = "/delivery/refund";
+}
+function toPickup()
+{
+    alert("to pick up ");
 }
 
 function init(){
@@ -150,10 +158,32 @@ function init(){
             </td>
         </tr>
         <tr>
-            <td class="edit">&nbsp;</td>
+            <td class="edit">&nbsp;
+                <table>
+                    <tr onclick="gotoRefund();" style="cursor:pointer">
+                        <td width="50%" align="center"><img src="/static/images/refund.png" width="60%"/></td>
+                        <td>
+                            <div class="div_font_while"> 退 票<br/>
+                                Refund
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
         <tr>
-            <td class="edit">&nbsp;</td>
+            <td class="edit">&nbsp;
+                <table>
+                    <tr onclick="toPickup();" style="cursor:pointer">
+                        <td width="50%" align="center"><img src="/static/images/pickup.png" width="60%"/></td>
+                        <td>
+                            <div class="div_font_while"> 取 件<br/>
+                                Pickup
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
     </table>
 </div>

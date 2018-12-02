@@ -47,6 +47,9 @@ urls = (
         '/testCom', 'service.testService.testCom',
         '/delivery/index', 'service.deliveryService.Index',
         '/delivery/scan', 'service.deliveryService.Scan',
+        '/delivery/submit', 'service.deliveryService.Submit',
+        '/delivery/refund', 'service.deliveryService.Refund',
+        '/delivery/machineError', 'service.deliveryService.MachineError',
         '/delivery/edit', 'service.deliveryService.Edit',
         '/exceptImg', 'service.scanService.exceptImg',
         )

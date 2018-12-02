@@ -13,25 +13,27 @@ from model.uploadTaskDao import UploadTaskDao
 from model.uploadTaskLogDao import UploadTaskLogDao
 from model.ocrResultDao import OcrResultDao
 from model.interface import GhEvsInterface
-from config.constants import taskStatus, headStatus, ftpStatus,serial_command,configkey
+from config.constants import taskStatus, headStatus, ftpStatus, serial_command, configkey
 from model.ftpU4 import MyFTP
 from i18n.i18nU import _
 import config.constants as constants
 from model.serialU import ComU
 from config.config import scanPath
-from config import  config
+from config import config
 
 import json
 from model import common
+
 
 def sendDataBySerial(data):
     configDict = config.getConfigDict()
     SERIAL_PORT = configDict.get(configkey.SERIAL_PORT)
     SERIAL_BAUDRATE = configDict.get(configkey.SERIAL_BAUDRATE)
-    comU = ComU(SERIAL_PORT,SERIAL_BAUDRATE)
+    comU = ComU(SERIAL_PORT, SERIAL_BAUDRATE)
     rtn = comU.sendAndWaitRecvDate(data)
     comU.closeCom()
     return rtn
+
 
 class Index:
     def __init__(self):
@@ -57,14 +59,16 @@ class Index:
 class Scan:
     def __init__(self):
         pass
+
     def initMachine(self):
         rtn = sendDataBySerial(serial_command.SEND_INIT)
-        if rtn["isSuccess"] and serial_command.SEND_INIT_RECEIVE==rtn["data"]:
+        if rtn["isSuccess"] and serial_command.SEND_INIT_RECEIVE == rtn["data"]:
             return json.dumps(rtn)
         else:
             return json.dumps(common.buildFail("电机初始化失败"))
 
         return json.dumps(common.buildSuccess(data=p_data))
+
     def GET(self):
         return render.modules.delivery.scan()
 
@@ -73,7 +77,62 @@ class Scan:
         method = i.get("method")
         if ("initMachine" == method):
             return self.initMachine()
+class Submit:
+    def __init__(self):
+        pass
 
+    def initMachine(self):
+        rtn = sendDataBySerial(serial_command.SEND_INIT)
+        if rtn["isSuccess"] and serial_command.SEND_INIT_RECEIVE == rtn["data"]:
+            return json.dumps(rtn)
+        else:
+            return json.dumps(common.buildFail("电机初始化失败"))
+
+        return json.dumps(common.buildSuccess(data=p_data))
+
+    def GET(self):
+        return render.modules.delivery.submit()
+
+    def POST(self):
+        i = web.input()
+        method = i.get("method")
+        if ("initMachine" == method):
+            return self.initMachine()
+class Refund:
+    def __init__(self):
+        pass
+
+    def initMachine(self):
+        rtn = sendDataBySerial(serial_command.SEND_INIT)
+        if rtn["isSuccess"] and serial_command.SEND_INIT_RECEIVE == rtn["data"]:
+            return json.dumps(rtn)
+        else:
+            return json.dumps(common.buildFail("电机初始化失败"))
+
+        return json.dumps(common.buildSuccess(data=p_data))
+
+    def GET(self):
+        return render.modules.delivery.refund()
+
+    def POST(self):
+        i = web.input()
+        method = i.get("method")
+        if ("initMachine" == method):
+            return self.initMachine()
+
+class MachineError:
+    def __init__(self):
+        pass
+
+
+    def GET(self):
+        return render.modules.delivery.machineError()
+
+    def POST(self):
+        i = web.input()
+        method = i.get("method")
+        if ("initMachine" == method):
+            return self.initMachine()
 
 class Edit:
     imgLineDao = ImgLineDao()
@@ -185,7 +244,7 @@ class Edit:
         for imgLine in imgLines:
             localPath = pathJoin(scanPath, imgHead.headNum, imgLine.imgNameP)
             localIconPath = pathJoin(scanPath, imgHead.headNum, "s_" + imgLine.imgNameP)
-            remotePath = pathJoin(imagePath, imgHead.headNum,imgLine.imgNameP)
+            remotePath = pathJoin(imagePath, imgHead.headNum, imgLine.imgNameP)
             imageList.append(remotePath)
             global uploadingLineId
             uploadingLineId = imgLine.lineId
@@ -194,7 +253,7 @@ class Edit:
                 break
             if iconPath:
                 # 上传缩略图
-                remoteIconPath = pathJoin(iconPath, imgHead.headNum,imgLine.imgNameP)
+                remoteIconPath = pathJoin(iconPath, imgHead.headNum, imgLine.imgNameP)
                 iconList.append(remoteIconPath)
                 flagFtp = flagFtp and myFtp.upload(ftpIp, ftpPort, ftpUser, ftpPwd, remoteIconPath, localIconPath)
             # 只要有一个失败当前任务就算失败
@@ -253,6 +312,7 @@ class Edit:
             return json.dumps(rtn)
         else:
             return json.dumps(common.buildFail("电机收件失败，请联系管理员"))
+
     def cancel(self):
         rtn = sendDataBySerial(serial_command.SEND_SCAN_NG)
         if rtn["isSuccess"] and serial_command.SEND_SCAN_NG_RECEIVE == rtn["data"]:
@@ -269,7 +329,6 @@ class Edit:
             return json.dumps(rtn)
         else:
             return json.dumps(common.buildFail("电机退件失败，请联系管理员"))
-
 
     def GET(self):
         i = web.input()
@@ -295,5 +354,4 @@ class Edit:
 
 
 if __name__ == '__main__':
-
     pass
