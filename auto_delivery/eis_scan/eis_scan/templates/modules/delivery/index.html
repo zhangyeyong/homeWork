@@ -1,6 +1,7 @@
 $var title: $_("欢迎使用自动投递")
 
 <script type="text/javascript">
+var machineIsOK = false;
 Date.prototype.pattern=function(fmt) {
   var o = {
   "M+" : this.getMonth()+1, //月份
@@ -64,6 +65,7 @@ function login(){
 			url : "/login",
 			data:{type:"login","userCd":userCd,"password":password},
 			success : function(data) {
+			    alert("登录成功");
 				data = eval("("+data+")");
 				if(data.isSuccess){
 					window.location.href = "/delivery/scan";
@@ -80,7 +82,11 @@ function login(){
 	}
 function gotoDelivery()
 {
-    login();
+    machineIsOK = false;
+    initMachine();
+    if(machineIsOK){
+        login();
+    }
 }
 function gotoRefund()
 {
@@ -88,14 +94,57 @@ function gotoRefund()
 }
 function toPickup()
 {
-    alert("to pick up ");
+    var pickupCodeBox = new Dialog({
+		target : jQuery('#pickupBox'),
+		title : _('取件'),
+		width : 360,
+		height : 100,
+		yesFn : function() {
+		    return pickup();
+	    }
+	});
+	pickupCodeBox.show();
+}
+function pickup(){
+    alert("输入的取件码是："+jQuery("#pickupCode").val());
 }
 
 function init(){
 	clock();
 	var int=self.setInterval("clock()",1000);
 }
+function initMachine(){
+    //扫描之前先检查 机器是否初始化成功
+    showLoading();
+    $$.ajax({
+        url : "/delivery/scan",
+        type : "post",
+        async : false,
+        data : {
+            method:"initMachine"
+        },
+        success : function(d) {
+            d = eval("(" + d + ")");
+            if (d.isSuccess) {
+                machineIsOK = true;
+                alert(d.info);
+                //scan["scanCallback"]=scanCallback;
+                //scan.execute('dailyScan');
 
+            } else {
+                alert(d.info);
+                window.location.href = "/delivery/machineError"
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            hideLoading();
+        }
+    });
+
+}
 
 </script>
 
@@ -187,4 +236,18 @@ function init(){
         </tr>
     </table>
 </div>
+
+<div class="pop mbox" id="pickupBox">
+        <div class="cb">
+			<div class="fields nofloat fix_width">
+				<div class="tit">
+                    $_("请输入取件码"):&nbsp;
+				</div>
+				<div class="cont">
+					<input type="text" class="input_search" value="" id="pickupCode">
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>

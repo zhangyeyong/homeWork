@@ -11,7 +11,7 @@ if sys.getdefaultencoding() != 'utf-8':
 
 
 class ComU:
-    def __init__(self, port="COM1", baudrate=9600):
+    def __init__(self, port="COM1", baudrate=19200):
         # self.ser = serial.Serial(port, baudrate, timeout=0.5)
         self.port = port
         self.baudrate = baudrate
@@ -80,10 +80,14 @@ class ComU:
             traceback.print_exc()
         return rtn
 
+def str_to_hex(s):
+    return ' '.join([hex(ord(c)).replace('0x', '') for c in s])
 
+def hex_to_str(s):
+    return ''.join([chr(i) for i in [int(b, 16) for b in s.split(' ')]])
 if __name__ == '__main__':
     comU = ComU()
-    rtn = comU.sendAndWaitRecvDate("zyy")
+    rtn = comU.sendAndWaitRecvDate(str_to_hex("1B 06 A0 00 00 FF FF FF 1C 59"))
     print("the recv data is ",rtn)
     comU.closeCom()
     # import serial.tools.list_ports

@@ -23,6 +23,7 @@ from config import config
 
 import json
 from model import common
+from model.meidingSerial import MeidingSerial
 
 
 def sendDataBySerial(data):
@@ -61,13 +62,14 @@ class Scan:
         pass
 
     def initMachine(self):
-        rtn = sendDataBySerial(serial_command.SEND_INIT)
-        if rtn["isSuccess"] and serial_command.SEND_INIT_RECEIVE == rtn["data"]:
-            return json.dumps(rtn)
-        else:
-            return json.dumps(common.buildFail("电机初始化失败"))
+        mds = MeidingSerial()
+        rtn = mds.initMachine()
+        return json.dumps(rtn)
 
-        return json.dumps(common.buildSuccess(data=p_data))
+    def backPaper(self):
+        mds = MeidingSerial()
+        rtn = mds.backPaper()
+        return json.dumps(rtn)
 
     def GET(self):
         return render.modules.delivery.scan()
@@ -77,6 +79,8 @@ class Scan:
         method = i.get("method")
         if ("initMachine" == method):
             return self.initMachine()
+        if ("backPaper" == method):
+            return self.backPaper()
 class Submit:
     def __init__(self):
         pass
