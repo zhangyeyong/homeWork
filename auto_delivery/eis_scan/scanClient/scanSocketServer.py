@@ -45,26 +45,27 @@ def test():
 def scan(paramDict):
     ds_name = paramDict.get("ds_name")
     temp = getDsList()
+    print temp
     if temp.get("isSuccess"):
         if ds_name not in temp.get("data"):
             return buildFail("Could not find the scanner:%s" % ds_name)
     else:
         return buildFail(temp.get("info"))
     t1 = time.time()
-    res = scanBase.scan(ds_name, paramDict)
+    # res = scanBase.scan(ds_name, paramDict)
     t2 = time.time()
     print u"scan time：%d" % (t2 - t1)
     log.debug(u"scan time：%d" % (t2 - t1))
     print "-----------res-----------------"
-    # res = [
-    #            {"path":"D:/temp/image/1.jpg"},
-    #            {"path":"D:/temp/image/2.jpg"},
-    #            {"path":"D:/temp/image/3.jpg"},
+    res = [
+               {"path":"D:/temp/image/1.jpg"},
+               {"path":"D:/temp/image/2.jpg"},
+               {"path":"D:/temp/image/3.jpg"},
     #            {"path":"D:/temp/image/4.jpg"},
     #            {"path":"D:/temp/image/5.jpg"},
     #            {"path":"D:/temp/image/6.jpg"},
     #            {"path":"D:/temp/image/7.jpg"},
-    #            ]
+               ]
     print res
     log.debug("scan: %s" % res)
     return buildSuccess("scan success", res)

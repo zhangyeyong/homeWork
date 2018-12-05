@@ -62,8 +62,14 @@ class Scan:
         pass
 
     def initMachine(self):
+        rtn = common.buildSuccess("initMachine ok ")
+        # mds = MeidingSerial()
+        # rtn = mds.initMachine()
+        return json.dumps(rtn)
+
+    def doScan(self):
         mds = MeidingSerial()
-        rtn = mds.initMachine()
+        rtn = mds.backPaper()
         return json.dumps(rtn)
 
     def backPaper(self):
@@ -81,27 +87,8 @@ class Scan:
             return self.initMachine()
         if ("backPaper" == method):
             return self.backPaper()
-class Submit:
-    def __init__(self):
-        pass
 
-    def initMachine(self):
-        rtn = sendDataBySerial(serial_command.SEND_INIT)
-        if rtn["isSuccess"] and serial_command.SEND_INIT_RECEIVE == rtn["data"]:
-            return json.dumps(rtn)
-        else:
-            return json.dumps(common.buildFail("电机初始化失败"))
 
-        return json.dumps(common.buildSuccess(data=p_data))
-
-    def GET(self):
-        return render.modules.delivery.submit()
-
-    def POST(self):
-        i = web.input()
-        method = i.get("method")
-        if ("initMachine" == method):
-            return self.initMachine()
 class Refund:
     def __init__(self):
         pass
@@ -124,10 +111,10 @@ class Refund:
         if ("initMachine" == method):
             return self.initMachine()
 
+
 class MachineError:
     def __init__(self):
         pass
-
 
     def GET(self):
         return render.modules.delivery.machineError()
@@ -137,6 +124,7 @@ class MachineError:
         method = i.get("method")
         if ("initMachine" == method):
             return self.initMachine()
+
 
 class Edit:
     imgLineDao = ImgLineDao()

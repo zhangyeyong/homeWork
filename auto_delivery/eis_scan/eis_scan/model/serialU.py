@@ -50,6 +50,7 @@ class ComU:
         rtn = common.buildFail(u"读串数据失败", "")
         try:
             comData = self.ser.read(30)
+            print(str_to_hex(comData))
             if None != comData and len(comData) > 0:
                 rtn = common.buildSuccess("", comData)
             else:
@@ -86,9 +87,23 @@ def str_to_hex(s):
 def hex_to_str(s):
     return ''.join([chr(i) for i in [int(b, 16) for b in s.split(' ')]])
 if __name__ == '__main__':
+    s = "\x6f"
+    # s = "open"
     comU = ComU()
-    rtn = comU.sendAndWaitRecvDate(str_to_hex("1B 06 A0 00 00 FF FF FF 1C 59"))
-    print("the recv data is ",rtn)
+    # comU.reloadCom()
+    comU.sendData(s)
+
+    starttime = time.time()
+    while True:
+        comData = comU.recvDate()
+        # 一分钟还未返回信息，直接退出
+        if time.time() - starttime > 60:
+            break
+        time.sleep(0.5)
+
+
+    # rtn = comU.sendAndWaitRecvDate(s)
+    # print("the recv data is ",str_to_hex(rtn))
     comU.closeCom()
     # import serial.tools.list_ports
     #

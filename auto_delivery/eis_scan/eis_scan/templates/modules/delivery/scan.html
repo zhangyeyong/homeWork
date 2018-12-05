@@ -26,7 +26,33 @@ function doScan(){
             if (d.isSuccess) {
                 alert(d.info);
                 //scan["scanCallback"]=scanCallback;
-                //scan.execute('dailyScan');
+                scan.commonScan(function(data) {
+                    var cond = {}
+                    cond.data = JSON.stringify(data);
+
+                    jQuery.ajax({
+                        url : "/dailyScan",
+                        type : "post",
+                        async : true,
+                        data : cond,
+                        success : function(d) {
+                            alert(d);
+                            d = eval("(" + d + ")");
+                            alert("---------->d:"+d);
+                            if (d.isSuccess) {
+                                alert(d.headId);
+                            } else {
+                                alert(d.msg);
+                            }
+                        },
+                        error : function(e) {
+                            alert(_("未知错误"));
+                        },
+                        complete : function() {
+                            hideLoading();
+                        }
+                    });
+                });
             } else {
                 alert(d.info);
             }
@@ -86,6 +112,7 @@ function init(){
 	clock();
 	var int=self.setInterval("clock()",1000);
 }
+
 
 
 </script>
