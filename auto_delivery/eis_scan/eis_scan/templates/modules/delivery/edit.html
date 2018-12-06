@@ -1,4 +1,4 @@
-$def with(head)
+$def with(head,lines)
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -163,7 +163,7 @@ function init(){
                                     <td align="center">
                                         <table>
                                             <tr>
-                                                <td align="center"><img src="/static/images/first.png" width="160px"/>
+                                                <td align="center"><img src='/static/images/scan/$lines[0].get("headNum")/s_$lines[0].get("imgNameP")' width="160px"/>
                                                 </td>
                                             </tr>
                                             <tr>

@@ -26,7 +26,9 @@ function doScan(){
             if (d.isSuccess) {
                 alert(d.info);
                 //scan["scanCallback"]=scanCallback;
+
                 scan.commonScan(function(data) {
+                    showLoading();
                     var cond = {}
                     cond.data = JSON.stringify(data);
 
@@ -36,11 +38,14 @@ function doScan(){
                         async : true,
                         data : cond,
                         success : function(d) {
-                            alert(d);
                             d = eval("(" + d + ")");
-                            alert("---------->d:"+d);
                             if (d.isSuccess) {
-                                alert(d.headId);
+                                headId = d.headId;
+                                if(headId){
+                                    window.location.href = "/delivery/edit?headId="+headId;
+                                }else{
+                                     alert("扫描失败！");
+                                }
                             } else {
                                 alert(d.msg);
                             }

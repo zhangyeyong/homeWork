@@ -327,10 +327,10 @@ class Edit:
         headId = i.get("headId")
         head = self.imgHeadDao.getById(headId)
         lines = self.imgLineDao.findByHeadId2(headId)
-        headJson = json.dumps(head)
-        linesJson = json.dumps(lines)
+        # headJson = json.dumps(head)
+        # linesJson = json.dumps(lines)
 
-        return render.modules.delivery.edit(head)
+        return render.modules.delivery.edit(head,lines)
 
     def POST(self):
         i = web.input()
