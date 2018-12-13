@@ -135,6 +135,37 @@ class MachineError:
             return self.initMachine()
 
 
+class PickUp:
+    boxDao = BoxDao()
+
+    def __init__(self):
+        pass
+
+    def GET(self):
+        return render.modules.delivery.machineError()
+
+    def pickUp(self):
+        i = web.input()
+        pickupCode = i.get("pickupCode")
+        if not pickupCode:
+            return json.dumps(common.buildFail(u"取件码不能为空！"))
+        # 通过取件码查询柜子
+        box = self.boxDao.getByPickupCode(pickupCode)
+        if not box:
+            return json.dumps(common.buildFail(u"取件码错误，请重新输入！"))
+        # 发送打开柜子指令
+        # mds = MeidingSerial()
+        # rtn = mds.openBox()
+        rtn = common.buildSuccess()
+        return json.dumps(rtn)
+
+    def POST(self):
+        i = web.input()
+        method = i.get("method")
+        if ("pickup" == method):
+            return self.pickUp()
+
+
 class Edit:
     imgLineDao = ImgLineDao()
     imgHeadDao = ImgHeadDao()

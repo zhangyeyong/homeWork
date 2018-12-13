@@ -49,6 +49,7 @@ urls = (
         '/delivery/scan', 'service.deliveryService.Scan',
         '/delivery/submit', 'service.deliveryService.Submit',
         '/delivery/refund', 'service.deliveryService.Refund',
+        '/delivery/pickup', 'service.deliveryService.PickUp',
         '/delivery/machineError', 'service.deliveryService.MachineError',
         '/delivery/edit', 'service.deliveryService.Edit',
         '/exceptImg', 'service.scanService.exceptImg',

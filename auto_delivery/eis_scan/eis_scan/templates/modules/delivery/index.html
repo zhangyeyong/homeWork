@@ -54,7 +54,7 @@ function clock()
     document.getElementById("top_time").innerText=t;
     document.getElementById("top_date").innerText=ld;
 }
-function login(){
+function login(jumpUrl){
         alert("to login ");
 		showLoading();
 		var userCd = "10000";
@@ -69,7 +69,7 @@ function login(){
 			    alert("登录成功");
 				data = eval("("+data+")");
 				if(data.isSuccess){
-					window.location.href = "/delivery/scan";
+					window.location.href = jumpUrl;
 				}else{
 					alert(data.info);
 				}
@@ -86,12 +86,23 @@ function gotoDelivery()
     machineIsOK = false;
     initMachine();
     if(machineIsOK){
-        login();
+        login("/delivery/scan");
     }
 }
 function gotoRefund()
 {
-    window.location.href = "/delivery/refund";
+    //window.location.href = "/delivery/refund";
+    var loginBox = new Dialog({
+		target : jQuery('#loginBox'),
+		title : _('退件'),
+		width : 360,
+		height : 150,
+		yesFn : function() {
+		    return login("/delivery/refund");
+	    }
+	});
+	loginBox.show();
+
 }
 function toPickup()
 {
@@ -107,7 +118,29 @@ function toPickup()
 	pickupCodeBox.show();
 }
 function pickup(){
-    alert("输入的取件码是："+jQuery("#pickupCode").val());
+    var pickupCode = jQuery("#pickupCode").val();
+    alert("输入的取件码是："+ pickupCode);
+    showLoading();
+    jQuery.ajax({
+        type : "post",
+        async : false,
+        url : "/delivery/pickup",
+        data:{"method":"pickup","pickupCode":pickupCode},
+        success : function(data) {
+            data = eval("("+data+")");
+            if(data.isSuccess){
+                alert("箱门已打开！");
+            }else{
+                alert(data.info);
+            }
+        },
+        error : function() {
+            alert(_("取件失败，请联系管理员"));
+        },complete : function (){
+            hideLoading();
+        }
+    });
+
 }
 
 function init(){
@@ -146,6 +179,7 @@ function initMachine(){
     });
 
 }
+
 
 
 
@@ -253,7 +287,7 @@ function initMachine(){
     </div>
 </div>
 
-<div class="pop mbox" id="login">
+<div class="pop mbox" id="loginBox">
     <div class="cb">
         <div class="fields nofloat fix_width">
             <div class="tit">
