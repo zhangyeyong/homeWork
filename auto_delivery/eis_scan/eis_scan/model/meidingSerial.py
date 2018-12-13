@@ -59,12 +59,13 @@ class MeidingSerial(ComU):
 
     def backPaper(self):
         print u"----------------退纸开始------------"
-        rtn = common.buildFail(u"退纸张失败", "")
+        rtn = None
         try:
             recvData = self.sendAndWaitRecvDate("init machine")
             rtn = common.buildSuccess(u"退纸张成功", "")
         except Exception:
             traceback.print_exc()
+            rtn = common.buildFail(u"退纸张失败", "")
         print u"----------------退纸结束------------"
         return rtn
 

@@ -1,4 +1,5 @@
-$var title: $_("欢迎使用自动投递")
+$def with(boxs)
+$var title: $_("欢迎使用退件")
 <script src="/static/js/common.js"></script>
 <script type="text/javascript">
 var endTime = 200;
@@ -20,15 +21,15 @@ function init(){
 	clock();
 	var int=self.setInterval("clock()",1000);
 }
-function showPickupCode(){
+function showPickupCode(boxName,pickupCode){
 var pickupCodeBox = new Dialog({
 		target : jQuery('#pickupCodeBox'),
 		title : _('取件码'),
 		width : 360,
 		height : 100,
 	});
-    jQuery('#boxName').html("A柜");
-    jQuery('#pickupCode').html("8888");
+    jQuery('#boxName').html(boxName);
+    jQuery('#pickupCode').html(pickupCode);
 	pickupCodeBox.show();
 }
 
@@ -60,54 +61,23 @@ var pickupCodeBox = new Dialog({
         <tr>
             <td  align="center" width="100%">
                 <table border="1"  width="80%">
-                    <tr>
-                        <td align="center">A柜</td>
-                        <td align="center" width="20%">可用</td>
-                        <td align="center" >打开</td>
-                        <td align="center" onclick="showPickupCode()">获取密码</td>
-                    </tr>
-                    <tr>
-                        <td align="center">B柜</td>
-                        <td align="center" width="20%">可用</td>
-                        <td align="center">打开</td>
-                        <td align="center">获取密码</td>
-                    </tr>
-                     <tr>
-                        <td align="center">A柜</td>
-                        <td align="center" width="20%">可用</td>
-                        <td align="center">打开</td>
-                        <td align="center">获取密码</td>
-                    </tr>
-                    <tr>
-                        <td align="center">B柜</td>
-                        <td align="center" width="20%">可用</td>
-                        <td align="center">打开</td>
-                        <td align="center">获取密码</td>
-                    </tr>
-                     <tr>
-                        <td align="center">A柜</td>
-                        <td align="center" width="20%">可用</td>
-                        <td align="center">打开</td>
-                        <td align="center">获取密码</td>
-                    </tr>
-                    <tr>
-                        <td align="center">B柜</td>
-                        <td align="center" width="20%">可用</td>
-                        <td align="center">打开</td>
-                        <td align="center">获取密码</td>
-                    </tr>
-                     <tr>
-                        <td align="center">A柜</td>
-                        <td align="center" width="20%">可用</td>
-                        <td align="center">打开</td>
-                        <td align="center">获取密码</td>
-                    </tr>
-                    <tr>
-                        <td align="center">B柜</td>
-                        <td align="center" width="20%">可用</td>
-                        <td align="center">打开</td>
-                        <td align="center">获取密码</td>
-                    </tr>
+                    $for box in boxs.get("data"):
+                        <tr>
+                            <td align="center">$box.get("boxName")</td>
+                            <td align="center" width="20%">
+                                $if box.get("enable")==0:
+                                    不可用
+                                $else:
+                                    可用
+                            </td>
+                            <td align="center">
+                                $if box.get("status")==0:
+                                    打开
+                                $else:
+                                    关闭
+                            </td>
+                            <td align="center" onclick='showPickupCode("$box.get("boxName")","$box.get("pickupCode")")' style="cursor:pointer;">获取密码</td>
+                        </tr>
                 </table>
             </td>
         </tr>

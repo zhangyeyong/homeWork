@@ -12,7 +12,7 @@ if sys.getdefaultencoding() != 'utf-8':
 
 class ComU:
     def __init__(self, port="COM1", baudrate=19200):
-        # self.ser = serial.Serial(port, baudrate, timeout=0.5)
+        self.ser = serial.Serial(port, baudrate, timeout=0.5)
         self.port = port
         self.baudrate = baudrate
 
@@ -87,7 +87,7 @@ def str_to_hex(s):
 def hex_to_str(s):
     return ''.join([chr(i) for i in [int(b, 16) for b in s.split(' ')]])
 if __name__ == '__main__':
-    s = "\x6f"
+    s = u"\x7A\x79"
     # s = "open"
     comU = ComU()
     # comU.reloadCom()

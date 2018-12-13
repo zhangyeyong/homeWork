@@ -44,13 +44,35 @@ function show(){
     });
 }
 function promptHeadNum(){
+jQuery('#headNumTemp').val('$head.get("headNum")');
 var headNumBox = new Dialog({
 		target : jQuery('#promptHeadNum'),
 		title : _('单据编号修改'),
 		width : 360,
 		height : 100,
 		yesFn : function() {
-			return scan.confirmNoTaskAddScan();
+		    var oldNum = '$head.get("headNum")';
+		    var newNum = jQuery('#headNumTemp').val();
+            jQuery.ajax({
+                url : "/delivery/edit",
+                type : "post",
+                async : true,
+                data : {
+                    "method":"editNum",
+                    "headId" : $head.get("headId"),
+                    "headNum" : newNum,
+                    "oldNum" : oldNum
+                },
+                success : function(d) {
+                    d = eval("(" + d + ")");
+                    if (d.isSuccess) {
+                        alert(_('单据编号修改成功!'));
+                        window.location.reload()
+                    } else {
+                        alert(d.msg);
+                    }
+                }
+            });
 		}
 	});
 	headNumBox.show();
@@ -93,7 +115,9 @@ function cancel(){
             headId:$head.get("headId"),
         },
         success : function(d) {
+            alert(d);
             d = eval("(" + d + ")");
+
             if (d.isSuccess) {
                 alert("退件成功");
                 back();
@@ -117,7 +141,7 @@ function clock()
 {
 	endTime = endTime-1;
 	if(endTime<1){
-	    back();
+	    cancel();
 	}
 	document.getElementById("endTime").innerText=endTime;
 }
@@ -230,13 +254,13 @@ function init(){
             <td class="edit">
                 <table>
                     <tr>
-                        <td width="50%" align="center" onclick="promptHeadNum()" style="cursor:pointer;">
+                        <td width="50%" align="center" onclick="submit()" style="cursor:pointer;">
                             <!--<div class="div_submit" onclick="submit()"> √<br/>提交<br/></div>-->
                             <img src="/static/images/submit.png"/>
                             <div class="div_font_while_small"> 提交
                             </div>
                         </td>
-                        <td align="center" onclick="promptHeadNum()" style="cursor:pointer;">
+                        <td align="center" onclick="cancel()" style="cursor:pointer;">
                             <img src="/static/images/cancel.png"/>
                             <div class="div_font_while_small"> 退票
                             </div>

@@ -9,6 +9,7 @@ import copy
 from tool import pathJoin
 from model.imgHeadDao import ImgHeadDao
 from model.imgLineDao import ImgLineDao
+from model.boxDao import BoxDao
 from model.uploadTaskDao import UploadTaskDao
 from model.uploadTaskLogDao import UploadTaskLogDao
 from model.ocrResultDao import OcrResultDao
@@ -24,6 +25,8 @@ from config import config
 import json
 from model import common
 from model.meidingSerial import MeidingSerial
+import os
+import traceback
 
 
 def sendDataBySerial(data):
@@ -90,6 +93,8 @@ class Scan:
 
 
 class Refund:
+    boxDao = BoxDao()
+
     def __init__(self):
         pass
 
@@ -102,8 +107,12 @@ class Refund:
 
         return json.dumps(common.buildSuccess(data=p_data))
 
+    def findAll(self):
+        boxs = self.boxDao.findAll()
+        return common.buildSuccess(data=boxs)
+
     def GET(self):
-        return render.modules.delivery.refund()
+        return render.modules.delivery.refund(self.findAll())
 
     def POST(self):
         i = web.input()
@@ -187,7 +196,7 @@ class Edit:
         if not ftpRet.get("isSuccess"):
             self.uploadTaskDao.deleteByHeadId(headId)
             imgHead["status"] = headStatus.FAILURE
-            imgHead["errorMsg"] = _("获取ftp信息失败")
+            imgHead["errorMsg"] = _(u"获取ftp信息失败")
             self.imgHeadDao.update(imgHead)
 
         ftpInfo = ftpRet.get("data")
@@ -228,7 +237,7 @@ class Edit:
         flagFtp = True
         flagFtp = myFtp.testFtp(ftpIp, ftpPort, ftpUser, ftpPwd)
         if not flagFtp:
-            self.uploadTaskDao.uploadFail(headId, _("连接ftp[%s]失败" % (str(ftpIp))))
+            self.uploadTaskDao.uploadFail(headId, _(u"连接ftp[%s]失败" % (str(ftpIp))))
             # 如果是评价任务，删除
         if constants.belongType.get("APPRAISE_TASK") == imgHead.get("belong"):
             print "delete dir ----->iconPath:", iconPath
@@ -290,37 +299,61 @@ class Edit:
         t2 = time.time()
         print "update status time :%d" % (t2 - t1)
         endTime = time.time()
-        print "总时间%d" % (endTime - startTime)
+        print u"总时间%d" % (endTime - startTime)
         return status
 
     def submit(self):
         flag = self.uploadToFtp()
         # self.callCom()
         if not flag:
-            return json.dumps(common.buildFail("上传FTP失败!"))
+            return json.dumps(common.buildFail(u"上传FTP失败!"))
 
         rtn = sendDataBySerial(serial_command.SEND_SCAN_OK)
         if rtn["isSuccess"] and serial_command.SEND_SCAN_OK_RECEIVE == rtn["data"]:
             return json.dumps(rtn)
         else:
-            return json.dumps(common.buildFail("电机收件失败，请联系管理员"))
+            return json.dumps(common.buildFail(u"电机收件失败，请联系管理员"))
+
+    def deleteTaskByHeadId(self, headId):
+        head = self.imgHeadDao.getById(headId)
+        self.imgHeadDao.deleteByHeadId(headId)
+        headPath = pathJoin(scanPath, head.get("headNum"))
+        import os
+        if os.path.exists(headPath):
+            import shutil
+            shutil.rmtree(headPath)
+        return json.dumps(common.buildSuccess(data=head))
 
     def cancel(self):
-        rtn = sendDataBySerial(serial_command.SEND_SCAN_NG)
-        if rtn["isSuccess"] and serial_command.SEND_SCAN_NG_RECEIVE == rtn["data"]:
+        # 通知电机退票
+        # mds = MeidingSerial()
+        # rtn = mds.backPaper()
+        rtn = common.buildSuccess()
+        if rtn["isSuccess"]:
             # 删除任务
             i = web.input()
-            headId = i.get("headId")
-            head = self.imgHeadDao.getById(headId)
-            self.imgHeadDao.deleteByHeadId(headId)
-            headPath = pathJoin(scanPath, head.get("headNum"))
-            import os
-            if os.path.exists(headPath):
-                import shutil
-                shutil.rmtree(headPath)
+            head_id = i.get("headId")
+            rtn = self.deleteTaskByHeadId(head_id)
+        return rtn
+
+    def editNum(self):
+        rtn = None
+        i = web.input()
+        dbHead = self.imgHeadDao.findByHeadNum(i.headNum)
+        if dbHead is not None:
+            rtn = common.buildFail(_(u"任务编号：") + i.headNum + _(u"已经存在"))
             return json.dumps(rtn)
-        else:
-            return json.dumps(common.buildFail("电机退件失败，请联系管理员"))
+
+        try:
+            oldDir = pathJoin(scanPath, i.oldNum)
+            newDir = pathJoin(scanPath, i.headNum)
+            os.rename(oldDir, newDir)
+            self.imgHeadDao.updateImgHeadNum(i.headId, i.headNum)
+            rtn = common.buildSuccess(u"修改编号成功");
+        except:
+            traceback.print_exc()
+            rtn = common.buildFail(_(u"修改编号失败"))
+        return json.dumps(rtn)
 
     def GET(self):
         i = web.input()
@@ -329,14 +362,18 @@ class Edit:
         lines = self.imgLineDao.findByHeadId2(headId)
         # headJson = json.dumps(head)
         # linesJson = json.dumps(lines)
-
-        return render.modules.delivery.edit(head,lines)
+        if head:
+            return render.modules.delivery.edit(head, lines)
+        else:
+            return render.modules.delivery.scan()
 
     def POST(self):
         i = web.input()
         method = i.get("method")
         if ("getImages" == method):
             return self.getImages()
+        if ("editNum" == method):
+            return self.editNum()
         if ("submit" == method):
             return self.submit()
         if ("cancel" == method):

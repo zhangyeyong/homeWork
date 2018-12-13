@@ -147,6 +147,8 @@ function initMachine(){
 
 }
 
+
+
 </script>
 
 <body onload="init()">
@@ -239,16 +241,37 @@ function initMachine(){
 </div>
 
 <div class="pop mbox" id="pickupBox">
-        <div class="cb">
-			<div class="fields nofloat fix_width">
-				<div class="tit">
-                    $_("请输入取件码"):&nbsp;
-				</div>
-				<div class="cont">
-					<input type="text" class="input_search" value="" id="pickupCode">
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="cb">
+        <div class="fields nofloat fix_width">
+            <div class="tit">
+                $_("请输入取件码"):&nbsp;
+            </div>
+            <div class="cont">
+                <input type="text" class="input_search" value="" id="pickupCode">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pop mbox" id="login">
+    <div class="cb">
+        <div class="fields nofloat fix_width">
+            <div class="tit">
+                $_("用户名"):&nbsp;
+            </div>
+            <div class="cont">
+                <input type="text" class="input_search" value="" id="username">
+            </div>
+        </div>
+        <div class="fields nofloat fix_width">
+            <div class="tit">
+                $_("密码"):&nbsp;
+            </div>
+            <div class="cont">
+                <input type="text" class="input_search" value="" id="password">
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
