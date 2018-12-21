@@ -11,7 +11,7 @@ if sys.getdefaultencoding() != 'utf-8':
 
 
 class ComU:
-    def __init__(self, port="COM1", baudrate=19200):
+    def __init__(self, port="COM5", baudrate=19200):
         self.ser = serial.Serial(port, baudrate, timeout=0.5)
         self.port = port
         self.baudrate = baudrate
@@ -49,8 +49,7 @@ class ComU:
     def recvDate(self):
         rtn = common.buildFail(u"读串数据失败", "")
         try:
-            comData = self.ser.read(30)
-            print(str_to_hex(comData))
+            comData = self.ser.readline()
             if None != comData and len(comData) > 0:
                 rtn = common.buildSuccess("", comData)
             else:
@@ -62,9 +61,10 @@ class ComU:
     def sendAndWaitRecvDate(self, dataStr):
         rtn = common.buildFail(u"读串数据失败", "")
         try:
-            self.ser = serial.Serial(self.port, self.baudrate, timeout=0.5)
+            # self.ser = serial.Serial(self.port, self.baudrate, timeout=0.5)
             self.ser.write(dataStr)
             comData = self.ser.readline()
+            print comData
             starttime = time.time()
             while not comData.strip():
                 comData = self.ser.readline()
@@ -72,11 +72,11 @@ class ComU:
                 if time.time() - starttime > 60:
                     break
                 time.sleep(0.5)
-
-            if comData is not None and len(comData) > 0:
-                rtn = common.buildSuccess("", comData)
-            else:
-                rtn = common.buildFail(u"未读到串数据", "")
+            rtn =comData
+            # if comData is not None and len(comData) > 0:
+            #     rtn = common.buildSuccess("", comData)
+            # else:
+            #     rtn = common.buildFail(u"未读到串数据", "")
         except Exception:
             traceback.print_exc()
         return rtn
@@ -86,12 +86,14 @@ def str_to_hex(s):
 
 def hex_to_str(s):
     return ''.join([chr(i) for i in [int(b, 16) for b in s.split(' ')]])
+def formathex(s):
+    return "\\x"+s.replace(" ", "\\x")
 if __name__ == '__main__':
-    s = u"\x7A\x79"
-    # s = "open"
+    s = "\x1B\x03\xA0\x00\x00\x1C\xA3"
+
     comU = ComU()
     # comU.reloadCom()
-    comU.sendData(s)
+    comU.sendAndWaitRecvDate(s)
 
     starttime = time.time()
     while True:
