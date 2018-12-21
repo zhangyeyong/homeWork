@@ -1,0 +1,220 @@
+$def with(rtn,userCd) 
+$var title: $_("登录")
+<body class="login_body_bg">
+	$if session.get('lang') == 'en_US':
+		<a href="/login?lang=zh_CN" class="languageA">中文版</a>
+	$else:
+		<a href="/login?lang=en_US" class="languageA">English</a>
+	<div class="login_c">
+		<div class="login_c_center">
+			<!--CMDC影像管理平台  -->
+			<div class="logoEn">
+				$_(session.get('appName'))
+			</div>
+			<ul>
+				<li>
+					<label class="leftTxt">
+						$_("用户名:")
+					</label>
+					<div class="inputBox">
+						<input class="input_text" name="" id="userCd" type="text" value="$userCd"/>
+					</div>
+				</li>
+				<li>
+					<label class="leftTxt">
+						$_("密 码:")
+					</label>
+					<div class="inputBox">
+						<input class="input_text" name="" id="password" type="password"/>
+					</div>
+				</li>
+				<li class="btn_c">
+					<div class="check error_info">
+						<span class="red" id="msg"></span>
+					</div>
+					<a id="loginA" class="btn_login" href="javaScript:login()">$_("登录")</a>
+				</li>
+			</ul>
+			<div class="pas">
+				<span class="net_set"><a href="#;" id="set_net">$_("网络配置")</a> </span>
+			</div>
+		</div>
+	</div>
+
+	<div class="pop p20 login_set" id="configDiv">
+		<div class="cb">
+			<div class="fields fix_width">
+				<div class="tit">
+					$_('服务器地址：')
+				</div>
+				<div class="cont">
+					<input type="text" class="input_search w250" id="EIS_IP"
+						value="${rtn.get('EIS_IP')}">
+				</div>
+			</div>
+		</div>
+		<div class="cb mt10">
+			<div class="fields fix_width">
+				<div class="tit">
+					$_('端口：')
+				</div>
+				<div class="cont">
+					<input type="text" class="input_search short" id="EIS_PORT"
+						value="${rtn.get('EIS_PORT')}">
+				</div>
+			</div>
+		</div>
+		<div class="cb mt10">
+			<div class="fields fix_width">
+				<div class="tit">
+					$_('虚拟目录：')
+				</div>
+				<div class="cont">
+					<input type="text" class="input_search long" id="VIRTUAL_PATH" 
+						value="${rtn.get('VIRTUAL_PATH')}">
+				</div>
+			</div>
+		</div>
+		<div class="cb mt10">
+			<div class="fields fix_width">
+				<div class="tit">
+					<input type="button" value="$_('测试')" onclick="testNetSet()">
+					<!-- _('测试') -->
+				</div>
+				<div class="cont">
+					<span id="testMsg" class="red"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var userCd = jQuery("#userCd").val();
+	if(userCd){
+		jQuery("#password").focus();
+	}else{
+		jQuery("#userCd").focus();
+	}
+	var password = jQuery("#password").val();
+
+	if (window != top) top.location.href = location.href;
+	jQuery(".input_text").focus(function() {
+		jQuery(this).addClass('focus');
+		jQuery(this).parent().addClass('focus');
+	});
+	jQuery(".input_text").blur(function() {
+		jQuery(this).removeClass('focus');
+		jQuery(this).parent().removeClass('focus');
+	});
+	var dbox = new Dialog({
+		target : jQuery('#configDiv'),
+		title : _('网络配置'),
+		yesBtnText:_('保存'),
+		width : 550,
+		height : 260,
+		yesFn:saveNetSet,
+	});
+	jQuery('#set_net').click(function() {
+		dbox.show();
+	});
+	function login(){
+		showLoading();
+		jQuery("#loginA").css("display",'none');
+		var userCd = jQuery("#userCd").val();
+		var password = jQuery("#password").val();
+		
+		if(jQuery.trim(userCd)==""){
+			jQuery("#msg").text(_('用户名不能为空'));
+			jQuery("#userCd").focus();
+			jQuery("#loginA").css("display",'block');
+			hideLoading();
+			return;
+		}
+		jQuery("#msg").text("");
+		jQuery.ajax({
+			type : "post",
+			async : false,
+			url : "/login",
+			data:{type:"login","userCd":userCd,"password":password},
+			success : function(data) {
+				data = eval("("+data+")");
+				if(data.isSuccess){
+					window.location.href = "/scan";
+				}else{
+					jQuery("#msg").text(data.info);
+				}
+				jQuery("#loginA").css("display",'block');
+			},
+			error : function() {
+				jQuery("#msg").text(_("未知错误"));
+				jQuery("#loginA").css("display",'block');
+			},complete : function (){
+				hideLoading();
+			}
+		});
+	}
+	function testNetSet(){
+		jQuery("#testMsg").text(_('测试中，请稍后...')).attr("class","blue");
+		var EIS_IP = jQuery("#EIS_IP").val();
+		var VIRTUAL_PATH = jQuery("#VIRTUAL_PATH").val();
+		
+		if(jQuery.trim(EIS_IP)==""){
+			jQuery("#testMsg").text(_('服务器地址不能为空！')).attr("class","red");
+			jQuery("#EIS_IP").focus();
+			return;
+		}
+		if(jQuery.trim(VIRTUAL_PATH)==""){
+			jQuery("#testMsg").text(_("虚拟目录不能为空！")).attr("class","red");
+			jQuery("#VIRTUAL_PATH").focus();
+			return;
+		}
+		jQuery.ajax({
+			type : "post",
+			async : false,
+			url : "/login",
+			data:{"type":"testNetSet","EIS_IP":EIS_IP,"EIS_PORT":jQuery("#EIS_PORT").val(),"VIRTUAL_PATH":jQuery("#VIRTUAL_PATH").val()},
+			success : function(data) {
+				data = eval("("+data+")");
+				if(data.isSuccess){
+					jQuery("#testMsg").text(_('测试成功')).attr("class","green");
+				}else{
+					jQuery("#testMsg").text(data.info).attr("class","red");
+				}
+			},
+			error : function() {
+				jQuery("#testMsg").text(_('测试失败')).attr("class","red");
+			}
+		});
+	}
+	function saveNetSet(){
+		var flag = false;
+		jQuery("#testMsg").text("");
+		jQuery.ajax({
+			type : "post",
+			async : false,
+			url : "/login",
+			data:{"type":"netSet","EIS_IP":jQuery("#EIS_IP").val(),"EIS_PORT":jQuery("#EIS_PORT").val(),"VIRTUAL_PATH":jQuery("#VIRTUAL_PATH").val()},
+			success : function(data) {
+				jQuery("#msg").text("");
+				data = eval("("+data+")");
+				if(!data.isSuccess){
+					jQuery("#testMsg").text(data.info);
+					return flag;
+				}
+				flag = true;
+			},
+			error : function() {
+				jQuery("#testMsg").text(_('保存失败')).attr("class","red");
+			}
+		});
+		return flag;
+	}
+	jQuery(function(){
+        jQuery('input').bind('keypress',function(event){
+            if(event.keyCode == "13")    
+            {
+                login();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,138 @@
+$def with(page) 
+$var title: $_("结果查询")
+<body class="bill_body">
+	$:render.widgets.navBar("result")
+	<form action="" id="queryForm" method="post">
+		<div class="searchbar">
+			<div class="fields">
+				<div class="tit">
+					$_("票据号"):
+				</div>
+				<div class="cont">
+					<input type="text" class="input_search" name="headNum"
+						value="$page.get('cond').get('headNum')">
+				</div>
+			</div>
+			<div class="fields">
+				<div class="tit">
+					$_("状态"):
+				</div>
+				<div class="cont">
+					<select class="myselect" name="status" value="$page.get('cond').get('status')">
+						<option value="">$_("全部")</option>
+						<option value="UPLOADING">$_("正在上传")</option>
+						<option value="SUCCESS">$_("上传成功")</option>
+						<option value="FAILURE">$_("上传失败")</option>
+						<option value="BACK">$_("退回")</option>
+					</select>
+				</div>
+			</div>
+			<input type="submit" value="$_("查询")" />
+		</div>
+
+		<div class="main">
+
+			<h2>
+				$_("结果查询")
+			</h2>
+			<div class="data_table cb">
+				<table>
+					<thead>
+						<tr>
+							<th>
+								$_("序号")
+							</th>
+							<th>
+								$_("票据号")
+							</th>
+							<th>
+								$_("图像页数")
+							</th>
+							<th>
+								$_("上传时间")
+							</th>
+							<!--						<th>$_("扫描时间")</th>-->
+							<th>
+								$_("描述")
+							</th>
+							<th>
+								$_("错误信息")
+							</th>
+							<th>
+								$_("上传进度")
+							</th>
+							<th>
+								$_("状态")
+							</th>
+							<th>
+								$_("操作")
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					$for header in page.get("data"):
+					$ rate =  header.get("uploadSize")*10000/header.get("headSize")/100.0
+					$ if header.get("status")=="SUCCESS" or rate>100.0:rate=100.00
+						<tr>
+							<td>$loop.index</td>
+							<td>$header.get("headNum")</td>
+							<td>$header.get("imgQty")</td>
+							<td>$header.get("uploadTime")</td>
+							<td>$header.get("headDesc")</td>
+							<td>$header.get("errorMsg")</td>
+							<td>$rate%</td>
+							$if header.get("status")=="FAILURE":
+								<td><span class="red">$page.get("headStatus").get(header.get("status"))</span></td>
+								<td><a href="#" onclick="backForModify($header.get('headId'))">$_("还原")</a>&nbsp;|&nbsp;<a href="#" onclick="reUpload($header.get('headId'))">$_("重新上传")</a>&nbsp;|&nbsp;<a href="#" onclick="deleteTask($header.get('headId'))">$_("删除")</a></td>
+							$else:
+								<td>$page.get("headStatus").get(header.get("status"))</td>
+								<td><a href="#" onclick="deleteTask($header.get('headId'))">$_("删除")</a></td>
+
+						</tr>
+					</tbody>
+				</table>
+				$:render.widgets.page(page)
+			</div>
+		</div>
+	</form>
+	<script>
+	function reUpload(headId){
+		jQuery.ajax({
+			url : "/reUploadFile",
+			type : "post",
+			data : {headId:headId},
+			success : function(data) {
+				alert('$_("重新上传成功！")');
+				jQuery("#queryForm").submit();
+			}
+		});
+	}
+	function backForModify(headId){
+		jQuery.ajax({
+			url : "/backForModify",
+			type : "post",
+			data : {headId:headId},
+			success : function(data) {
+				alert('$_("还原成功")');
+				jQuery("#queryForm").submit();
+			}
+		});
+	}
+
+
+	function deleteTask(headId) {
+		if (confirm('$_("确定要删除吗？")')) {
+			jQuery.ajax({
+				url : "/delTaskOnResultPage",
+				type : "post",
+				data : {
+					headId : headId
+				},
+				success : function(data) {
+					jQuery("#queryForm").submit();
+				}
+			});
+		}
+	}
+	</script>	
+</body>
