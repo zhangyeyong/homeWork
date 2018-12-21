@@ -115,6 +115,25 @@ createConfigSQL = '''create table config
                        val                  varchar(256)                   not null,
                        userNum              varchar(32)                    null
                     );'''
+createBoxSQL = '''
+        create table box 
+        (
+           boxId integer primary key,
+           boxNum              varchar(32)                    null,                       
+           boxName              varchar(32)                    null,   
+           pickupCode           varchar(8)                    null,
+           status               int DEFAULT 0                 null,
+           enable               int DEFAULT 1                   null
+        );
+        insert into box values(1,'001','A柜','1234',0,0);
+        insert into box values(2,'001','B柜','1234',0,0);
+        insert into box values(3,'001','C柜','1234',0,0);
+        insert into box values(4,'001','D柜','1234',0,0);
+        insert into box values(5,'001','E柜','1234',0,0);
+        insert into box values(6,'001','F柜','1234',0,0);
+        insert into box values(7,'001','G柜','1234',0,0);
+    '''
+
 def initDB():
     if os.path.exists(dbPath) and os.path.isfile(dbPath):
         os.remove(dbPath)

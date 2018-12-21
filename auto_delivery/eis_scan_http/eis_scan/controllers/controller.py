@@ -43,6 +43,14 @@ urls = (
         '/recognitionDetail/(.*)', 'service.recognitionService.recognitionDetail',
         '/configure', 'service.configService.configure',
         '/queue', 'service.scanService.queue',
+        '/delivery/index', 'service.deliveryService.Index',
+        '/delivery/scan', 'service.deliveryService.Scan',
+        '/delivery/submit', 'service.deliveryService.Submit',
+        '/delivery/refund', 'service.deliveryService.Refund',
+        '/delivery/pickup', 'service.deliveryService.PickUp',
+        '/delivery/machineError', 'service.deliveryService.MachineError',
+        '/delivery/edit', 'service.deliveryService.Edit',
+        '/exceptImg', 'service.scanService.exceptImg',
         )
 
 def cleanFile(dir_clean):
@@ -102,7 +110,7 @@ def Loginfilter():
     if ticket:
         web.setcookie('ticket', ticket)
 # web.config.session_parameters['timeout'] = 10#86400, #24 * 60 * 60, # 24 hours   in seconds   
-app.add_processor(web.loadhook(Loginfilter))
+# app.add_processor(web.loadhook(Loginfilter))
 app.notfound = notfound
 app.internalerror = internalerror
 

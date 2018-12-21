@@ -22,6 +22,8 @@ class configure:
 #         configs[configkey.IS_PASV] = params.get(configkey.IS_PASV) 
         configs[configkey.HTTP_UPLOAD_URL] = params.get(configkey.HTTP_UPLOAD_URL) 
         configs[configkey.DS_NAME] = params.get(configkey.DS_NAME) 
+        configs[configkey.SERIAL_PORT] = params.get(configkey.SERIAL_PORT)
+        configs[configkey.SERIAL_BAUDRATE] = params.get(configkey.SERIAL_BAUDRATE)
         #空白率
         PIXERRATIO = params.get(configkey.PIXERRATIO) 
         if PIXERRATIO:

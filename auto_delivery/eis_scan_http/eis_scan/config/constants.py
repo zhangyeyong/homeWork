@@ -58,22 +58,24 @@ headStatusShow = Storage({
                        "BACK":_("退回")
                     })
 configkey = Storage({
-                       "IS_PASV":"IS_PASV",
-                       "HTTP_UPLOAD_URL":"HTTP_UPLOAD_URL",
-                       "EIS_IP":"EIS_IP",
-                       "EIS_PORT":"EIS_PORT",
-                       "VIRTUAL_PATH":"VIRTUAL_PATH",
-                       "DS_NAME":"DS_NAME",
-                       "PIXERRATIO":"PIXERRATIO",
-                       "BARCODE_RULE":"BARCODE_RULE",
-                       "COMPANY_CODE":"COMPANY_CODE_",
-                       "SITE_ID":"SITE_ID_",
-                       "OPERATION_TYPE_CODE":"OPERATION_TYPE_CODE_",
-                       "SCAN_CONFIG":"SCAN_CONFIG",
-                       "DPI":"DPI",
-                       "CONTRAST":"CONTRAST",
-                       "COMPRESS":"COMPRESS"
-                    }) 
+    "IS_PASV": "IS_PASV",
+    "HTTP_UPLOAD_URL": "HTTP_UPLOAD_URL",
+    "EIS_IP": "EIS_IP",
+    "EIS_PORT": "EIS_PORT",
+    "VIRTUAL_PATH": "VIRTUAL_PATH",
+    "DS_NAME": "DS_NAME",
+    "PIXERRATIO": "PIXERRATIO",
+    "BARCODE_RULE": "BARCODE_RULE",
+    "COMPANY_CODE": "COMPANY_CODE_",
+    "SITE_ID": "SITE_ID_",
+    "OPERATION_TYPE_CODE": "OPERATION_TYPE_CODE_",
+    "SCAN_CONFIG": "SCAN_CONFIG",
+    "DPI": "DPI",
+    "CONTRAST": "CONTRAST",
+    "COMPRESS": "COMPRESS",
+    "SERIAL_PORT": "SERIAL_PORT",
+    "SERIAL_BAUDRATE": "SERIAL_BAUDRATE"
+})
 #定时TIME，实时NOW
 taskType = Storage({
                        "NOW":"NOW",
