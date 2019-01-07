@@ -282,7 +282,7 @@ class Edit:
         if not rtn["isSuccess"]:
             return json.dumps(rtn)
         #等待压痕完成
-        time.sleep(4)
+        time.sleep(2)
         # ======================回收======================================
         rtn = mds.recyclePaper()
         if  rtn["isSuccess"]:
