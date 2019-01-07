@@ -65,6 +65,7 @@ class UploadThread(threading.Thread):  # The timer class is derived from the cla
     def run(self):  # Overwrite run() method, put what you want the thread do here  
         startTime = time.time()
         global uploadingHeadId
+        rtn = []
         for headId in self.headIds:
             uploadingHeadId = headId
             imgHead = self.imgHeadDao.getById(headId)
@@ -211,8 +212,10 @@ class UploadThread(threading.Thread):  # The timer class is derived from the cla
             
             self.imgHeadDao.updateStatusAndErrorMsgByheadId(headId,imgHead["status"],imgHead["errorMsg"])
             t2 = time.time()
+            rtn.append(imgHead)
             print "update status time :%d" % (t2 - t1)
         endTime = time.time()
         print "总时间%d" % (endTime - startTime)
+        return rtn
 if __name__ == "__main__":
     pass

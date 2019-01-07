@@ -38,6 +38,7 @@ function doScan(){
                         async : true,
                         data : cond,
                         success : function(d) {
+                            alert(d);
                             d = eval("(" + d + ")");
                             if (d.isSuccess) {
                                 headId = d.headId;
@@ -75,11 +76,10 @@ function scanCallback(headId){
     if(headId){
         window.location.href = "/delivery/edit?headId="+headId;
     }else{
-         alert("扫描失败！");
+         alert("1扫描失败！");
     }
 }
 function back(){
-    alert("aaaa");
     //backPaper();
     window.location.href = "/delivery/index";
 }

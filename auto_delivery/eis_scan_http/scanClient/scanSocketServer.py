@@ -32,6 +32,7 @@ def isAlive():
 def scan(paramDict):
     ds_name = paramDict.get("ds_name")
     temp =  getDsList()
+    print temp
     if temp.get("isSuccess"):
         if ds_name not in temp.get("data"):
             return buildFail("Could not find the scanner:%s"%ds_name)
@@ -42,15 +43,15 @@ def scan(paramDict):
     t2 = time.time();
     print "scan time：%d"%(t2-t1)
     print "-----------res-----------------"
-#     res = [
-#            {"path":"D:/temp/image/1.jpg"},
-#            {"path":"D:/temp/image/2.jpg"},
-#            {"path":"D:/temp/image/3.jpg"},
-#            {"path":"D:/temp/image/4.jpg"},
-#            {"path":"D:/temp/image/5.jpg"},
-#            {"path":"D:/temp/image/6.jpg"},
-#            {"path":"D:/temp/image/7.jpg"},
-#            ]
+    # res = [
+    #        {"path":"D:/temp/image/1.jpg"},
+    #        {"path":"D:/temp/image/2.jpg"},
+    #        {"path":"D:/temp/image/3.jpg"},
+    #        {"path":"D:/temp/image/4.jpg"},
+    #        {"path":"D:/temp/image/5.jpg"},
+    #        {"path":"D:/temp/image/6.jpg"},
+    #        {"path":"D:/temp/image/7.jpg"},
+    #        ]
     print res
     return buildSuccess("scan success",res)   
 def urlToDict(url):
@@ -76,6 +77,12 @@ def buildSuccess(info=None, data=None):
     rtn["info"] = info
     rtn["data"] = data
     return rtn
+def send_http(connection, html):
+    connection.send("HTTP/1.1 200 OK\r\n")
+    connection.send("Content-Type: text/html;charset=UTF-8\r\n")
+    connection.send("\r\n")
+    connection.send(html)
+    connection.send("\r\n")
 def start(port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
     sock.bind(('127.0.0.1', port))
@@ -127,8 +134,8 @@ def start(port):
                 t1 = time.time()
                 jsonStr = json.dumps(rtn)  # 返回的json
                 print jsonStr
-                text = callback + "(" + jsonStr+ ")"; 
-                connection.send(text)
+                text = callback + "(" + jsonStr + ")";
+                send_http(connection, text)
                 connection.close()
                 t2 = time.time()
                 print "send mes %d"%(t2-t1)

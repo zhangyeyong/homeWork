@@ -18,9 +18,9 @@ $ operationTypeCodeKey='OPERATION_TYPE_CODE_'+session.user.get('userNum')
 				<dt class="cb"><h3>$_("非空白率：")</h3>($_("说明：用于判断图片是否是空白的参数"))</dt>
 				<dd><input type="text" class="input_text" value="$configDict.get('PIXERRATIO','0.5')" id="PIXERRATIO">%</dd>
 				<dt class="cb"><h3>$_("串口名：")</h3>($_("说明：串口通信参数"))</dt>
-				<dd><input type="text" class="input_text" value="$configDict.get('SERIAL_PORT','COM1')" id="SERIAL_PORT">%</dd>
+				<dd><input type="text" class="input_text" value="$configDict.get('SERIAL_PORT','COM1')" id="SERIAL_PORT"></dd>
 				<dt class="cb"><h3>$_("波特率：")</h3>($_("说明：说明：串口通信参数"))</dt>
-				<dd><input type="text" class="input_text" value="$configDict.get('SERIAL_BAUDRATE','9600')" id="SERIAL_BAUDRATE">%</dd>
+				<dd><input type="text" class="input_text" value="$configDict.get('SERIAL_BAUDRATE','19200')" id="SERIAL_BAUDRATE"></dd>
 				<dt class="cb"><h3>$_("扫描仪：")</h3>($_("说明：选择一台适合的扫描仪"))</dt>
 				<dd>
 					<div class="fields">
@@ -103,6 +103,8 @@ $ operationTypeCodeKey='OPERATION_TYPE_CODE_'+session.user.get('userNum')
 					//"IS_PASV":String(jQuery("#IS_PASV").is(':checked')==true),
 					"HTTP_UPLOAD_URL":jQuery("#HTTP_UPLOAD_URL").val(),
 					"BARCODE_RULE":jQuery("#BARCODE_RULE").val(),
+					"SERIAL_PORT":jQuery("#SERIAL_PORT").val(),
+					"SERIAL_BAUDRATE":jQuery("#SERIAL_BAUDRATE").val(),
 					"PIXERRATIO":pixer_ratio,
 					"$companyCodeKey":jQuery("#$companyCodeKey").val(),
 					"$siteIdKey":jQuery("#"+jQuery("#$companyCodeKey").val()).val(),

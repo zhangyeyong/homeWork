@@ -9,24 +9,31 @@ import copy
 from tool import pathJoin
 from model.imgHeadDao import ImgHeadDao
 from model.imgLineDao import ImgLineDao
+from model.configDao import ConfigDao
 from model.boxDao import BoxDao
 from model.uploadTaskDao import UploadTaskDao
 from model.uploadTaskLogDao import UploadTaskLogDao
 from model.ocrResultDao import OcrResultDao
 from model.interface import GhEvsInterface
 from config.constants import taskStatus, headStatus, ftpStatus, configkey
+from config.config import rootPath, scanPath, imgWidth, rootPathCmd
 from model.ftpU4 import MyFTP
 from i18n.i18nU import _
 import config.constants as constants
 from model.serialU import ComU
 from config.config import scanPath
 from config import config
-
+from config.constants import *
 import json
+import os
+import sys
 from model import common
 from model.meidingSerial import MeidingSerial
+# from model.meidingSerial_for_test import MeidingSerial
 import os
 import traceback
+from scanService import uploadFile
+from model.uploadThreadByHttp import UploadThread
 
 
 def sendDataBySerial(data):
@@ -37,6 +44,22 @@ def sendDataBySerial(data):
     rtn = comU.sendAndWaitRecvDate(data)
     comU.closeCom()
     return rtn
+
+
+def getBelong(belong):
+    if belong == "dailyScanM":
+        return belongType.DAILY_SCAN
+    elif belong == "appraiseTaskM":
+        return belongType.APPRAISE_TASK
+    else:
+        return belongType.NO_TASK
+
+
+def setUserFormValue(userForm, name, value):
+    for f in userForm:
+        if f.get("name") == name:
+            f["value"] = value
+    return userForm
 
 
 class Index:
@@ -61,22 +84,26 @@ class Index:
 
 
 class Scan:
+    imgHeadDao = ImgHeadDao()
+    imgLineDao = ImgLineDao()
+    configDao = ConfigDao()
+
     def __init__(self):
         pass
 
     def initMachine(self):
-        rtn = common.buildSuccess("initMachine ok ")
-        # mds = MeidingSerial()
-        # rtn = mds.initMachine()
-        return json.dumps(rtn)
-
-    def doScan(self):
-        mds = MeidingSerial()
-        rtn = mds.backPaper()
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = int(configDict.get(configkey.SERIAL_BAUDRATE))
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
+        rtn = mds.initMachine()
         return json.dumps(rtn)
 
     def backPaper(self):
-        mds = MeidingSerial()
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = configDict.get(configkey.SERIAL_BAUDRATE)
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
         rtn = mds.backPaper()
         return json.dumps(rtn)
 
@@ -90,6 +117,8 @@ class Scan:
             return self.initMachine()
         if ("backPaper" == method):
             return self.backPaper()
+        if ("doScan" == method):
+            return self.backPaper()
 
 
 class Refund:
@@ -98,18 +127,29 @@ class Refund:
     def __init__(self):
         pass
 
-    def initMachine(self):
-        mds = MeidingSerial()
-        rtn = mds.openBox()
-        if rtn["isSuccess"]:
-            return json.dumps(rtn)
-        else:
-            return json.dumps(common.buildFail("电机初始化失败"))
-
-        return json.dumps(common.buildSuccess(data=p_data))
+    def openBox(self, boxNum):
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = int(configDict.get(configkey.SERIAL_BAUDRATE))
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
+        rtn = mds.openBox(boxNum)
+        return json.dumps(rtn)
 
     def findAll(self):
         boxs = self.boxDao.findAll()
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = int(configDict.get(configkey.SERIAL_BAUDRATE))
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
+        rtn = mds.queryBoxSatus()
+        print rtn
+        for tmp in rtn.get("data"):
+            for box in boxs:
+                if int(box.get("boxNum")) == int(tmp.get("boxNum")):
+                    box["enable"] = tmp.get("enable")
+                    box["status"] = tmp.get("status")
+                    break;
+        print boxs
         return common.buildSuccess(data=boxs)
 
     def GET(self):
@@ -118,8 +158,8 @@ class Refund:
     def POST(self):
         i = web.input()
         method = i.get("method")
-        if ("initMachine" == method):
-            return self.initMachine()
+        if ("openBox" == method):
+            return self.openBox(int(i.get("boxNum")))
 
 
 class MachineError:
@@ -155,9 +195,11 @@ class PickUp:
         if not box:
             return json.dumps(common.buildFail(u"取件码错误，请重新输入！"))
         # 发送打开柜子指令
-        # mds = MeidingSerial()
-        # rtn = mds.openBox()
-        rtn = common.buildSuccess()
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = configDict.get(configkey.SERIAL_BAUDRATE)
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
+        rtn = mds.openBox(box.get("boxNum"))
         return json.dumps(rtn)
 
     def POST(self):
@@ -173,6 +215,7 @@ class Edit:
     uploadTaskDao = UploadTaskDao()
     uploadTaskLogDao = UploadTaskLogDao()
     evsInterface = GhEvsInterface()
+    configDao = ConfigDao()
 
     def __init__(self):
         self.uploadingLineId = None
@@ -200,148 +243,49 @@ class Edit:
         }
         return json.dumps(common.buildSuccess(data=p_data))
 
-    def callback2(self, buf):
-        if self.uploadingLineId:
-            imgLineDao = ImgLineDao()
-            imgLineDao.addUploadSize(uploadingLineId, len(buf))
-
-    def uploadToFtp(self):
+    def upload(self):
+        u = uploadFile()
         i = web.input()
+        # belong = getBelong(i.belong)
+        headId = json.loads(i.headId)
         session = web.config._session
-        headId = i.get("headId")
-        startTime = time.time()
-        self.uploadingLineId = headId
-        imgHead = self.imgHeadDao.getById(headId)
-        # 清空
-        imgHead['errorMsg'] = ''
-        imgHead["uploadTime"] = time.strftime('%Y-%m-%d %H:%M:%S')
-        imgHead['status'] = headStatus.UPLOADING
-        self.imgHeadDao.update(imgHead)
-        userForm = {}
-        for f in json.loads(imgHead.get("userForm")):
-            userForm[f.get("name")] = f.get("value")
-        jsonParam = {"appCode": imgHead.get("appCode"), "form": userForm}
-
-        t1 = time.time()
-        # 询问服务器是否能上传
-        ftpRet = self.evsInterface.FtpInfo(session.ticket, imgHead.get("belong"), json.dumps(jsonParam))
-        if not ftpRet.get("isSuccess"):
-            self.uploadTaskDao.deleteByHeadId(headId)
-            imgHead["status"] = headStatus.FAILURE
-            imgHead["errorMsg"] = _(u"获取ftp信息失败")
-            self.imgHeadDao.update(imgHead)
-
-        ftpInfo = ftpRet.get("data")
-        # 不能上传
-        if ftpInfo.get('code') == 'F' or ftpInfo.get("status") == ftpStatus.CLOSED:
-            self.uploadTaskDao.deleteByHeadId(headId)
-            imgHead["status"] = headStatus.FAILURE
-            imgHead["errorMsg"] = ftpInfo.get("errorMsg")
-            self.imgHeadDao.update(imgHead)
-        # 补全ftp信息
-        print "-----------ftpInfo", ftpInfo
-        print "-----------ftpInfo.get(\"ftpId\")):", ftpInfo.get("ftpId")
-        print "-----------str(ftpInfo.get(\"ftpId\"))):", str(ftpInfo.get("ftpId"))
-        #             print "-----------self.ftpMap.get(str(ftpInfo.get(\"ftpId\"))):",self.ftpMap.get(str(ftpInfo.get("ftpId")))
-        ftpInfo.update(session.ftpMap.get(str(ftpInfo.get("ftpId"))))
-
-        self.uploadTaskDao.updateStatusByHeadId(headId, taskStatus.UPLOADING)
-        t2 = time.time()
-        print "call uploadTaskDao time :%d" % (t2 - t1)
-
-        imgLines = self.imgLineDao.findByHeadId2(headId)
-        imageList = []
-        iconList = []
-        # 上传影像到ftp
-        flag = False
-        t1 = time.time()
-        #                 ip:,port:,userName:"","password":
-        ftpIp = ftpInfo.get("ftpIp")
-        ftpPort = int(ftpInfo.get("port"))
-        ftpUser = ftpInfo.get("userName")
-        ftpPwd = ftpInfo.get("password")
-        imagePath = ftpInfo.get("imagePath")
-        iconPath = ftpInfo.get("iconPath")
-
-        # 上传原图
-        myFtp = MyFTP()
-        # 测试ftp
-        flagFtp = True
-        flagFtp = myFtp.testFtp(ftpIp, ftpPort, ftpUser, ftpPwd)
-        if not flagFtp:
-            self.uploadTaskDao.uploadFail(headId, _(u"连接ftp[%s]失败" % (str(ftpIp))))
-            # 如果是评价任务，删除
-        if constants.belongType.get("APPRAISE_TASK") == imgHead.get("belong"):
-            print "delete dir ----->iconPath:", iconPath
-            myFtp.deletedir(ftpIp, ftpPort, ftpUser, ftpPwd, iconPath)
-        for imgLine in imgLines:
-            localPath = pathJoin(scanPath, imgHead.headNum, imgLine.imgNameP)
-            localIconPath = pathJoin(scanPath, imgHead.headNum, "s_" + imgLine.imgNameP)
-            remotePath = pathJoin(imagePath, imgHead.headNum, imgLine.imgNameP)
-            imageList.append(remotePath)
-            global uploadingLineId
-            uploadingLineId = imgLine.lineId
-            flagFtp = flagFtp and myFtp.upload(ftpIp, ftpPort, ftpUser, ftpPwd, remotePath, localPath, self.callback2)
-            if not flagFtp:
-                break
-            if iconPath:
-                # 上传缩略图
-                remoteIconPath = pathJoin(iconPath, imgHead.headNum, imgLine.imgNameP)
-                iconList.append(remoteIconPath)
-                flagFtp = flagFtp and myFtp.upload(ftpIp, ftpPort, ftpUser, ftpPwd, remoteIconPath, localIconPath)
-            # 只要有一个失败当前任务就算失败
-            if not flagFtp:
-                break
-        t2 = time.time()
-        print "call ftpU.upload time :%d" % (t2 - t1)
-        if flagFtp:
-            # 同步上传影像的信息 TODO
-            t1 = time.time()
-            jsonParam["imageList"] = imageList
-            jsonParam["iconList"] = iconList
-            #                 uploadLogFlag = self.evsInterface.UploadLog(self.ticket,imgHead.get("belong"), json.dumps(jsonParam))
-            UploadLogRtn = self.evsInterface.UploadLog(session.ticket, imgHead.get("belong"), json.dumps(jsonParam))
-            uploadLogFlag = False
-            if (UploadLogRtn and UploadLogRtn.get("isSuccess") and UploadLogRtn.get("data") and UploadLogRtn.get(
-                    "data").get("code") == 'S'):
-                uploadLogFlag = True
-            t2 = time.time()
-            print "call client.service.UploadLog time :%d" % (t2 - t1)
-            print "---------->uploadLogFlag:" + str(uploadLogFlag)
-            flag = flagFtp and uploadLogFlag
-        status = headStatus.FAILURE
-        # # 在删除之前，先查询出数据，用于插入日志表
-        # uploadTask = self.uploadTaskDao.getByHeadId(headId)
-        if flag:
-            status = headStatus.SUCCESS
-            # 删除任务
-            self.uploadTaskDao.deleteByHeadId(headId)
-        else:
-            # 修改状态
-            self.uploadTaskDao.updateStatusByHeadId(headId, status)
-        # 插入上传任务历史表
-        t1 = time.time()
-        # uploadTaskLog = copy.deepcopy(uploadTask)
-        # uploadTaskLog.pop("uploadTaskId")
-        # uploadTaskLog['status'] = status
-
-        # self.uploadTaskLogDao.save(uploadTaskLog)
-        # 修改组状态
-        self.imgHeadDao.updateStatusByheadId(headId, status)
-        t2 = time.time()
-        print "update status time :%d" % (t2 - t1)
-        endTime = time.time()
-        print u"总时间%d" % (endTime - startTime)
-        return status
+        userNum = session.user.get("userNum")
+        self.imgHeadDao.update(
+            {"headId": headId, "status": headStatus.UPLOADING, "uploadTime": time.strftime('%Y-%m-%d %H:%M:%S')})
+        uploadTask = {
+            "headId": headId,
+            "status": taskStatus.WAITING,
+            "userNum": userNum,
+            "taskType": taskType.NOW
+        }
+        self.uploadTaskDao.deleteByHeadId(headId)
+        self.uploadTaskDao.save(uploadTask)
+        uploadUrl = self.configDao.getValueByKey(configkey.HTTP_UPLOAD_URL)
+        #         uploadUrl = "http://127.0.0.1:8080/upload/UploadServlet.do"
+        uploadThread = UploadThread([headId], session.ticket, uploadUrl)
+        head_list = uploadThread.run()
+        status = head_list[0].get("status")
+        errorMsg = head_list[0].get("errorMsg")
+        return status, errorMsg
 
     def submit(self):
-        flag = self.uploadToFtp()
-        # self.callCom()
-        if not flag:
-            return json.dumps(common.buildFail(u"上传FTP失败!"))
-
-        rtn = sendDataBySerial(serial_command.SEND_SCAN_OK)
-        if rtn["isSuccess"] and serial_command.SEND_SCAN_OK_RECEIVE == rtn["data"]:
+        status, errorMsg = self.upload()
+        if headStatus.FAILURE == status:
+            print("=========== 上传失败 ===========")
+            return json.dumps(common.buildFail(errorMsg))
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = configDict.get(configkey.SERIAL_BAUDRATE)
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
+        # =====================压痕======================================
+        rtn = mds.fixPaper()
+        if not rtn["isSuccess"]:
+            return json.dumps(rtn)
+        #等待压痕完成
+        time.sleep(4)
+        # ======================回收======================================
+        rtn = mds.recyclePaper()
+        if  rtn["isSuccess"]:
             return json.dumps(rtn)
         else:
             return json.dumps(common.buildFail(u"电机收件失败，请联系管理员"))
@@ -358,9 +302,12 @@ class Edit:
 
     def cancel(self):
         # 通知电机退票
-        # mds = MeidingSerial()
-        # rtn = mds.backPaper()
-        rtn = common.buildSuccess()
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = configDict.get(configkey.SERIAL_BAUDRATE)
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
+        rtn = mds.backPaper()
+        # rtn = common.buildSuccess()
         if rtn["isSuccess"]:
             # 删除任务
             i = web.input()
