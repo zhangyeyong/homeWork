@@ -24,7 +24,7 @@ function doScan(){
         success : function(d) {
             d = eval("(" + d + ")");
             if (d.isSuccess) {
-                alert(d.info);
+                //alert(d.info);
                 //scan["scanCallback"]=scanCallback;
 
                 scan.commonScan(function(data) {
@@ -38,7 +38,7 @@ function doScan(){
                         async : true,
                         data : cond,
                         success : function(d) {
-                            alert(d);
+                            //alert(d);
                             d = eval("(" + d + ")");
                             if (d.isSuccess) {
                                 headId = d.headId;
@@ -76,7 +76,7 @@ function scanCallback(headId){
     if(headId){
         window.location.href = "/delivery/edit?headId="+headId;
     }else{
-         alert("1扫描失败！");
+         alert("扫描失败！");
     }
 }
 function back(){
@@ -95,7 +95,7 @@ function backPaper(){
         success : function(d) {
             d = eval("(" + d + ")");
             if (d.isSuccess) {
-                alert(d.info);
+                //alert(d.info);
                 //scan["scanCallback"]=scanCallback;
                 //scan.execute('dailyScan');
             } else {

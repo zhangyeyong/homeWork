@@ -66,7 +66,7 @@ var headNumBox = new Dialog({
                 success : function(d) {
                     d = eval("(" + d + ")");
                     if (d.isSuccess) {
-                        alert(_('单据编号修改成功!'));
+                        //alert(_('单据编号修改成功!'));
                         window.location.reload()
                     } else {
                         alert(d.msg);
@@ -115,7 +115,7 @@ function cancel(){
             headId:$head.get("headId"),
         },
         success : function(d) {
-            alert(d);
+            //alert(d);
             d = eval("(" + d + ")");
 
             if (d.isSuccess) {
