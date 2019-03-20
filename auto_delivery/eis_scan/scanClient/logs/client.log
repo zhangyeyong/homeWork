@@ -134,3 +134,390 @@
 [2018-12-05 00:54:45,394](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
 [2018-12-05 00:54:45,394](DEBUG)scanSocketServer : send mes 0
 [2018-12-05 00:54:45,394](DEBUG)scanSocketServer : start server
+[2018-12-05 22:54:12,562](DEBUG)scanSocketServer : Start 8001
+[2018-12-05 22:54:12,575](DEBUG)scanSocketServer : start server
+[2018-12-05 22:55:07,378](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111034266646939202405_1544021707318', 'method': 'isAlive', '_': '1544021707319'}
+[2018-12-05 22:55:07,378](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 22:55:07,380](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 22:55:07,380](DEBUG)scanSocketServer : start server
+[2018-12-05 22:57:06,825](DEBUG)scanSocketServer : start: {'callback': 'jQuery111109121421214444947_1544021826793', 'method': 'isAlive', '_': '1544021826794'}
+[2018-12-05 22:57:06,825](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 22:57:06,825](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 22:57:06,825](DEBUG)scanSocketServer : start server
+[2018-12-05 22:57:13,704](DEBUG)scanSocketServer : start: {'callback': 'jQuery111106865646433323556_1544021833671', 'method': 'isAlive', '_': '1544021833672'}
+[2018-12-05 22:57:13,706](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 22:57:13,706](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 22:57:13,706](DEBUG)scanSocketServer : start server
+[2018-12-05 22:57:28,546](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544021707320', 'imageFormat': 'jpg'}
+[2018-12-05 22:57:29,153](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 22:57:29,153](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 22:57:29,153](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 22:57:29,154](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 22:57:29,154](DEBUG)scanSocketServer : start server
+[2018-12-05 22:57:41,470](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111017739364866537755_1544021861457', 'method': 'isAlive', '_': '1544021861458'}
+[2018-12-05 22:57:41,470](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 22:57:41,470](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 22:57:41,470](DEBUG)scanSocketServer : start server
+[2018-12-05 22:58:34,569](DEBUG)scanSocketServer : time out
+[2018-12-05 22:58:34,571](DEBUG)scanSocketServer : start server
+[2018-12-05 22:58:48,279](DEBUG)scanSocketServer : start: {'callback': 'jQuery111108996802285572971_1544021928229', 'method': 'isAlive', '_': '1544021928230'}
+[2018-12-05 22:58:48,279](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 22:58:48,279](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 22:58:48,279](DEBUG)scanSocketServer : start server
+[2018-12-05 22:58:50,282](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544021928231', 'imageFormat': 'jpg'}
+[2018-12-05 22:58:50,282](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 22:58:50,282](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 22:58:50,282](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 22:58:50,282](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 22:58:50,282](DEBUG)scanSocketServer : start server
+[2018-12-05 22:59:02,653](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111029239671436368386_1544021942630', 'method': 'isAlive', '_': '1544021942631'}
+[2018-12-05 22:59:02,653](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 22:59:02,654](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 22:59:02,654](DEBUG)scanSocketServer : start server
+[2018-12-05 23:01:21,184](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111037866000135444877_1544022081129', 'method': 'isAlive', '_': '1544022081130'}
+[2018-12-05 23:01:21,184](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:01:21,184](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:01:21,186](DEBUG)scanSocketServer : start server
+[2018-12-05 23:01:24,858](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022081131', 'imageFormat': 'jpg'}
+[2018-12-05 23:01:24,858](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:01:24,858](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:01:24,858](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:01:24,858](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:01:24,858](DEBUG)scanSocketServer : start server
+[2018-12-05 23:01:31,982](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022081132', 'imageFormat': 'jpg'}
+[2018-12-05 23:01:31,982](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:01:31,983](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:01:31,983](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:01:31,983](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:01:31,983](DEBUG)scanSocketServer : start server
+[2018-12-05 23:01:34,193](DEBUG)scanSocketServer : start: {'callback': 'jQuery111107834235102577725_1544022094153', 'method': 'isAlive', '_': '1544022094154'}
+[2018-12-05 23:01:34,193](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:01:34,194](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:01:34,194](DEBUG)scanSocketServer : start server
+[2018-12-05 23:01:37,155](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022094155', 'imageFormat': 'jpg'}
+[2018-12-05 23:01:37,155](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:01:37,157](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:01:37,157](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:01:37,157](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:01:37,157](DEBUG)scanSocketServer : start server
+[2018-12-05 23:01:41,200](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111030168636850954433_1544022101185', 'method': 'isAlive', '_': '1544022101186'}
+[2018-12-05 23:01:41,200](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:01:41,200](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:01:41,200](DEBUG)scanSocketServer : start server
+[2018-12-05 23:01:55,789](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111016067857947065023_1544022115733', 'method': 'isAlive', '_': '1544022115734'}
+[2018-12-05 23:01:55,789](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:01:55,790](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:01:55,790](DEBUG)scanSocketServer : start server
+[2018-12-05 23:01:58,724](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022115735', 'imageFormat': 'jpg'}
+[2018-12-05 23:01:58,726](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:01:58,726](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:01:58,726](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:01:58,726](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:01:58,726](DEBUG)scanSocketServer : start server
+[2018-12-05 23:02:09,953](DEBUG)scanSocketServer : start: {'callback': 'jQuery111109091646479976889_1544022129810', 'method': 'isAlive', '_': '1544022129811'}
+[2018-12-05 23:02:09,954](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:02:09,954](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:02:09,956](DEBUG)scanSocketServer : start server
+[2018-12-05 23:02:10,808](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111015924192317899477_1544022130685', 'method': 'isAlive', '_': '1544022130686'}
+[2018-12-05 23:02:10,808](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:02:10,809](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:02:10,809](DEBUG)scanSocketServer : start server
+[2018-12-05 23:02:11,480](DEBUG)scanSocketServer : start: {'callback': 'jQuery111109138350061888099_1544022131325', 'method': 'isAlive', '_': '1544022131326'}
+[2018-12-05 23:02:11,480](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:02:11,480](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:02:11,480](DEBUG)scanSocketServer : start server
+[2018-12-05 23:02:13,390](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022131327', 'imageFormat': 'jpg'}
+[2018-12-05 23:02:13,391](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:02:13,391](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:02:13,391](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:02:13,391](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:02:13,391](DEBUG)scanSocketServer : start server
+[2018-12-05 23:02:15,667](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022131328', 'imageFormat': 'jpg'}
+[2018-12-05 23:02:15,667](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:02:15,667](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:02:15,667](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:02:15,667](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:02:15,668](DEBUG)scanSocketServer : start server
+[2018-12-05 23:02:39,513](DEBUG)scanSocketServer : start: {'callback': 'jQuery11110928045243531733_1544022159427', 'method': 'isAlive', '_': '1544022159428'}
+[2018-12-05 23:02:39,513](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:02:39,515](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:02:39,515](DEBUG)scanSocketServer : start server
+[2018-12-05 23:04:33,637](DEBUG)scanSocketServer : start: {'callback': 'jQuery111106737029287215117_1544022273570', 'method': 'isAlive', '_': '1544022273571'}
+[2018-12-05 23:04:33,637](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:04:33,638](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:04:33,638](DEBUG)scanSocketServer : start server
+[2018-12-05 23:04:34,757](DEBUG)scanSocketServer : start: {'callback': 'jQuery111108082114860439829_1544022274694', 'method': 'isAlive', '_': '1544022274695'}
+[2018-12-05 23:04:34,757](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:04:34,757](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:04:34,757](DEBUG)scanSocketServer : start server
+[2018-12-05 23:04:35,621](DEBUG)scanSocketServer : start: {'callback': 'jQuery111109933279635770689_1544022275566', 'method': 'isAlive', '_': '1544022275567'}
+[2018-12-05 23:04:35,621](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:04:35,622](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:04:35,622](DEBUG)scanSocketServer : start server
+[2018-12-05 23:04:37,842](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111013296621263374808_1544022277678', 'method': 'isAlive', '_': '1544022277679'}
+[2018-12-05 23:04:37,844](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:04:37,844](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:04:37,844](DEBUG)scanSocketServer : start server
+[2018-12-05 23:04:41,953](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022277680', 'imageFormat': 'jpg'}
+[2018-12-05 23:04:41,953](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:04:41,953](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:04:41,953](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:04:41,954](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:04:41,954](DEBUG)scanSocketServer : start server
+[2018-12-05 23:04:46,618](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022277681', 'imageFormat': 'jpg'}
+[2018-12-05 23:04:46,618](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:04:46,618](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:04:46,618](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:04:46,618](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:04:46,619](DEBUG)scanSocketServer : start server
+[2018-12-05 23:06:50,201](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111039338263836558474_1544022410118', 'method': 'isAlive', '_': '1544022410119'}
+[2018-12-05 23:06:50,203](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:06:50,203](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:06:50,203](DEBUG)scanSocketServer : start server
+[2018-12-05 23:06:52,845](DEBUG)scanSocketServer : start: {'callback': 'jQuery111104033080914564984_1544022412703', 'method': 'isAlive', '_': '1544022412704'}
+[2018-12-05 23:06:52,845](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:06:52,845](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:06:52,845](DEBUG)scanSocketServer : start server
+[2018-12-05 23:06:55,397](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022412705', 'imageFormat': 'jpg'}
+[2018-12-05 23:06:55,398](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:06:55,398](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:06:55,398](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:06:55,398](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:06:55,398](DEBUG)scanSocketServer : start server
+[2018-12-05 23:09:44,171](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111004553910870958178_1544022583999', 'method': 'isAlive', '_': '1544022584000'}
+[2018-12-05 23:09:44,171](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:09:44,173](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:09:44,173](DEBUG)scanSocketServer : start server
+[2018-12-05 23:09:47,063](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111038083782396900423_1544022587033', 'method': 'isAlive', '_': '1544022587034'}
+[2018-12-05 23:09:47,063](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:09:47,065](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:09:47,065](DEBUG)scanSocketServer : start server
+[2018-12-05 23:09:55,901](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544022584001', 'imageFormat': 'jpg'}
+[2018-12-05 23:09:55,901](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:09:55,901](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:09:55,903](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:09:55,903](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:09:55,903](DEBUG)scanSocketServer : start server
+[2018-12-05 23:10:02,392](DEBUG)scanSocketServer : time out
+[2018-12-05 23:10:02,392](DEBUG)scanSocketServer : start server
+[2018-12-05 23:33:00,644](DEBUG)scanSocketServer : start: {'callback': 'jQuery111109317903558091418_1544023979753', 'method': 'isAlive', '_': '1544023979754'}
+[2018-12-05 23:33:00,644](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:33:00,645](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:33:00,645](DEBUG)scanSocketServer : start server
+[2018-12-05 23:43:37,450](DEBUG)scanSocketServer : start: {'callback': 'jQuery111102629337412513828_1544024617421', 'method': 'isAlive', '_': '1544024617422'}
+[2018-12-05 23:43:37,450](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:43:37,451](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:43:37,451](DEBUG)scanSocketServer : start server
+[2018-12-05 23:43:40,611](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544024617423', 'imageFormat': 'jpg'}
+[2018-12-05 23:43:40,611](DEBUG)scanSocketServer : scan time：0
+[2018-12-05 23:43:40,612](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-05 23:43:40,612](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-05 23:43:40,614](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:43:40,614](DEBUG)scanSocketServer : start server
+[2018-12-05 23:57:41,622](DEBUG)scanSocketServer : start: {'callback': 'jQuery111104909008488182849_1544025461542', 'method': 'isAlive', '_': '1544025461543'}
+[2018-12-05 23:57:41,624](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-05 23:57:41,624](DEBUG)scanSocketServer : send mes 0
+[2018-12-05 23:57:41,624](DEBUG)scanSocketServer : start server
+[2018-12-06 18:04:38,901](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:04:38,903](DEBUG)scanSocketServer : url error
+[2018-12-06 18:04:38,903](DEBUG)scanSocketServer : start server
+[2018-12-06 18:04:41,036](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:04:41,036](DEBUG)scanSocketServer : url error
+[2018-12-06 18:04:41,036](DEBUG)scanSocketServer : start server
+[2018-12-06 18:05:11,006](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:05:11,006](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:05:11,007](DEBUG)scanSocketServer : start server
+[2018-12-06 18:05:11,009](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:05:11,010](DEBUG)scanSocketServer : url error
+[2018-12-06 18:05:11,010](DEBUG)scanSocketServer : start server
+[2018-12-06 18:05:13,111](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:05:13,111](DEBUG)scanSocketServer : url error
+[2018-12-06 18:05:13,111](DEBUG)scanSocketServer : start server
+[2018-12-06 18:05:43,094](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:05:43,095](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:05:43,095](DEBUG)scanSocketServer : start server
+[2018-12-06 18:05:43,108](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:05:43,109](DEBUG)scanSocketServer : url error
+[2018-12-06 18:05:43,109](DEBUG)scanSocketServer : start server
+[2018-12-06 18:05:45,142](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:05:45,142](DEBUG)scanSocketServer : url error
+[2018-12-06 18:05:45,142](DEBUG)scanSocketServer : start server
+[2018-12-06 18:06:15,148](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:06:15,150](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:06:15,150](DEBUG)scanSocketServer : start server
+[2018-12-06 18:06:15,173](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:06:15,173](DEBUG)scanSocketServer : url error
+[2018-12-06 18:06:15,174](DEBUG)scanSocketServer : start server
+[2018-12-06 18:06:17,193](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:06:17,194](DEBUG)scanSocketServer : url error
+[2018-12-06 18:06:17,194](DEBUG)scanSocketServer : start server
+[2018-12-06 18:06:47,193](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:06:47,193](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:06:47,193](DEBUG)scanSocketServer : start server
+[2018-12-06 18:06:47,214](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:06:47,214](DEBUG)scanSocketServer : url error
+[2018-12-06 18:06:47,214](DEBUG)scanSocketServer : start server
+[2018-12-06 18:06:49,331](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:06:49,331](DEBUG)scanSocketServer : url error
+[2018-12-06 18:06:49,331](DEBUG)scanSocketServer : start server
+[2018-12-06 18:07:19,223](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:07:19,223](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:07:19,223](DEBUG)scanSocketServer : start server
+[2018-12-06 18:07:19,267](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:07:19,267](DEBUG)scanSocketServer : url error
+[2018-12-06 18:07:19,267](DEBUG)scanSocketServer : start server
+[2018-12-06 18:07:21,358](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:07:21,358](DEBUG)scanSocketServer : url error
+[2018-12-06 18:07:21,359](DEBUG)scanSocketServer : start server
+[2018-12-06 18:07:51,282](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:07:51,282](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:07:51,282](DEBUG)scanSocketServer : start server
+[2018-12-06 18:07:51,319](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:07:51,319](DEBUG)scanSocketServer : url error
+[2018-12-06 18:07:51,321](DEBUG)scanSocketServer : start server
+[2018-12-06 18:07:53,404](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:07:53,404](DEBUG)scanSocketServer : url error
+[2018-12-06 18:07:53,404](DEBUG)scanSocketServer : start server
+[2018-12-06 18:08:23,338](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:08:23,338](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:08:23,339](DEBUG)scanSocketServer : start server
+[2018-12-06 18:08:23,407](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:08:23,407](DEBUG)scanSocketServer : url error
+[2018-12-06 18:08:23,407](DEBUG)scanSocketServer : start server
+[2018-12-06 18:08:25,443](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:08:25,443](DEBUG)scanSocketServer : url error
+[2018-12-06 18:08:25,443](DEBUG)scanSocketServer : start server
+[2018-12-06 18:08:55,387](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:08:55,387](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:08:55,388](DEBUG)scanSocketServer : start server
+[2018-12-06 18:08:55,456](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:08:55,456](DEBUG)scanSocketServer : url error
+[2018-12-06 18:08:55,457](DEBUG)scanSocketServer : start server
+[2018-12-06 18:08:57,486](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:08:57,486](DEBUG)scanSocketServer : url error
+[2018-12-06 18:08:57,486](DEBUG)scanSocketServer : start server
+[2018-12-06 18:09:27,407](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:09:27,407](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:09:27,408](DEBUG)scanSocketServer : start server
+[2018-12-06 18:09:27,506](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:09:27,507](DEBUG)scanSocketServer : url error
+[2018-12-06 18:09:27,507](DEBUG)scanSocketServer : start server
+[2018-12-06 18:09:29,519](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:09:29,519](DEBUG)scanSocketServer : url error
+[2018-12-06 18:09:29,520](DEBUG)scanSocketServer : start server
+[2018-12-06 18:09:59,430](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:09:59,430](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:09:59,431](DEBUG)scanSocketServer : start server
+[2018-12-06 18:09:59,543](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:09:59,543](DEBUG)scanSocketServer : url error
+[2018-12-06 18:09:59,543](DEBUG)scanSocketServer : start server
+[2018-12-06 18:10:01,555](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:10:01,555](DEBUG)scanSocketServer : url error
+[2018-12-06 18:10:01,555](DEBUG)scanSocketServer : start server
+[2018-12-06 18:10:31,470](DEBUG)scanSocketServer : start: {'ureka/apps/ZTESSC-FUNDS-CONFIG/bf7efb75940ad00cc774671ad7ee3bd0:ztessc-funds-config:8000?status': 'UP', 'lastDirtyTimestamp': '1544090678929'}
+[2018-12-06 18:10:31,470](DEBUG)scanSocketServer : not assign method
+[2018-12-06 18:10:31,471](DEBUG)scanSocketServer : start server
+[2018-12-06 18:10:31,572](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:10:31,572](DEBUG)scanSocketServer : url error
+[2018-12-06 18:10:31,573](DEBUG)scanSocketServer : start server
+[2018-12-06 18:10:33,576](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:10:33,576](DEBUG)scanSocketServer : url error
+[2018-12-06 18:10:33,576](DEBUG)scanSocketServer : start server
+[2018-12-06 18:10:38,967](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:10:38,969](DEBUG)scanSocketServer : url error
+[2018-12-06 18:10:38,970](DEBUG)scanSocketServer : start server
+[2018-12-06 18:10:41,020](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:10:41,020](DEBUG)scanSocketServer : url error
+[2018-12-06 18:10:41,022](DEBUG)scanSocketServer : start server
+[2018-12-06 18:10:59,803](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:10:59,803](DEBUG)scanSocketServer : url error
+[2018-12-06 18:10:59,803](DEBUG)scanSocketServer : start server
+[2018-12-06 18:11:01,921](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:11:01,923](DEBUG)scanSocketServer : url error
+[2018-12-06 18:11:01,923](DEBUG)scanSocketServer : start server
+[2018-12-06 18:11:14,085](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:11:14,086](DEBUG)scanSocketServer : url error
+[2018-12-06 18:11:14,086](DEBUG)scanSocketServer : start server
+[2018-12-06 18:11:16,127](DEBUG)scanSocketServer : start: {}
+[2018-12-06 18:11:16,127](DEBUG)scanSocketServer : url error
+[2018-12-06 18:11:16,127](DEBUG)scanSocketServer : start server
+[2018-12-06 20:00:51,296](DEBUG)scanSocketServer : start: {'callback': 'jQuery111108311881527168914_1544097651244', 'method': 'isAlive', '_': '1544097651245'}
+[2018-12-06 20:00:51,296](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-06 20:00:51,298](DEBUG)scanSocketServer : send mes 0
+[2018-12-06 20:00:51,299](DEBUG)scanSocketServer : start server
+[2018-12-06 20:05:56,338](DEBUG)scanSocketServer : start: {'callback': 'jQuery111109477950091072673_1544097956295', 'method': 'isAlive', '_': '1544097956296'}
+[2018-12-06 20:05:56,338](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-06 20:05:56,338](DEBUG)scanSocketServer : send mes 0
+[2018-12-06 20:05:56,338](DEBUG)scanSocketServer : start server
+[2018-12-06 20:14:22,898](DEBUG)scanSocketServer : start: {'callback': 'jQuery111109030176358078936_1544098462846', 'method': 'isAlive', '_': '1544098462847'}
+[2018-12-06 20:14:22,898](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-06 20:14:22,898](DEBUG)scanSocketServer : send mes 0
+[2018-12-06 20:14:22,898](DEBUG)scanSocketServer : start server
+[2018-12-06 20:38:21,586](DEBUG)scanSocketServer : start: {'callback': 'jQuery111104762886608489709_1544099901544', 'method': 'isAlive', '_': '1544099901545'}
+[2018-12-06 20:38:21,588](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-06 20:38:21,588](DEBUG)scanSocketServer : send mes 0
+[2018-12-06 20:38:21,588](DEBUG)scanSocketServer : start server
+[2018-12-06 20:58:41,740](DEBUG)scanSocketServer : start: {'callback': 'jQuery111109414686657997318_1544101120785', 'method': 'isAlive', '_': '1544101120786'}
+[2018-12-06 20:58:41,742](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-06 20:58:41,742](DEBUG)scanSocketServer : send mes 0
+[2018-12-06 20:58:41,742](DEBUG)scanSocketServer : start server
+[2018-12-06 23:50:19,555](DEBUG)scanSocketServer : start: {'callback': 'jQuery111109046787826911289_1544111419518', 'method': 'isAlive', '_': '1544111419519'}
+[2018-12-06 23:50:19,555](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-06 23:50:19,555](DEBUG)scanSocketServer : send mes 0
+[2018-12-06 23:50:19,555](DEBUG)scanSocketServer : start server
+[2018-12-07 00:00:15,494](DEBUG)scanSocketServer : start: {'callback': 'jQuery111107025657489584125_1544112015399', 'method': 'isAlive', '_': '1544112015400'}
+[2018-12-07 00:00:15,494](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-07 00:00:15,494](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:00:15,496](DEBUG)scanSocketServer : start server
+[2018-12-07 00:00:21,272](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111001294323391608665_1544112021195', 'method': 'isAlive', '_': '1544112021196'}
+[2018-12-07 00:00:21,272](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-07 00:00:21,273](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:00:21,273](DEBUG)scanSocketServer : start server
+[2018-12-07 00:00:32,710](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544112021197', 'imageFormat': 'jpg'}
+[2018-12-07 00:00:32,713](DEBUG)scanSocketServer : scan time：0
+[2018-12-07 00:00:32,713](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-07 00:00:32,713](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-07 00:00:32,713](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:00:32,714](DEBUG)scanSocketServer : start server
+[2018-12-07 00:01:00,134](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111041157206395375256_1544112060049', 'method': 'isAlive', '_': '1544112060050'}
+[2018-12-07 00:01:00,134](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-07 00:01:00,134](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:01:00,134](DEBUG)scanSocketServer : start server
+[2018-12-07 00:01:18,283](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544112060051', 'imageFormat': 'jpg'}
+[2018-12-07 00:01:18,285](DEBUG)scanSocketServer : scan time：0
+[2018-12-07 00:01:18,285](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-07 00:01:18,285](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-07 00:01:18,286](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:01:18,286](DEBUG)scanSocketServer : start server
+[2018-12-07 00:05:52,992](DEBUG)scanSocketServer : start: {'callback': 'jQuery111107562869505871248_1544112352915', 'method': 'isAlive', '_': '1544112352916'}
+[2018-12-07 00:05:52,992](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-07 00:05:52,993](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:05:52,993](DEBUG)scanSocketServer : start server
+[2018-12-07 00:05:55,595](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544112352917', 'imageFormat': 'jpg'}
+[2018-12-07 00:05:55,595](DEBUG)scanSocketServer : scan time：0
+[2018-12-07 00:05:55,595](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-07 00:05:55,596](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-07 00:05:55,596](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:05:55,596](DEBUG)scanSocketServer : start server
+[2018-12-07 00:08:41,213](DEBUG)scanSocketServer : start: {'callback': 'jQuery1111005668769495147652_1544112521091', 'method': 'isAlive', '_': '1544112521092'}
+[2018-12-07 00:08:41,213](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-07 00:08:41,213](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:08:41,213](DEBUG)scanSocketServer : start server
+[2018-12-07 00:08:43,510](DEBUG)scanSocketServer : start: {'ds_name': 'Canon DR-C240 TWAIN', 'callback': 'success_jsonpCallback', 'dpi': '200', 'method': 'scan', '_': '1544112521093', 'imageFormat': 'jpg'}
+[2018-12-07 00:08:43,512](DEBUG)scanSocketServer : scan time：0
+[2018-12-07 00:08:43,512](DEBUG)scanSocketServer : scan: [{'path': 'D:/temp/image/1.jpg'}, {'path': 'D:/temp/image/2.jpg'}, {'path': 'D:/temp/image/3.jpg'}]
+[2018-12-07 00:08:43,512](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "scan success", "data": [{"path": "D:/temp/image/1.jpg"}, {"path": "D:/temp/image/2.jpg"}, {"path": "D:/temp/image/3.jpg"}]}
+[2018-12-07 00:08:43,512](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:08:43,512](DEBUG)scanSocketServer : start server
+[2018-12-07 00:09:04,270](DEBUG)scanSocketServer : start: {'callback': 'jQuery111108679005782732665_1544112544190', 'method': 'isAlive', '_': '1544112544191'}
+[2018-12-07 00:09:04,270](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-07 00:09:04,272](DEBUG)scanSocketServer : send mes 0
+[2018-12-07 00:09:04,272](DEBUG)scanSocketServer : start server
+[2018-12-07 00:48:37,842](DEBUG)scanSocketServer : Start 8001
+[2018-12-07 00:48:37,849](DEBUG)scanSocketServer : start server
+[2018-12-13 23:45:56,492](DEBUG)scanSocketServer : Start 8001
+[2018-12-13 23:45:56,500](DEBUG)scanSocketServer : start server
+[2018-12-14 00:08:50,999](DEBUG)scanSocketServer : start: {'callback': 'jQuery111104953808465450875_1544717330938', 'method': 'isAlive', '_': '1544717330939'}
+[2018-12-14 00:08:50,999](DEBUG)scanSocketServer : start: {"isSuccess": true, "info": "isAlive success", "data": null}
+[2018-12-14 00:08:51,000](DEBUG)scanSocketServer : send mes 0
+[2018-12-14 00:08:51,000](DEBUG)scanSocketServer : start server

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41bec5e4-4dfd-427b-935f-a3dd1bf8a1ee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../eis_scan/eis_scan/model/meidingSerial_for_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../eis_scan/model/meidingSerial_for_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../eis_scan/eis_scan/data/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/../../eis_scan/eis_scan/data/data.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../eis_scan/eis_scan/model/initDatabase.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../eis_scan/eis_scan/model/initDatabase.py" afterDir="false" />
@@ -18,25 +16,6 @@
       <change beforePath="$PROJECT_DIR$/../../eis_scan/scanClient/logs/client.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../eis_scan/scanClient/logs/client.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eis_scan/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eis_scan/data/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/data/data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/model/meidingSerial.py" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/model/meidingSerial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/model/uploadThreadByHttp.py" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/model/uploadThreadByHttp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/service/deliveryService.py" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/service/deliveryService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/service/scanService.py" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/service/scanService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/static/css/delivery_base.css" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/static/css/delivery_base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/static/js/scan.js" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/static/js/scan.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/templates/modules/configure.html" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/templates/modules/configure.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/templates/modules/delivery/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/templates/modules/delivery/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/templates/modules/delivery/refund.html" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/templates/modules/delivery/refund.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eis_scan/templates/modules/delivery/scan.html" beforeDir="false" afterPath="$PROJECT_DIR$/../eis_scan/templates/modules/delivery/scan.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/20170714145825_0.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/20170714145825_1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/20170714145825_2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/20170714145825_3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/20170714145825_4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image/20170714145825_5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scanBase.py" beforeDir="false" afterPath="$PROJECT_DIR$/scanBase.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scanSocketServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/scanSocketServer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../java_test/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/../../../java_test/.classpath" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../java_test/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../java_test/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../java_test/bin/test/copyfile/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../java_test/bin/test/copyfile/Main.class" afterDir="false" />
@@ -53,15 +32,15 @@
     <session id="-21871750">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
-          <entry key="project.open.time.0" value="3" />
+          <entry key="project.closed" value="5" />
+          <entry key="project.open.time.0" value="4" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.opened" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -152,6 +131,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -163,7 +143,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -251,6 +230,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="974" height="760" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16987179" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

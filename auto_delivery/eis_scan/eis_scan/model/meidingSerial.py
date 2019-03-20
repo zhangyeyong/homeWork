@@ -87,7 +87,7 @@ class MeidingSerial(ComU):
                 box = {
                     "boxNum": boxNum,
                     "enable": enable,
-                    "openStatus": openStatus
+                    "status": openStatus
                 }
                 boxList.append(box)
             rtn = common.buildSuccess(u"查询柜子成功", boxList)
@@ -178,16 +178,16 @@ if __name__ == '__main__':
 
     # s = u"\x7A\x79"
     # print s
-    # s = "1B 06 A0 00 00 FF FE FF 1C 58"
-    # print(formathex(s))
+    s = "\x1b\x06\xa0\x00\x00\x00\xfe\xff\x1c\xa7"
+    print(str_to_hex(s))
 
-    mds = MeidingSerial(port="COM1")
+    # mds = MeidingSerial(port="COM1")
     # ========================初始化====================
     # mds.initMachine()
 
     # ================查询柜子状态========================
-    rtn = mds.queryBoxSatus()
-    print rtn
+    # rtn = mds.queryBoxSatus()
+    # print rtn
 
     # ================打开柜子========================
     # mds.openBox(1)

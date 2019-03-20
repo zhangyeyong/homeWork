@@ -24,7 +24,8 @@ from config import config
 
 import json
 from model import common
-from model.meidingSerial import MeidingSerial
+# from model.meidingSerial import MeidingSerial
+from model.meidingSerial_for_test import MeidingSerial
 import os
 import traceback
 
@@ -65,9 +66,8 @@ class Scan:
         pass
 
     def initMachine(self):
-        rtn = common.buildSuccess("initMachine ok ")
-        # mds = MeidingSerial()
-        # rtn = mds.initMachine()
+        mds = MeidingSerial()
+        rtn = mds.initMachine()
         return json.dumps(rtn)
 
     def doScan(self):
@@ -98,17 +98,23 @@ class Refund:
     def __init__(self):
         pass
 
-    def initMachine(self):
-        rtn = sendDataBySerial(serial_command.SEND_INIT)
-        if rtn["isSuccess"] and serial_command.SEND_INIT_RECEIVE == rtn["data"]:
-            return json.dumps(rtn)
-        else:
-            return json.dumps(common.buildFail("电机初始化失败"))
-
-        return json.dumps(common.buildSuccess(data=p_data))
+    def openBox(self, boxNum):
+        mds = MeidingSerial("COM1")
+        rtn = mds.openBox(boxNum)
+        return json.dumps(rtn)
 
     def findAll(self):
         boxs = self.boxDao.findAll()
+        mds = MeidingSerial("COM1")
+        rtn = mds.queryBoxSatus()
+        print rtn
+        for tmp in rtn.get("data"):
+            for box in boxs:
+                if int(box.get("boxNum")) == int(tmp.get("boxNum")):
+                    box["enable"] = tmp.get("enable")
+                    box["status"] = tmp.get("status")
+                    break;
+        print boxs
         return common.buildSuccess(data=boxs)
 
     def GET(self):
@@ -117,8 +123,8 @@ class Refund:
     def POST(self):
         i = web.input()
         method = i.get("method")
-        if ("initMachine" == method):
-            return self.initMachine()
+        if ("openBox" == method):
+            return self.openBox(int(i.get("boxNum")))
 
 
 class MachineError:
@@ -154,9 +160,8 @@ class PickUp:
         if not box:
             return json.dumps(common.buildFail(u"取件码错误，请重新输入！"))
         # 发送打开柜子指令
-        # mds = MeidingSerial()
-        # rtn = mds.openBox()
-        rtn = common.buildSuccess()
+        mds = MeidingSerial()
+        rtn = mds.openBox(box.get("boxNum"))
         return json.dumps(rtn)
 
     def POST(self):
@@ -357,9 +362,9 @@ class Edit:
 
     def cancel(self):
         # 通知电机退票
-        # mds = MeidingSerial()
-        # rtn = mds.backPaper()
-        rtn = common.buildSuccess()
+        mds = MeidingSerial()
+        rtn = mds.backPaper()
+        # rtn = common.buildSuccess()
         if rtn["isSuccess"]:
             # 删除任务
             i = web.input()
