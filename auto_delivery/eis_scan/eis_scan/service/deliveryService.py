@@ -59,26 +59,40 @@ class Index:
             port = i.get("port", "COM1")
             baudrate = i.get("baudrate", 9600)
             return json.dumps(self.reloadCom(port, baudrate))
+class Login:
+    def __init__(self):
+        pass
 
+    def GET(self):
+        return render.modules.delivery.login()
+class Promit:
+    def __init__(self):
+        pass
+
+    def GET(self):
+        return render.modules.delivery.promit()
 
 class Scan:
     def __init__(self):
         pass
 
     def initMachine(self):
-        mds = MeidingSerial()
-        rtn = mds.initMachine()
-        return json.dumps(rtn)
+        # mds = MeidingSerial()
+        # rtn = mds.initMachine()
+        # return json.dumps(rtn)
+        return json.dumps(common.buildSuccess("initMachine", ""))
 
     def doScan(self):
-        mds = MeidingSerial()
-        rtn = mds.backPaper()
-        return json.dumps(rtn)
+        # mds = MeidingSerial()
+        # rtn = mds.backPaper()
+        # return json.dumps(rtn)
+        return json.dumps(common.buildSuccess("doScan", ""))
 
     def backPaper(self):
-        mds = MeidingSerial()
-        rtn = mds.backPaper()
-        return json.dumps(rtn)
+        # mds = MeidingSerial()
+        # rtn = mds.backPaper()
+        # return json.dumps(rtn)
+        return json.dumps(common.buildSuccess("backPaper", ""))
 
     def GET(self):
         return render.modules.delivery.scan()
@@ -88,6 +102,8 @@ class Scan:
         method = i.get("method")
         if ("initMachine" == method):
             return self.initMachine()
+        if ("doScan" == method):
+            return self.doScan()
         if ("backPaper" == method):
             return self.backPaper()
 
@@ -416,7 +432,30 @@ class Edit:
             return self.cancel()
 
         pass
+class Test:
+    def __init__(self):
+        pass
 
+    def GET(self):
+        return render.modules.delivery.test()
+
+    def POST(self):
+        from model.huageSerial import HuageSerial
+        mds = HuageSerial(port="COM1")
+        i = web.input()
+        method = i.get("method")
+        if method == "initMachine":
+            # ========================初始化====================
+            rtn = mds.initMachine()
+            return json.dumps(rtn)
+        elif method == "recyclePaper":
+            # ========================回收====================
+            rtn = mds.recyclePaper()
+            return json.dumps(rtn)
+        elif method == "backPaper":
+            # ========================退件====================
+            rtn = mds.backPaper()
+            return json.dumps(rtn)
 
 if __name__ == '__main__':
     pass

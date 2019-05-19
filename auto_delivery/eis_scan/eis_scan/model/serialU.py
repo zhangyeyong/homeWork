@@ -8,7 +8,7 @@ import time
 if sys.getdefaultencoding() != 'utf-8':
     reload(sys)
     sys.setdefaultencoding('utf-8')
-
+READ_SIZE=1024
 
 class ComU:
     def __init__(self, port="COM5", baudrate=19200):
@@ -63,11 +63,10 @@ class ComU:
         try:
             # self.ser = serial.Serial(self.port, self.baudrate, timeout=0.5)
             self.ser.write(dataStr)
-            comData = self.ser.readline()
-            print comData
+            comData = self.ser.read(READ_SIZE)
             starttime = time.time()
             while not comData.strip():
-                comData = self.ser.readline()
+                comData = self.ser.read(READ_SIZE)
                 # 一分钟还未返回信息，直接退出
                 if time.time() - starttime > 60:
                     break

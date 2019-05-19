@@ -478,6 +478,7 @@ class addScan:
             retDict["info"] = renderScan2(belong)
         else:
             retDict["info"] = updateScan3(self.imgLineDao, headId)
+        retDict["headId"]=headId
         return json.dumps(retDict)
 class replaceScan:
     imgLineDao = ImgLineDao()
@@ -546,6 +547,7 @@ class replaceScan:
 #         ocrThread = OcrThread(allLines)
 #         ocrThread.start()
         retDict["info"] = updateScan3(self.imgLineDao, headId)
+        retDict["headId"]=headId;
         return json.dumps(retDict)
         
 class importImg:

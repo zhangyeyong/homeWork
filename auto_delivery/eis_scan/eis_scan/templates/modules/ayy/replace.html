@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="path/swiper-3.4.2.min.css">
+    <style>
+    .boss{
+        position: relative;
+    }
+    .boss #loading{
+        position: absolute;
+        z-index:999;
+        display: none;
+        background: rgba(255, 255, 255, .9) url('img/load.gif') no-repeat center;
+        left: 50%;
+        top: 50%;
+        width:1280px;
+        height:640px;
+        transform: translate(-50%,-50%);
+    }
+    .box{
+        width: 1280px;
+        height: 640px;
+        padding: 5px;
+        border: 10px solid black;
+        background: rgb(222, 235, 247);
+        margin: 0 auto;
+        display: flex;
+    }
+    .box .left{
+        width: 50%;
+        border-right: 5px solid black;
+        height: 100%;
+    }
+    .box .left .search{
+        height: 68px;
+        text-align: center;
+        margin: 10px;
+        position: relative;
+    }
+    .box .left .search .search_input{
+        height: 54px;
+        width: 400px;
+        border-radius: 10px;
+        border: 1px solid rgb(0, 122, 255);
+        text-align: center;
+        margin: 10px;
+        font-weight: 500;
+        font-size: 35px;
+    }
+    .box .left .search input[type='button']{
+        height: 36px;
+        width: 36px;
+        border: none;
+        background: #fff;
+        background: url('img/search.png') left center no-repeat;
+        position: absolute;
+        top: 20px;
+        right: 120px;
+    }
+    .box .left .swiper-container{
+        text-align: center;
+        margin-top: 42px;
+        height: 380px;
+        margin-bottom: 40px;
+    }
+    .box .left .swiper-container .swiper-wrapper{
+        text-align: center;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide{
+        position: relative;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc{
+        position: absolute;
+        right: 100px;
+        top: 5px;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc input[type='checkbox']{
+        height:40px;
+        width:40px;
+    }
+    .box .left .swiper-container .swiper-wrapper .name{
+        text-align: center;
+        height: 43px;
+        line-height: 43px;
+        font-weight: 500;
+        font-size: 35px;
+    }
+    .box .left .bot{
+        text-align: right;
+        padding-right: 40px;
+    }
+    .box .left .bot #time{
+        height: 30px;
+    }
+    .box .right{
+        width: 50%;
+        border-left: 5px solid black;
+        height: 100%;
+        display: flex;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .box .right .one{
+        width: 50%;
+        background: rgb(91, 253, 47);
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-right: 10px;
+    }
+    .box .right .one .tdyq{
+        height: 120px;
+        line-height: 120px;
+        text-align: center;
+        font-weight: bolder;
+        font-size: 40px;
+    }
+    .box .right .one .gg{
+        height: 70px;
+        font-weight: bolder;
+        font-size: 35px;
+    }
+    .box .right .one .gg{
+        height: 70px;
+        font-weight: bolder;
+        font-size: 35px;
+    }
+    .box .right .one .zh{
+        height: 150px;
+    }
+    .box .right .one .gg span{
+        margin-left: 25px;
+    }
+    .box .right .one .gg span.bt{
+        margin-left: 0;
+        color: red;
+    }
+    .box .right .one .an{
+        height: 70px;
+        line-height: 70px;
+        display: flex;
+        justify-content: space-around;
+        font-weight: bolder;
+        font-size: 35px;
+        color: white;
+    }
+    .box .right .one .an .btn{
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        width: 120px;
+        background: rgb(255, 192, 0);
+        border-radius: 10px;
+    }
+    .box .right .one .an .backTime{
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        width: 120px;
+    }
+    .box .right .two{
+        width: 50%;
+        height: 100%;
+    }
+    .box .right .two .top{
+        height: 35%;
+        display: flex;
+        margin-bottom: 10px;
+        background: rgb(255, 255, 0);
+    }
+    .box .right .two .mid{
+        height: 31%;
+        display: flex;
+        margin-bottom: 10px;
+        background: rgb(86, 218, 205);
+    }
+    .box .right .two .bot{
+        height: 31%;
+        display: flex;
+        background: rgb(86, 218, 205);
+    }
+    .box .right .two .topLeft{
+        width: 45%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topLeft img{
+        width: 100px;
+    }
+    .box .right .two .topRight{
+        width: 55%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topRight .text{
+        font-weight: bolder;
+        font-size: 36px;
+    }
+    .box .right .two .topRight .text .textTop,.textBot{
+        text-align: center;
+    }
+    </style>
+</head>
+<body onload="showtime();">
+    <div class="boss">
+    <div id="loading"></div>
+    <div class="box">
+        <div class="left">
+            <div class="search">
+                <input type="text" class="search_input" placeholder="Search"/>
+                <input type="button" class="search_btn"/>
+            </div>     
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="doc"><input name="document" type="checkbox" value="1"></div>
+                        <img src="img/djfm.png">
+                        <div class="name">EAS1903040001</div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="doc"><input name="document1" type="checkbox" value="2"></div>
+                        <img src="img/djfm.png">
+                        <div class="name">EAS1903040002</div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="doc"><input name="document2" type="checkbox" value="3"></div>
+                        <img src="img/djfm.png">
+                        <div class="name">EAS1903040003</div>
+                    </div>
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="bot">
+                <div id="time"></div>
+                <div id="date"></div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="one">
+                    <div class="tdyq">扫描要求</div>
+                    <div class="gg">扫描:<span>正常扫描</span></div>
+                    <div class="gg">补扫:<span>补充附件</span></div>
+                    <div class="gg">替扫:<span>替换附件</span></div>
+                    <div class="gg zh"><span class="bt">补替</span>附件需要在空白处写<span class="bt">原单号</span></div>
+                <div class="an">
+                <div class="btn">返回</div>
+                <div class="backTime">199s</div>
+                </div>
+            </div>
+            <div class="two">
+                <div class="top" id="Scan">
+                    <div class="topLeft">
+                        <div class="imge"><img src="img/scan.png"></div>
+                    </div>
+                    <div class="topRight">
+                        <div class="text">
+                            <div class="textTop">扫描</div>
+                            <div class="textBot">Scan</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mid" id="Add">
+                    <div class="topLeft">
+                            <div class="imge"><img src="img/add.png"></div>
+                        </div>
+                        <div class="topRight" id="Add">
+                            <div class="text">
+                                <div class="textTop">补扫</div>
+                                <div class="textBot">Add</div>
+                            </div>
+                        </div>
+                </div>
+                <div class="bot" id="Replace">
+                    <div class="topLeft">
+                            <div class="imge"><img src="img/replace.png"></div>
+                        </div>
+                        <div class="topRight">
+                            <div class="text">
+                                <div class="textTop">替扫</div>
+                                <div class="textBot">Replace</div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="path/jquery-1.10.1.min.js"></script>
+    <script src="path/swiper-3.4.2.min.js"></script>
+    <script>
+    function showtime()
+        {
+        var today,hour,second,minute,year,month,date;
+        var strDate ;
+        today=new Date();
+        var n_day = today.getDay();
+        switch (n_day)
+        {
+            case 0:{
+            strDate = "星期日";
+            }break;
+            case 1:{
+            strDate = "星期一";
+            }break;
+            case 2:{
+            strDate ="星期二";
+            }break;
+            case 3:{
+            strDate = "星期三";
+            }break;
+            case 4:{
+            strDate = "星期四";
+            }break;
+            case 5:{
+            strDate = "星期五";
+            }break;
+            case 6:{
+            strDate = "星期六";
+            }break;
+            case 7:{
+            strDate = "星期日";
+            }break;
+        }
+        year = today.getYear()+1900;
+        month = today.getMonth()+1;
+        date = today.getDate();
+        hour = today.getHours();
+        minute =today.getMinutes();
+        second = today.getSeconds();
+        document.getElementById('time').innerHTML = "<h1>"+ hour + ":" + minute + ":" + second+"</h1>"; //显示时间
+        document.getElementById('date').innerHTML = "<h1>"+ month + "月" + date + "日" + strDate +"</h1>"; //显示日期
+        setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)
+    } 
+    // 扫描按钮
+    $("#Scan").click(function(){
+        $('#loading').css('display', 'block');
+        // $.ajax({
+        //      type: "POST",  
+        //      url: "",  
+        //      contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
+        //      data: {},  
+        //      dataType: "json",  
+        //      success: function(data){  
+        //         console.log(data);  
+        //               },
+        //      error:function(e){  
+        //         console.log(e);  
+        //      },
+        //  });
+    });
+    // 补扫按钮
+    $("#Add").click(function(){
+        window.location.href="promit.html";
+    });
+    // 替扫按钮
+    $("#Replace").click(function(){
+        window.location.href="promit.html";
+    });
+    </script>
+    <script language="javascript"> 
+        var mySwiper = new Swiper('.swiper-container',{
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        })
+    </script>
+</body>
+</html>
