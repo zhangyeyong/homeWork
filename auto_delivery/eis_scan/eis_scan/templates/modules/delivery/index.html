@@ -6,9 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-    .box{
+     #loading{
+        position: absolute;
+        z-index:999;
+        display: none;
+        background: rgba(255, 255, 255, .9) url('/static/images/load.gif') no-repeat center;
+        left: 50%;
+        top: 50%;
         width: 1920px;
         height: 1080px;
+        transform: translate(-50%,-50%);
+    }
+    .box{
+        width: 1873px;
+        height: 1040px;
         padding: 5px;
         border: 5px solid black;
         background: rgb(212, 238, 238);
@@ -67,7 +78,7 @@
         height: 120px;
         line-height: 120px;
         font-weight: bolder;
-        font-size: 60px;
+        font-size: 55px;
     }
     .box .right .one .gg span{
         margin-left: 25px;
@@ -189,13 +200,13 @@
         font-size: 35px;
         text-align: center;
     }
-    .boss #bg .popupWindow #con1 .btn2{
+    .boss #bg .popupWindow #con1 .btn{
         margin-top: 80px;
         height: 80px;
         line-height: 80px;
         text-align: center;
     }
-    .boss #bg .popupWindow #con1 .btn2 button{
+    .boss #bg .popupWindow #con1 .btn button{
         width: 370px;
         height: 72px;
         color: #fff;
@@ -330,10 +341,245 @@
         padding: 5px 20px;
         border-radius: 5px;
     }
+
     </style>
+    <script>
+    function showtime() {
+        var today, hour, minute, year, month, date;
+        var strDate;
+        today = new Date();
+        var n_day = today.getDay();
+        switch (n_day) {
+        case 0:
+            {
+                strDate = "星期日";
+            }
+            break;
+        case 1:
+            {
+                strDate = "星期一";
+            }
+            break;
+        case 2:
+            {
+                strDate = "星期二";
+            }
+            break;
+        case 3:
+            {
+                strDate = "星期三";
+            }
+            break;
+        case 4:
+            {
+                strDate = "星期四";
+            }
+            break;
+        case 5:
+            {
+                strDate = "星期五";
+            }
+            break;
+        case 6:
+            {
+                strDate = "星期六";
+            }
+            break;
+        case 7:
+            {
+                strDate = "星期日";
+            }
+            break;
+        }
+        year = today.getYear() + 1900;
+        month = today.getMonth() + 1;
+        date = today.getDate();
+        hour = today.getHours();
+        minute = today.getMinutes();
+        if (month < 10){
+            month = '0' + month
+        }
+        if (date < 10){
+            return date =  '0' + date
+        }
+        if (hour < 10){
+            hour = '0' + hour
+        }
+        if (minute < 10){
+            minute =  '0' + minute
+        }
+        document.getElementById('time').innerHTML = "<div>" + hour + ":" + minute + "</div>"; //显示时间
+        document.getElementById('date').innerHTML = "<div>" + month + "月" + date + "日" + strDate + "</div>"; //显示日期
+        setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)
+    }
+    function init() {
+        // 投递按钮
+        jQuery("#Delivery").click(function() {
+            //window.location.href = "/delivery/scan";
+            var url = "/delivery/scan";
+            nologin(url);
+        });
+        // 退票按钮
+        jQuery("#Refund").click(function() {
+            jQuery('.userOrpassword input').val('');
+            jQuery('#bg').css('display', 'flex');
+            jQuery('.popupWindow').css('display', 'block');
+            jQuery('.boxList').css('display', 'none');
+            jQuery('#con1').css('display', 'none');
+            jQuery('#con2').css('display', 'none');
+            jQuery('#con3').css('display', 'block');
+        });
+        // 柜子打开按钮
+        jQuery("#open").click(function() {
+            jQuery.ajax({
+                type: "POST",
+                url: "",
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {},
+                dataType: "json",
+                success: function(data) {
+
+                },
+                error: function(e) {
+
+                },
+            });
+        });
+        // 柜子获取密码按钮
+        jQuery("#getPassWord").click(function() {
+            jQuery.ajax({
+                type: "POST",
+                url: "",
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {},
+                dataType: "json",
+                success: function(data) {
+                    // 显示获取的密码
+                    jQuery('#showPassword').text(data.passWord);
+                    jQuery('#msg').css('display', 'block');
+                },
+                error: function(e) {
+
+                },
+            });
+        });
+        // 柜子弹窗关闭按钮
+        jQuery(".clo").click(function() {
+            jQuery('#bg').css('display', 'none');
+        });
+        // 取件按钮
+        jQuery("#Pickup").click(function() {
+            jQuery('#bg').css('display', 'flex');
+            jQuery('.popupWindow').css('display', 'block');
+            jQuery('.boxList').css('display', 'none');
+            jQuery('#con1').css('display', 'block');
+            jQuery('#con2').css('display', 'none');
+            jQuery('#con3').css('display', 'none');
+            jQuery('#code').val('');
+        });
+        // 取件码弹窗关闭按钮
+        jQuery("#close").click(function() {
+            jQuery('#bg').css('display', 'none');
+        });
+
+        showtime();
+    }
+    function nologin(jumpUrl){
+		showLoading();
+		jQuery.ajax({
+			type : "post",
+			async : false,
+			url : "/login",
+			data:{type:"nologin"},
+			success : function(data) {
+				data = eval("("+data+")");
+				if(data.isSuccess){
+					window.location.href = jumpUrl;
+				}else{
+					alert(data.info);
+				}
+			},
+			error : function() {
+				alert(_("登录失败，请联系管理员"));
+			},complete : function (){
+				hideLoading();
+			}
+		});
+	}
+
+    function login(){
+        var userCd = jQuery('#userCd').val();
+        var password = jQuery('#password').val();
+		if(jQuery.trim(userCd)==""){
+			alert(_('用户名不能为空'));
+			jQuery("#userCd").focus();
+			return;
+		}
+		if(jQuery.trim(password)==""){
+			alert(_('密码不能为空'));
+			jQuery("#password").focus();
+			return;
+		}
+        jQuery.ajax({
+			type : "post",
+			async : false,
+			url : "/login",
+			data:{type:"login","userCd":userCd,"password":password},
+			success : function(data) {
+				data = eval("("+data+")");
+				if(data.isSuccess){
+					showBox();
+				}else{
+					alert(data.info);
+				}
+			},
+			error : function() {
+				jQuery("#msg").text(_("未知错误"));
+				jQuery("#loginA").css("display",'block');
+			},complete : function (){
+				hideLoading();
+			}
+		});
+    }
+    function showBox(){
+         // // 打开柜子列表
+        jQuery('#bg').css('display', 'flex');
+        jQuery('.popupWindow').css('display', 'none');
+        jQuery('.boxList').css('display', 'block');
+        jQuery('#msg').css('display', 'none');
+    }
+    function pickUp(){
+        jQuery('#loading').css('display', 'block');
+         // 取件
+        var pickupCode = jQuery('#pickupCode').val();
+        jQuery.ajax({
+            type : "post",
+            async : false,
+            url : "/delivery/pickup",
+            data:{"method":"pickup","pickupCode":pickupCode},
+            success : function(data) {
+                data = eval("("+data+")");
+                if(data.isSuccess){
+                     // 几号门打开成功
+                    jQuery('#num').text(data.num);
+                    jQuery('#con1').css('display', 'none');
+                    jQuery('#con2').css('display', 'block');
+                }else{
+                    alert(data.info);
+                }
+            },
+            error : function() {
+                alert(_("取件失败，请联系管理员"));
+            },complete : function (){
+                jQuery('#loading').css('display', 'none');
+            }
+        });
+    }
+    </script>
 </head>
-<body onload="showtime();">
-    <div class="boss">
+<body onload="init();">
+<div id="loading"></div>
+<div class="boss">
     <div class="box">
         <div class="left">
             <div class="top">
@@ -366,38 +612,40 @@
                 </div>
                 <div class="mid" id="Refund">
                     <div class="topLeft">
-                            <div class="imge"><img src="/static/images/refund.png"></div>
+                        <div class="imge"><img src="/static/images/refund.png"></div>
+                    </div>
+                    <div class="topRight">
+                        <div class="text">
+                            <div class="textTop">退票</div>
+                            <div class="textBot">Refund</div>
                         </div>
-                        <div class="topRight">
-                            <div class="text">
-                                <div class="textTop">退票</div>
-                                <div class="textBot">Refund</div>
-                            </div>
-                        </div>
+                    </div>
                 </div>
                 <div class="bot" id="Pickup">
                     <div class="topLeft">
-                            <div class="imge"><img src="/static/images/take.png"></div>
+                        <div class="imge"><img src="/static/images/take.png"></div>
+                    </div>
+                    <div class="topRight">
+                        <div class="text">
+                            <div class="textTop">取件</div>
+                            <div class="textBot">Pickup</div>
                         </div>
-                        <div class="topRight">
-                            <div class="text">
-                                <div class="textTop">取件</div>
-                                <div class="textBot">Pickup</div>
-                            </div>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div id="bg">
         <div class="popupWindow">
-            <div class="head"><div id="close">×</div></div>
+            <div class="head">
+                <div id="close">×</div>
+            </div>
             <div id="con1">
                 <div class="prompt">请输入取件码</div>
                 <div class="inp">
-                    <input type="text" value="" id="code">
+                    <input type="text" value="" id="pickupCode">
                 </div>
-                <div class="btn2">
+                <div class="btn">
                     <button id="comfirm">确定</button>
                 </div>
             </div>
@@ -406,16 +654,20 @@
             </div>
             <div id="con3">
                 <div class="passTitle">密码登录</div>
-                <div class="userOrpassword"><input type="text" value="" placeholder="账户" id="user"></div>
+                <div class="userOrpassword"><input type="text" value="" placeholder="账户" id="userCd"></div>
                 <div class="userOrpassword"><input type="text" value="" placeholder="密码" id="password"></div>
                 <div class="login">
-                    <button id="login">登录</button>
+                    <button id="login" onclick="login()">登录</button>
                 </div>
             </div>
         </div>
         <div class="boxList">
-            <div class="oneHead"><div class="clo">×</div></div>
-            <div class="message"><div id="msg">本次获取密码: <span id="showPassword"></span></div></div>
+            <div class="oneHead">
+                <div class="clo">×</div>
+            </div>
+            <div class="message">
+                <div id="msg">本次获取密码: <span id="showPassword"></span></div>
+            </div>
             <div class="over">
                 <div class="boxOne">
                     <div class="col">柜号</div>
@@ -430,158 +682,11 @@
                     <div class="col"><span id="getPassWord">获取密码</span></div>
                 </div>
             </div>
-            
+
         </div>
     </div>
-    </div>
-    <script>
-    function showtime()
-        {
-        var today,hour,minute,year,month,date;
-        var strDate ;
-        today=new Date();
-        var n_day = today.getDay();
-        switch (n_day)
-        {
-            case 0:{
-            strDate = "星期日";
-            }break;
-            case 1:{
-            strDate = "星期一";
-            }break;
-            case 2:{
-            strDate ="星期二";
-            }break;
-            case 3:{
-            strDate = "星期三";
-            }break;
-            case 4:{
-            strDate = "星期四";
-            }break;
-            case 5:{
-            strDate = "星期五";
-            }break;
-            case 6:{
-            strDate = "星期六";
-            }break;
-            case 7:{
-            strDate = "星期日";
-            }break;
-        }
-        year = today.getYear()+1900;
-        month = today.getMonth()+1;
-        date = today.getDate();
-        hour = today.getHours();
-        minute =today.getMinutes();
-        document.getElementById('time').innerHTML = "<div>"+ hour + ":" + minute +"</div>"; //显示时间
-        document.getElementById('date').innerHTML = "<div>"+ month + "月" + date + "日" + strDate +"</div>"; //显示日期
-        setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)
-    }
-    // 投递按钮
-    jQuery("#Delivery").click(function(){
-        window.location.href="replace.html";
-    });
-    // 退票按钮
-    jQuery("#Refund").click(function(){
-        jQuery('.userOrpassword input').val('');
-        jQuery('#bg').css('display', 'flex');
-        jQuery('.popupWindow').css('display', 'block');
-        jQuery('.boxList').css('display', 'none');
-        jQuery('#con1').css('display', 'none');
-        jQuery('#con2').css('display', 'none');
-        jQuery('#con3').css('display', 'block');
-    });
-    // 退票弹窗登录按钮
-    jQuery("#login").click(function(){
-        jQuery.ajax({
-            type: "POST",  
-            url: "",  
-            contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
-            data: {user:jQuery('#user').val(),password:jQuery('#password').val()},
-            dataType: "json",  
-            success: function(data){
-                // // 打开柜子列表
-                jQuery('#bg').css('display', 'flex');
-                jQuery('.popupWindow').css('display', 'none');
-                jQuery('.boxList').css('display', 'block');
-                jQuery('#msg').css('display', 'none');
-            },
-            error:function(e){
+</div>
 
-            },
-            });
-    });
-    // 柜子打开按钮
-    jQuery("#open").click(function(){
-        jQuery.ajax({
-            type: "POST",  
-            url: "",  
-            contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
-            data: {},
-            dataType: "json",  
-            success: function(data){
-                
-            },
-            error:function(e){
 
-            },
-            });
-    });
-    // 柜子获取密码按钮
-    jQuery("#getPassWord").click(function(){
-        jQuery.ajax({
-            type: "POST",  
-            url: "",  
-            contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
-            data: {},
-            dataType: "json",  
-            success: function(data){
-                // 显示获取的密码
-                jQuery('#showPassword').text(data.passWord);
-                jQuery('#msg').css('display', 'block');
-            },
-            error:function(e){
-
-            },
-            });
-    });
-    // 柜子弹窗关闭按钮
-    jQuery(".clo").click(function(){
-        jQuery('#bg').css('display', 'none');
-    });
-    // 取件按钮
-    jQuery("#Pickup").click(function(){
-        jQuery('#bg').css('display', 'flex');
-        jQuery('.popupWindow').css('display', 'block');
-        jQuery('.boxList').css('display', 'none');
-        jQuery('#con1').css('display', 'block');
-        jQuery('#con2').css('display', 'none');
-        jQuery('#con3').css('display', 'none');
-        jQuery('#code').val('');
-    });
-    // 取件码弹窗确认按钮
-    jQuery("#comfirm").click(function(){
-        jQuery.ajax({
-            type: "POST",  
-            url: "",  
-            contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
-            data: {code:jQuery('#code').val()},
-            dataType: "json",  
-            success: function(data){
-                // 几号门打开成功
-                jQuery('#num').text(data.num);
-                jQuery('#con1').css('display', 'none');
-                jQuery('#con2').css('display', 'block');
-            },
-            error:function(e){
-
-            },
-            });
-    });
-    // 取件码弹窗关闭按钮
-    jQuery("#close").click(function(){
-        jQuery('#bg').css('display', 'none');
-    });
-    </script>
 </body>
 </html>

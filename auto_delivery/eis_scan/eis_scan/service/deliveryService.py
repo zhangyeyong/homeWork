@@ -22,10 +22,12 @@ from model.serialU import ComU
 from config.config import scanPath
 from config import config
 
+import random
 import json
 from model import common
 # from model.meidingSerial import MeidingSerial
-from model.meidingSerial_for_test import MeidingSerial
+from model.huageSerial import HuageSerial
+# from model.meidingSerial_for_test import MeidingSerial
 import os
 import traceback
 
@@ -73,6 +75,7 @@ class Promit:
         return render.modules.delivery.promit()
 
 class Scan:
+    imgLineDao = ImgLineDao()
     def __init__(self):
         pass
 
@@ -93,6 +96,17 @@ class Scan:
         # rtn = mds.backPaper()
         # return json.dumps(rtn)
         return json.dumps(common.buildSuccess("backPaper", ""))
+    def searchByHeadNum(self):
+        i = web.input()
+        headNum = i.get("headNum")
+        lines = self.imgLineDao.getByHeadNum(headNum)
+        for line in lines:
+            line['imgPathS'] = pathJoin("/static/images/scan", headNum, "s_" + line.get("imgNameP")) + "?r=" + str(random.random())
+            line['imgPathO'] = pathJoin("/static/images/scan", headNum, line.get("imgNameP")) + "?r=" + str(random.random())
+            fullName = line.get("imgNameS").split(".")
+            line['imgName'] = fullName[0]
+            line['imgExt'] = fullName[1]
+        return json.dumps(common.buildSuccess(data=lines))
 
     def GET(self):
         return render.modules.delivery.scan()
@@ -106,6 +120,8 @@ class Scan:
             return self.doScan()
         if ("backPaper" == method):
             return self.backPaper()
+        if ("searchByHeadNum" == method):
+            return self.searchByHeadNum()
 
 
 class Refund:
@@ -378,7 +394,7 @@ class Edit:
 
     def cancel(self):
         # 通知电机退票
-        mds = MeidingSerial()
+        mds = HuageSerial()
         rtn = mds.backPaper()
         # rtn = common.buildSuccess()
         if rtn["isSuccess"]:
