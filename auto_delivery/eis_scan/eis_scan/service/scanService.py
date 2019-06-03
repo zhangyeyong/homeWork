@@ -110,7 +110,7 @@ class dailyScan:
         groupInfo = {}
         userform = app.get("form")
         for f in userform:
-            if f.get("groupBy") and f.get("groupBy") == "1":
+            if f.get("groupBy") and str(f.get("groupBy")) == "1":
                 groupInfo["groupBy"] = f.get("name")
                 groupInfo["value"] = f.get("value")
                 groupInfo["autoOcr"] = f.get("autoOcr").upper() if f.get("autoOcr", "") else ""
@@ -323,6 +323,8 @@ class dailyScan:
         print " 保存数据：%d" % (t3 - t2)         
         # 查询出当前用户的全部展示信息
         retDict["info"] = renderScan2(belongType.DAILY_SCAN)
+        if len(allLines) > 0:
+            retDict["headId"] = allLines[0].get("headId")
         return json.dumps(retDict)
     
 class rescan:
@@ -476,6 +478,7 @@ class addScan:
             retDict["info"] = renderScan2(belong)
         else:
             retDict["info"] = updateScan3(self.imgLineDao, headId)
+        retDict["headId"]=headId
         return json.dumps(retDict)
 class replaceScan:
     imgLineDao = ImgLineDao()
@@ -544,6 +547,7 @@ class replaceScan:
 #         ocrThread = OcrThread(allLines)
 #         ocrThread.start()
         retDict["info"] = updateScan3(self.imgLineDao, headId)
+        retDict["headId"]=headId;
         return json.dumps(retDict)
         
 class importImg:

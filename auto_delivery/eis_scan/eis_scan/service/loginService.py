@@ -286,7 +286,12 @@ class login:
             traceback.print_exc()  
         if not client:
             return common.buildFail(_("连接服务器失败")) 
-        return common.buildSuccess(_("测试完成"))
+        return common.buildSuccess(_("测试成功"))
+    def nologin(self,params):
+        params={}
+        params["userCd"]="1000"
+        params["password"]="1"
+        return self.login(params)
     def login(self, params):
         userCd = params.get("userCd")
         password = params.get("password")
@@ -405,6 +410,8 @@ class login:
             return json.dumps(self.netSet(d))
         elif d.type == "testNetSet":
             return json.dumps(self.testNetSet(d))
+        elif d.type == "nologin":
+            return json.dumps(self.nologin(d))
         elif d.type == "login":
             return json.dumps(self.login(d))
         elif d.type == "isLogin":

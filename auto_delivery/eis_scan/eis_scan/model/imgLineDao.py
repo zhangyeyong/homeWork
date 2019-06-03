@@ -137,6 +137,8 @@ class ImgLineDao:
         
         otherHeads = imgHeadDao.findOtherHeads(imgHead)
         return imgHead, otherHeads, lines if lines else []
+    def getByHeadNum(self, headNum):
+        return db.select('imgLine', where="headNum=$headNum", vars={"headNum":headNum}, order="imgOrd").list()
     def findByHeadId2(self, headId):
         return  db.select('imgLine', where="headId=$headId", vars={"headId":headId}, order="imgOrd").list()
     def addUploadSize(self, lineId,uploadSize):

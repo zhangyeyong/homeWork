@@ -11,6 +11,7 @@ urls = (
         '/result', 'service.resultService.resultQuery',
         '/scan', 'service.scanService.scan',
         '/dailyScan', 'service.scanService.dailyScan',
+        '/asyncScan', 'service.scanService.asyncScan',
         '/rescan', 'service.scanService.rescan',
         '/replaceScan', 'service.scanService.replaceScan',
         '/addScan', 'service.scanService.addScan',
@@ -44,6 +45,17 @@ urls = (
         '/configure', 'service.configService.configure',
         '/queue', 'service.scanService.queue',
         '/testCom', 'service.testService.testCom',
+        '/delivery/index', 'service.deliveryService.Index',
+        '/delivery/login', 'service.deliveryService.Login',
+        '/delivery/promit', 'service.deliveryService.Promit',
+        '/delivery/scan', 'service.deliveryService.Scan',
+        '/delivery/submit', 'service.deliveryService.Submit',
+        '/delivery/refund', 'service.deliveryService.Refund',
+        '/delivery/pickup', 'service.deliveryService.PickUp',
+        '/delivery/machineError', 'service.deliveryService.MachineError',
+        '/delivery/edit', 'service.deliveryService.Edit',
+        '/delivery/test', 'service.deliveryService.Test',
+        '/exceptImg', 'service.scanService.exceptImg',
         )
 
 def cleanFile(dir_clean):

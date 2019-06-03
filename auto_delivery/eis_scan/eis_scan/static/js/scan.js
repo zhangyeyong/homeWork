@@ -93,6 +93,9 @@ Scan.prototype = {
 					success : function(d) {
 						d = eval("(" + d + ")");
 						if (d.isSuccess) {
+						    if(scanSelf&&scanSelf.scanCallback){
+                                scanSelf.scanCallback(d.headId);
+						    }
 							$(".main").html(d.info.__body__);
 						} else {
 							alert(d.msg);

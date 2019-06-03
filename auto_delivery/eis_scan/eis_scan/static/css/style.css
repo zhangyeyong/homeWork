@@ -9,7 +9,8 @@
 
 /* 样式表重置 */
 body,html,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
-table{border-collapse:collapse; border-spacing:0;width: 100%}
+table{width: 100%}
+/*table{border-collapse:collapse; border-spacing:0;width: 100%}*/
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section{display: block; margin:0; padding: 0;}
 body,button,input,select,textarea{font: 12px/1.5 arial;color: #666}fieldset,img{border:none;}
 address,caption,cite,code,dfn,em,var,i{font-style:normal; font-weight:normal;}ol,ul{list-style:none;}caption,th{text-align:left;}
