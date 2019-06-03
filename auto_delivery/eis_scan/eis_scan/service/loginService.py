@@ -373,7 +373,7 @@ class login:
             tickerDict[userCd] = result.get("ticket")
             # 登录成功 开启获取评价任务定时器
 #             startServCmdInfoTimer()
-            startAutoUploadTimer()
+#             startAutoUploadTimer()
             return common.buildSuccess(_("登录成功"))
     def reUpload(self):
         from scanService import uploadFile
