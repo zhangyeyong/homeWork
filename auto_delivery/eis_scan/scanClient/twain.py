@@ -1,13 +1,9 @@
-'''
-Created on Sep 4, 2011
-
-@author: misha
-'''
+import ctypes
 from ctypes import *
 import weakref
 import sys
-import os
-import time
+import platform
+import warnings
 
 TWON_PROTOCOLMAJOR = 2
 TWON_PROTOCOLMINOR = 1
@@ -1048,84 +1044,131 @@ TWUN_PIXELS = 5
 TWUN_POINTS = 3
 TWUN_TWIPS = 4
 
+
 class TwainError(Exception):
     pass
 
+
 class excCapabilityFormatNotSupported(TwainError):
     pass
+
+
 class excDSTransferCancelled(TwainError):
     pass
+
+
 class excSMGetProcAddressFailed(TwainError):
     pass
+
+
 class excSMLoadFileFailed(TwainError):
     pass
+
+
 class excSMOpenFailed(TwainError):
     pass
+
 
 class excImageFormat(Exception):
     pass
 
+
 class excTWCC_BADCAP(TwainError):
     pass
+
+
 class excTWCC_BADDEST(Exception):
     pass
+
+
 class excTWCC_BADPROTOCOL(Exception):
     pass
 
+
 class excTWCC_BUMMER(Exception):
-    '''General failure.  Unload Source immediately.'''
+    """General failure.  Unload Source immediately."""
     pass
+
 
 class excTWCC_CAPBADOPERATION(Exception):
-    '''Operation (i.e., Get or Set)  not supported on capability.'''
+    """Operation (i.e., Get or Set)  not supported on capability."""
     pass
+
 
 class excTWCC_CAPSEQERROR(Exception):
-    '''Capability has dependencies on other capabilities and 
+    """Capability has dependencies on other capabilities and
     cannot be operated upon at this time.
-    '''
+    """
     pass
+
 
 class excTWCC_CAPUNSUPPORTED(Exception):
-    '''Capability not supported by Source.'''
+    """Capability not supported by Source."""
     pass
 
+
 class excTWCC_CHECKDEVICEONLINE(Exception):
-    '''Check the device status using CAP_DEVICEONLINE, this 
-    condition code can be returned by any TWAIN operation 
-    in state 4 or higher, or from the state 3 DG_CONTROL / 
-    DAT_IDENTITY / MSG_OPENDS.  The state remains 
-    unchanged.  If in state 4 the Application can poll with 
+    """Check the device status using CAP_DEVICEONLINE, this
+    condition code can be returned by any TWAIN operation
+    in state 4 or higher, or from the state 3 DG_CONTROL /
+    DAT_IDENTITY / MSG_OPENDS.  The state remains
+    unchanged.  If in state 4 the Application can poll with
     CAP_DEVICELINE until the value returns TRUE.
-    '''
+    """
     pass
+
 
 class excTWCC_DENIED(Exception):
     pass
+
+
 class excTWCC_FILEEXISTS(Exception):
     pass
+
+
 class excTWCC_FILENOTFOUND(Exception):
     pass
+
+
 class excTWCC_FILEWRITEERROR(Exception):
     pass
+
+
 class excTWCC_MAXCONNECTIONS(Exception):
     pass
+
+
 class excTWCC_NODS(Exception):
     pass
+
+
 class excTWCC_NOTEMPTY(Exception):
     pass
+
+
 class excTWCC_OPERATIONERROR(Exception):
     pass
+
+
 class excTWCC_PAPERDOUBLEFEED(Exception):
     pass
+
+
 class excTWCC_PAPERJAM(Exception):
     pass
+
+
 class excTWCC_SEQERROR(Exception):
     pass
+
+
 class excTWCC_SUCCESS(Exception):
     pass
+
+
 class excTWCC_UNKNOWN(Exception):
     pass
+
 
 _ext_to_type = {'.bmp': TWFF_BMP,
                 '.jpg': TWFF_JFIF,
@@ -1135,15 +1178,18 @@ _ext_to_type = {'.bmp': TWFF_BMP,
                 '.tif': TWFF_TIFF,
                 }
 
+
 class CancelAll(Exception):
-    '''Exception used by callbacks to cancel remaining image transfers'''
+    """Exception used by callbacks to cancel remaining image transfers"""
     pass
 
+
 class CheckStatus(Exception):
-    '''This exception means that operation succeeded but user value was truncated
+    """This exception means that operation succeeded but user value was truncated
     to fit valid range
-    '''
+    """
     pass
+
 
 class _Image(object):
     def __init__(self, handle):
@@ -1153,14 +1199,15 @@ class _Image(object):
         self.close()
         
     def close(self):
-        '''Releases memory of image'''
+        """Releases memory of image"""
         self._free(self._handle)
         self._handle = None
         
     def save(self, filepath):
-        '''Saves in-memory image to BMP file'''
+        """Saves in-memory image to BMP file"""
         _dib_write(self._handle, filepath, self._lock, self._unlock)
-        
+
+
 def _float2fix(x):
     if x <= -2**15 - 1 and 2**15 + 1 <= x:
         raise Exception('Float value is out of range')
@@ -1169,20 +1216,24 @@ def _float2fix(x):
     frac = x & 0xffff
     return TW_FIX32(whole, frac)
 
+
 def _fix2float(x):
     return x.Whole + float(x.Frac) / 2**16 
+
 
 def _frame2tuple(frame):
     return (_fix2float(frame.Left),
             _fix2float(frame.Top),
             _fix2float(frame.Right),
             _fix2float(frame.Bottom))
-    
+
+
 def _tuple2frame(tup):
     return TW_FRAME(_float2fix(tup[0]),
                     _float2fix(tup[1]),
                     _float2fix(tup[2]),
                     _float2fix(tup[3]))
+
 
 class TW_CAPABILITY(Structure):
     _pack_ = 2
@@ -1190,15 +1241,21 @@ class TW_CAPABILITY(Structure):
                 ('ConType', c_uint16),
                 ('hContainer', c_void_p)]
 
+
 class TW_ONEVALUE(Structure):
     _pack_ = 2
     _fields_ = [('ItemType', c_uint16),
                 ('Item', c_uint32)]
-    
+
+
 class TW_FIX32(Structure):
     _pack_ = 2
     _fields_ = [('Whole', c_int16),
                 ('Frac', c_uint16)]
+
+    def __str__(self):
+        return str(_fix2float(self))
+
 
 class TW_FRAME(Structure):
     _pack_ = 2
@@ -1206,24 +1263,28 @@ class TW_FRAME(Structure):
                 ('Top', TW_FIX32),
                 ('Right', TW_FIX32),
                 ('Bottom', TW_FIX32)]
-    
+
+
 class TW_STATUS(Structure):
     _pack_ = 2
     _fields_ = [('ConditionCode', c_uint16), # Any TWCC_ constant
                 ('Data', c_uint16)]
-    
+
+
 class TW_IMAGELAYOUT(Structure):
     _pack_ = 2
     _fields_ = [('Frame', TW_FRAME), # Any TWCC_ constant
                 ('DocumentNumber', c_uint32),
                 ('PageNumber', c_uint32),
                 ('FrameNumber', c_uint32)]
-    
+
+
 class TW_USERINTERFACE(Structure):
     _pack_ = 2
     _fields_ = [('ShowUI', c_uint16),
                 ('ModalUI', c_uint16),
                 ('hParent', c_void_p)]
+
 
 class MSG(Structure):
     _pack_ = 8
@@ -1235,10 +1296,12 @@ class MSG(Structure):
                 ('pt_x', c_long),
                 ('pt_y', c_long)]
 
+
 class TW_EVENT(Structure):
     _pack_ = 2
     _fields_ = [('pEvent', c_void_p),
                 ('TWMessage', c_uint16)]
+
 
 class TW_VERSION(Structure):
     _pack_ = 2
@@ -1247,6 +1310,8 @@ class TW_VERSION(Structure):
                 ('Language', c_uint16),
                 ('Country', c_uint16),
                 ('Info', c_char * 34)]
+
+
 class TW_IDENTITY(Structure):
     _pack_ = 2
     _fields_ = [('Id', c_uint32),
@@ -1257,6 +1322,7 @@ class TW_IDENTITY(Structure):
                 ('Manufacturer', c_char * 34),
                 ('ProductFamily', c_char * 34),
                 ('ProductName', c_char * 34)]
+
 
 class TW_IMAGEINFO(Structure):
     _pack_ = 2
@@ -1271,10 +1337,12 @@ class TW_IMAGEINFO(Structure):
                 ('PixelType', c_int16),
                 ('Compression', c_uint16)]
 
+
 class TW_PENDINGXFERS(Structure):
     _pack_ = 2
     _fields_ = [('Count', c_uint16),
                 ('EOJ', c_uint32)]
+
 
 class TW_RANGE(Structure):
     _pack_ = 2
@@ -1285,49 +1353,66 @@ class TW_RANGE(Structure):
                 ('DefaultValue', c_uint32),
                 ('CurrentValue', c_uint32)]
 
+
 class TW_ENUMERATION(Structure):
     _pack_ = 2
     _fields_ = [('ItemType', c_uint16),
                 ('NumItems', c_uint32),
                 ('CurrentIndex', c_uint32),
                 ('DefaultIndex', c_uint32)]
-    
+
+
 class TW_ARRAY(Structure):
     _pack_ = 2
     _fields_ = [('ItemType', c_uint16),
                 ('NumItems', c_uint32)]
+
 
 class TW_SETUPFILEXFER(Structure):
     _pack_ = 2
     _fields_ = [('FileName', c_char * 256),
                 ('Format', c_uint16),
                 ('VRefNum', c_int16)]
-    
+
+
+def _is_windows():
+    return platform.system() == 'Windows'
+
+
+if _is_windows():
+    FUNCTYPE = ctypes.WINFUNCTYPE
+else:
+    FUNCTYPE = ctypes.CFUNCTYPE
+
+
 class TW_ENTRYPOINT(Structure):
     _pack_ = 2
     _fields_ = [('Size', c_uint32),
-                ('DSM_Entry', WINFUNCTYPE(c_int, POINTER(c_int), POINTER(c_int))),
-                ('DSM_MemAllocate', WINFUNCTYPE(c_void_p, c_uint32)),
-                ('DSM_MemFree', WINFUNCTYPE(None, c_void_p)),
-                ('DSM_MemLock', WINFUNCTYPE(c_void_p, c_void_p)),
-                ('DSM_MemUnlock', WINFUNCTYPE(None, c_void_p))]
+                ('DSM_Entry', FUNCTYPE(c_int, POINTER(c_int), POINTER(c_int))),
+                ('DSM_MemAllocate', FUNCTYPE(c_void_p, c_uint32)),
+                ('DSM_MemFree', FUNCTYPE(None, c_void_p)),
+                ('DSM_MemLock', FUNCTYPE(c_void_p, c_void_p)),
+                ('DSM_MemUnlock', FUNCTYPE(None, c_void_p))]
+
 
 _mapping = {TWTY_INT8: c_int8,
-           TWTY_UINT8: c_uint8,
-           TWTY_INT16: c_int16,
-           TWTY_UINT16: c_uint16,
-           TWTY_UINT32: c_uint32,
-           TWTY_INT32: c_int32,
-           TWTY_BOOL: c_uint16,
-           TWTY_FIX32: TW_FIX32,
-           TWTY_FRAME: TW_FRAME,
-           TWTY_STR32: c_char*34,
-           TWTY_STR64: c_char*66,
-           TWTY_STR128: c_char*130,
-           TWTY_STR255: c_char*255}
+            TWTY_UINT8: c_uint8,
+            TWTY_INT16: c_int16,
+            TWTY_UINT16: c_uint16,
+            TWTY_UINT32: c_uint32,
+            TWTY_INT32: c_int32,
+            TWTY_BOOL: c_uint16,
+            TWTY_FIX32: TW_FIX32,
+            TWTY_FRAME: TW_FRAME,
+            TWTY_STR32: c_char*34,
+            TWTY_STR64: c_char*66,
+            TWTY_STR128: c_char*130,
+            TWTY_STR255: c_char*255}
+
 
 def _is_good_type(type_id):
     return type_id in list(_mapping.keys()) 
+
 
 def _struct2dict(struct, decode):
     result = {}
@@ -1343,6 +1428,7 @@ def _struct2dict(struct, decode):
             value = decode(value)
         result[field] = value
     return result
+
 
 _exc_mapping = {TWCC_SUCCESS: excTWCC_SUCCESS,
                 TWCC_BUMMER: excTWCC_BUMMER,
@@ -1366,6 +1452,7 @@ _exc_mapping = {TWCC_SUCCESS: excTWCC_SUCCESS,
                 TWCC_FILEWRITEERROR: excTWCC_FILEWRITEERROR,
                 TWCC_CHECKDEVICEONLINE: excTWCC_CHECKDEVICEONLINE}
 
+
 def _win_check(result, func, args):
     if func is _GlobalFree:
         if result:
@@ -1386,32 +1473,61 @@ def _win_check(result, func, args):
             raise WinError()
         return result
 
-_GlobalLock = windll.kernel32.GlobalLock
-_GlobalLock.errcheck = _win_check
-_GlobalUnlock = windll.kernel32.GlobalUnlock
-_GlobalUnlock.errcheck = _win_check
-_GlobalAlloc = windll.kernel32.GlobalAlloc
-_GlobalAlloc.errcheck = _win_check
-_GlobalFree = windll.kernel32.GlobalFree
-_GlobalFree.errcheck = _win_check
-_GlobalSize = windll.kernel32.GlobalSize
-_GlobalSize.errcheck = _win_check
-_GetMessage = windll.user32.GetMessageW
-_TranslateMessage = windll.user32.TranslateMessage
-_TranslateMessage.errcheck = _win_check
-_DispatchMessage = windll.user32.DispatchMessageW
-_DispatchMessage.errcheck = _win_check
 
-GMEM_ZEROINIT = 0x0040
+if _is_windows():
+    _GlobalLock = windll.kernel32.GlobalLock
+    _GlobalLock.argtypes = [ctypes.c_void_p]
+    _GlobalLock.restype = ctypes.c_void_p
+    _GlobalLock.errcheck = _win_check
+    _GlobalUnlock = windll.kernel32.GlobalUnlock
+    _GlobalUnlock.argtypes = [ctypes.c_void_p]
+    _GlobalUnlock.errcheck = _win_check
+    _GlobalAlloc = windll.kernel32.GlobalAlloc
+    _GlobalAlloc.restype = ctypes.c_void_p
+    _GlobalAlloc.errcheck = _win_check
+    _GlobalFree = windll.kernel32.GlobalFree
+    _GlobalFree.argtypes = [ctypes.c_void_p]
+    _GlobalFree.errcheck = _win_check
+    _GlobalSize = windll.kernel32.GlobalSize
+    _GlobalSize.argtypes = [ctypes.c_void_p]
+    _GlobalSize.restype = ctypes.c_size_t
+    _GlobalSize.errcheck = _win_check
+    _GetMessage = windll.user32.GetMessageW
+    _TranslateMessage = windll.user32.TranslateMessage
+    _TranslateMessage.errcheck = _win_check
+    _DispatchMessage = windll.user32.DispatchMessageW
+    _DispatchMessage.errcheck = _win_check
 
-def _twain1_alloc(size):
-    return _GlobalAlloc(GMEM_ZEROINIT, size)
+    GMEM_ZEROINIT = 0x0040
 
-_twain1_free = _GlobalFree
-_twain1_lock = _GlobalLock
-_twain1_unlock = _GlobalUnlock
+    def _twain1_alloc(size):
+        return _GlobalAlloc(GMEM_ZEROINIT, size)
 
-class _Source(object):
+    _twain1_free = _GlobalFree
+    _twain1_lock = _GlobalLock
+    _twain1_unlock = _GlobalUnlock
+else:
+    # Mac
+    def _twain1_alloc(size):
+        return ctypes.libc.malloc(size)
+
+    def _twain1_lock(handle):
+        return handle
+
+    def _twain1_unlock(handle):
+        pass
+
+    def _twain1_free(handle):
+        return ctypes.libc.free(handle)
+
+
+class Source(object):
+    """
+    This object represents connection to Data Source.
+
+    An instance of this class can be created by calling
+    :meth:`SourceManager.open_source`
+    """
     def __init__(self, sm, ds_id):
         self._sm = sm
         self._id = ds_id
@@ -1436,10 +1552,16 @@ class _Source(object):
     def __del__(self):
         self.close()
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
     def close(self):
-        '''This method is used to close the data source object.
+        """This method is used to close the data source object.
         It gives finer control over this connects than relying on garbage collection.
-        '''
+        """
         if self._state == 'ready':
             self._end_all_xfers()
         if self._state == 'enabled':
@@ -1448,10 +1570,8 @@ class _Source(object):
             self._sm._close_ds(self._id)
             self._state = 'closed'
             self._sm = None
-    
-    destroy = close
 
-    def _call(self, dg, dat, msg, buf, expected_returns=[TWRC_SUCCESS]):
+    def _call(self, dg, dat, msg, buf, expected_returns=(TWRC_SUCCESS,)):
         return self._sm._call(self._id, dg, dat, msg, buf, expected_returns)
 
     def _get_capability(self, cap, current):
@@ -1491,7 +1611,7 @@ class _Source(object):
                         msg = "Capability Code = %d, Format Code = %d, Item Type = %d" % (cap,
                                                                                           twCapability.ConType,
                                                                                           enum.ItemType)
-                        raise excCapabilityFormatNotSupported(msg);
+                        raise excCapabilityFormatNotSupported(msg)
                     ctype = _mapping[enum.ItemType]
                     item_p = cast(ptr + sizeof(TW_ENUMERATION), POINTER(ctype))
                     values = [el for el in item_p[0:enum.NumItems]]
@@ -1502,7 +1622,7 @@ class _Source(object):
                         msg = "Capability Code = %d, Format Code = %d, Item Type = %d" % (cap,
                                                                                           twCapability.ConType,
                                                                                           arr.ItemType)
-                        raise excCapabilityFormatNotSupported(msg);
+                        raise excCapabilityFormatNotSupported(msg)
                     ctype = _mapping[arr.ItemType]
                     item_p = cast(ptr + sizeof(TW_ARRAY), POINTER(ctype))
                     return arr.ItemType, [el for el in item_p[0:arr.NumItems]]
@@ -1514,77 +1634,77 @@ class _Source(object):
         finally:
             self._free(twCapability.hContainer)
 
-    def GetCapability(self, cap):
-        '''This function is used to return the capability information from the source.
+    def get_capability(self, cap):
+        """This function is used to return the capability information from the source.
         If the capability is not supported, an exception should be returned.
         Capabilities are returned as a tuple of a type (TWTY_*) and a value.
         The format of values depends on their container type.
         Capabilities can be in any of the following containers:
             singleton, range, enumerator or array.
-            
+
          singletons are returned as a single value (integer or string)
          ranges are returned as a tuple dictionary containing MinValue,
              MaxValue, StepSize, DefaultValue and CurrentValue
          enumerators and arrays are returned as tuples, each containing
              a list which has the actual values
-        '''
+        """
         return self._get_capability(cap, MSG_GET)
     
     def get_capability_current(self, cap):
-        '''This function is used to return the current value of a capability from the source.
+        """This function is used to return the current value of a capability from the source.
         If the capability is not supported, an exception should be returned.
         Capabilities are returned as a tuple of a type (TWTY_*) and a value.
         The format of values depends on their container type.
         Capabilities can be in any of the following containers:
             singleton, range, enumerator or array.
-        
+
          singletons are returned as a single value (integer or string)
          ranges are returned as a tuple dictionary containing MinValue,
              MaxValue, StepSize, DefaultValue and CurrentValue
          enumerators and arrays are returned as tuples, each containing
              a list which has the actual values
-        '''
+        """
         return self._get_capability(cap, MSG_GETCURRENT)
     
     def get_capability_default(self, cap):
-        '''This function is used to return the default value of a capability from the source.
+        """This function is used to return the default value of a capability from the source.
         If the capability is not supported, an exception should be returned.
         Capabilities are returned as a tuple of a type (TWTY_*) and a value.
         The format of values depends on their container type.
         Capabilities can be in any of the following containers:
             singleton, range, enumerator or array.
-        
+
          singletons are returned as a single value (integer or string)
          ranges are returned as a tuple dictionary containing MinValue,
              MaxValue, StepSize, DefaultValue and CurrentValue
          enumerators and arrays are returned as tuples, each containing
              a list which has the actual values
-        '''
+        """
         return self._get_capability(cap, MSG_GETDEFAULT)
     
     @property
     def name(self):
-        '''Get the name of the source. This can be used later for
+        """Get the name of the source. This can be used later for
         connecting to the same source.
-        '''
+        """
         return self._decode(self._id.ProductName)
     
     @property
     def identity(self):
-        '''This function is used to retrieve information about the source.
+        """This function is used to retrieve information about the source.
         driver. The information is returned in a dictionary.
-        '''
+        """
         res = _struct2dict(self._id, self._decode)
         res.update(_struct2dict(self._id.Version, self._decode))
         return res
         
     def set_capability(self, cap, type_id, value):
-        '''This function is used to set the value of a capability in the source.
+        """This function is used to set the value of a capability in the source.
         Three parameters are required, a Capability Identifier (twain.CAP_* or
         twain.ICAP_*) a value type (twain.TWTY_*) and a value
         If the capability is not supported, an exception should be returned.
         This function is used to set a value using a TW_ONEVALUE.
-        '''
+        """
         if not _is_good_type(type_id):
             raise excCapabilityFormatNotSupported("Capability Code = %d, Format Code = %d" % (cap, type_id))
         ctype = _mapping[type_id]
@@ -1618,18 +1738,19 @@ class _Source(object):
             raise CheckStatus
         
     def reset_capability(self, cap):
-        '''This function is used to reset the value of a capability to the source default.
-        One parameter is required, a Capability Identifier (twain.CAP_* or
-        twain.ICAP_*).'''
+        """This function is used to reset the value of a capability to the source default.
+
+        :param cap: Capability Identifier (twain.CAP_* or twain.ICAP_*).
+        """
         cap = TW_CAPABILITY(Cap=cap)
         self._call(DG_CONTROL, DAT_CAPABILITY, MSG_RESET, byref(cap))
         
     def set_image_layout(self, frame, document_number=1, page_number=1, frame_number=1):
-        '''This function is used to inform the source of the Image Layout.
-        
+        """This function is used to inform the source of the Image Layout.
+
         It uses a tuple containing frame coordinates, document
         number, page number, frame number.
-        '''
+        """
         il = TW_IMAGELAYOUT(Frame=_tuple2frame(frame),
                             DocumentNumber=document_number,
                             PageNumber=page_number,
@@ -1643,59 +1764,57 @@ class _Source(object):
             raise CheckStatus
 
     def get_image_layout(self):
-        '''This function is used to ask the source for Image Layout.
-        
+        """This function is used to ask the source for Image Layout.
+
         It returns a tuple containing frame coordinates, document
         number, page number, frame number.
-        
+
         Valid states 4 through 6
-        '''
+        """
         il = TW_IMAGELAYOUT()
         self._call(DG_IMAGE, DAT_IMAGELAYOUT, MSG_GET, byref(il))
         return _frame2tuple(il.Frame), il.DocumentNumber, il.PageNumber, il.FrameNumber    
     
     def get_image_layout_default(self):
-        '''This function is used to ask the source for default Image Layout.
-        
+        """This function is used to ask the source for default Image Layout.
+
         It returns a tuple containing frame coordinates, document
         number, page number, frame number.
-        
+
         Valid states 4 through 6
-        '''
+        """
         il = TW_IMAGELAYOUT()
         self._call(DG_IMAGE, DAT_IMAGELAYOUT, MSG_GETDEFAULT, byref(il))
         return _frame2tuple(il.Frame), il.DocumentNumber, il.PageNumber, il.FrameNumber
     
     def reset_image_layout(self):
-        '''This function is used to reset Image Layout to its default settings'''
+        """This function is used to reset Image Layout to its default settings"""
         il = TW_IMAGELAYOUT()
         self._call(DG_IMAGE, DAT_IMAGELAYOUT, MSG_RESET, byref(il))
 
     def _enable(self, show_ui, modal_ui, hparent):
-        '''This function is used to ask the source to begin aquistion.
+        """This function is used to ask the source to begin aquistion.
         Parameters:
             show_ui - bool
             modal_ui - bool
-        '''
+        """
         ui = TW_USERINTERFACE(ShowUI=show_ui, ModalUI=modal_ui, hParent=hparent)
-        print "start _enable  self._call  "+time.strftime('%Y%m%d %H:%M:%S')
         self._call(DG_CONTROL, DAT_USERINTERFACE, MSG_ENABLEDS, byref(ui))
-        print "end _enable  self._call  "+time.strftime('%Y%m%d %H:%M:%S')
         self._state = 'enabled'
 
     def _disable(self):
-        '''This function is used to ask the source to hide the user interface.'''
+        """This function is used to ask the source to hide the user interface."""
         ui = TW_USERINTERFACE()
         self._call(DG_CONTROL, DAT_USERINTERFACE, MSG_DISABLEDS, byref(ui))
         self._state = 'open'
         
     def _process_event(self, msg_ref):
-        '''The TWAIN interface requires that the windows events
+        """The TWAIN interface requires that the windows events
         are available to both the application and the twain
         source (which operates in the same process).
         This method is called in the event loop to pass on those
         events.
-        '''
+        """
         event = TW_EVENT(cast(msg_ref, c_void_p), 0)
         rv = self._call(DG_CONTROL,
                         DAT_EVENT,
@@ -1711,28 +1830,19 @@ class _Source(object):
         done = False
         msg = MSG()
         while not done:
-            print "start _modal_loop  _GetMessage"+time.strftime('%Y%m%d %H:%M:%S')
             if not _GetMessage(byref(msg), 0, 0, 0):
                 break
-            print "end _modal_loop  _GetMessage"+time.strftime('%Y%m%d %H:%M:%S')
-            print "start _modal_loop  _process_event"+time.strftime('%Y%m%d %H:%M:%S')
             rc, event = self._process_event(byref(msg))
-            print "end _modal_loop  _process_event"+time.strftime('%Y%m%d %H:%M:%S')
             if callback:
-                print "start _modal_loop  callback"+time.strftime('%Y%m%d %H:%M:%S')
                 callback(event)
-                print "end _modal_loop  callback"+time.strftime('%Y%m%d %H:%M:%S')
             if event in (MSG_XFERREADY, MSG_CLOSEDSREQ):
                 done = True
             if rc == TWRC_NOTDSEVENT:
                 _TranslateMessage(byref(msg))
                 _DispatchMessage(byref(msg))
-            print " done "+str(done)
     
     def _acquire(self, callback, show_ui=True, modal=False):
-        print "start _acquire  _enable  "+time.strftime('%Y%m%d %H:%M:%S')
         self._enable(show_ui, modal, self._sm._hwnd)
-        print "end _acquire  _enable  "+time.strftime('%Y%m%d %H:%M:%S')
         try:
             def callback_lolevel(event):
                 if event == MSG_XFERREADY:
@@ -1743,47 +1853,44 @@ class _Source(object):
                         except CancelAll:
                             self._end_all_xfers()
                             break
-            print "start _acquire  _modal_loop"+time.strftime('%Y%m%d %H:%M:%S')
             self._modal_loop(callback_lolevel)
-            print "end _acquire  _modal_loop"+time.strftime('%Y%m%d %H:%M:%S')
         finally:
-            print "start _acquire  _disable"+time.strftime('%Y%m%d %H:%M:%S')
             self._disable()
-            print "end _acquire  _disable"+time.strftime('%Y%m%d %H:%M:%S')
     
     @property
     def file_xfer_params(self):
-        '''Retrieve the configured transfer file name / format'''    
+        """ Property which stores tuple of (file name, format) where format is one of TWFF_*
+
+        This property is used by :meth:`xfer_image_by_file`
+
+        Valid states: 4, 5, 6
+        """
         sfx = TW_SETUPFILEXFER()
         self._call(DG_CONTROL, DAT_SETUPFILEXFER, MSG_GET, byref(sfx))
         return self._decode(sfx.FileName), sfx.Format
     
     @file_xfer_params.setter
     def file_xfer_params(self, params):
-        '''Where the application is transferring the data via a file,
-        configure the file name.
-        Parameters:
-            params -- tuple (path, format), path should absolute file path
-                      format should be one of TWFF_* constants
-        '''
         (path, fmt) = params
         sfx = TW_SETUPFILEXFER(self._encode(path), fmt, 0)
         self._call(DG_CONTROL, DAT_SETUPFILEXFER, MSG_SET, byref(sfx))
 
     @property
     def image_info(self):
-        '''This function is used to ask the source for Image Info.
+        """This function is used to ask the source for Image Info.
         Normally, the application is notified that the image is
         ready for transfer using the message loop. However, it is
         hard to get at the message loop in toolkits such as wxPython.
         As an alternative, I poll the source looking for image information.
         When the image information is available, the image is ready for transfer
-        '''
+
+        Valid states: 6, 7
+        """
         ii = TW_IMAGEINFO()
         self._call(DG_IMAGE,
                    DAT_IMAGEINFO,
                    MSG_GET,
-                   byref(ii));
+                   byref(ii))
         return {"XResolution": _fix2float(ii.XResolution),
                 "YResolution": _fix2float(ii.YResolution),
                 "ImageWidth": ii.ImageWidth,
@@ -1826,67 +1933,96 @@ class _Source(object):
         return px.Count
     
     def _end_all_xfers(self):
-        '''Cancel all outstanding transfers on the data source.'''
+        """Cancel all outstanding transfers on the data source."""
         px = TW_PENDINGXFERS()
         self._call(DG_CONTROL, DAT_PENDINGXFERS, MSG_RESET, byref(px))
         self._state = 'enabled'
         
-    def RequestAcquire(self, ShowUI, ModalUI):
-        '''This function is used to ask the source to begin acquisition.
-        Parameters:
-            ShowUI - bool (default 1)
-            ModalUI - bool (default 1)
-        '''
-        self._enable(ShowUI, ModalUI, self._sm._hwnd)
+    def request_acquire(self, show_ui, modal_ui):
+        """This function is used to ask the source to begin acquisition.
+
+        Transitions Source to state 5.
+
+        :param show_ui: bool (default 1)
+        :param modal_ui: bool (default 1)
+
+        Valid states: 4
+        """
+        self._enable(show_ui, modal_ui, self._sm._hwnd)
     
-    def ModalLoop(self):
-        '''This function should be called after call to RequiestAcquire
+    def modal_loop(self):
+        """This function should be called after call to :func:`requiest_acquire`
         it will return after acquisition complete.
-        '''
+
+        Valid states: 5
+        """
         self._modal_loop(self._sm._cb)
         
-    def HideUI(self):
-        '''This function is used to ask the source to hide the user interface.'''
+    def hide_ui(self):
+        """This function is used to ask the source to hide the user interface.
+
+        Transitions Source to state 4 if successful.
+
+        Valid states: 5
+        """
         self._disable()
         
-    def XferImageNatively(self):
-        '''Perform a 'Native' form transfer of the image.
+    def xfer_image_natively(self):
+        """Perform a 'Native' form transfer of the image.
+
         When successful, this routine returns two values,
         an image handle and a count of the number of images
         remaining in the source.
-        '''
+
+        If remaining number of images is zero Source will
+        transition to state 5, otherwise it stays in state 6
+        in which case you should call
+        :meth:`xfer_image_natively` again.
+
+        Valid states: 6
+        """
         rv, handle = self._get_native_image()
         more = self._end_xfer()
         if rv == TWRC_CANCEL:
             raise excDSTransferCancelled
         return handle.value, more
-    
-    def XferImageByFile(self):
-        '''Perform a file based transfer of the image.
+
+    def xfer_image_by_file(self):
+        """Perform a file based transfer of the image.
+
         When successful, the file is saved to the image file,
-        defined in a previous call to SetXferFileName.
+        defined in a previous call to :meth:`file_xfer_params`.
+
         Returns  the number of pending transfers
-        '''
+
+        If remaining number of images is zero Source will
+        transition to state 5, otherwise it stays in state 6
+        in which case you should call
+        :meth:`xfer_image_natively` again.
+
+        Valid states: 6
+        """
         rv = self._get_file_image()
         more = self._end_xfer()
         if rv == TWRC_CANCEL:
             raise excDSTransferCancelled
         return more
 
-    def acquire_file(self, before, after=lambda more: None, show_ui=True, modal=True):
-        '''Acquires one ore more images as files. Call returns when acquisition complete
-        Parameters:
-            before -- callback called before each acquired file, it should return
-                      full file path. It can also throw CancelAll to cancel acquisition
-            after -- callback called after each acquired file, it receives number of 
-                     images remaining. It can throw CancelAll to cancel remaining
-                     acquisition
-            show_ui -- if True source's UI will be presented to user
-            modal   -- if True source's UI will be modal
-        '''
-        _, (_, _, mechs) = self.GetCapability(ICAP_XFERMECH)
+    def acquire_file(self, before, after=lambda more: None, show_ui=True, modal=False):
+        """Acquires one ore more images as files. Call returns when acquisition complete.
+
+        :param before: Callback called before each acquired file, it should return
+                       full file path. It can also throw CancelAll to cancel acquisition
+        :keyword after: Callback called after each acquired file, it receives number of
+                        images remaining. It can throw CancelAll to cancel remaining
+                        acquisition
+        :keyword show_ui: If True source's UI will be presented to user
+        :keyword modal: If True source's UI will be modal
+        """
+        _, (_, _, mechs) = self.get_capability(ICAP_XFERMECH)
         if TWSX_FILE not in mechs:
             raise Exception('File transfer is not supported')
+
         def callback():
             filepath = before(self.image_info)
             import os
@@ -1905,27 +2041,30 @@ class _Source(object):
             if rv == TWRC_CANCEL:
                 raise excDSTransferCancelled
             if ext != '.bmp':
-                from PIL import Image
+                try:
+                    import Image
+                except ImportError:
+                    from PIL import Image
                 Image.open(bmppath).save(filepath)            
                 os.remove(bmppath)
             after(more)
             return more
+
         self.set_capability(ICAP_XFERMECH, TWTY_UINT16, TWSX_FILE)
-        print "start self._acquire"
         self._acquire(callback, show_ui, modal)
-        print "end self._acquire"
     
     def acquire_natively(self, after, before=lambda img_info: None, show_ui=True, modal=False):
-        '''Acquires one ore more images in memory. Call returns when acquisition complete
-        Parameters:
-            before -- callback called before each acquired file. It can throw CancelAll
-                      to cancel acquisition
-            after -- callback called after each acquired file, it receives an image object and
+        """Acquires one ore more images in memory. Call returns when acquisition complete
+
+        :param after: Callback called after each acquired file, it receives an image object and
                      number of images remaining. It can throw CancelAll to cancel remaining
                      acquisition
-            show_ui -- if True source's UI will be presented to user
-            modal   -- if True source's UI will be modal
-        '''
+        :keyword before: Callback called before each acquired file. It can throw CancelAll
+                      to cancel acquisition
+        :keyword show_ui: If True source's UI will be presented to user
+        :keyword modal:   If True source's UI will be modal
+        """
+
         def callback():
             before(self.image_info)
             rv, handle = self._get_native_image()
@@ -1934,105 +2073,178 @@ class _Source(object):
                 raise excDSTransferCancelled
             after(_Image(handle), more)
             return more
+
         self.set_capability(ICAP_XFERMECH, TWTY_UINT16, TWSX_NATIVE)
         self._acquire(callback, show_ui, modal)
         
     def is_twain2(self):
         return self._version2
 
-    GetCapabilityCurrent = get_capability_current
-    GetCapabilityDefault = get_capability_default
+    # backward compatible aliases
+    def destroy(self):
+        self.close()
+
+    def GetCapabilityCurrent(self, cap):
+        warnings.warn("GetCapabilityCurrent is deprecated, use get_capability_current instead", DeprecationWarning)
+        return self.get_capability_current(cap)
+
+    def GetCapabilityDefault(self, cap):
+        warnings.warn("GetCapabilityDefault is deprecated, use get_capability_default instead", DeprecationWarning)
+        return self.get_capability_default(cap)
+
     def GetSourceName(self):
+        warnings.warn("GetSourceName is deprecated, use name property instead", DeprecationWarning)
         return self.name
+
     def GetIdentity(self):
+        warnings.warn("GetIdentity is deprecated, use identity property instead", DeprecationWarning)
         return self.identity
-    SetCapability = set_capability
-    ResetCapability = reset_capability
-    SetImageLayout = set_image_layout
-    GetImageLayout = get_image_layout
-    GetDefaultImageLayout = get_image_layout_default
-    ResetImageLayout = reset_image_layout
+
+    def GetCapability(self, cap):
+        warnings.warn("GetCapability is deprecated, use get_capability instead", DeprecationWarning)
+        return self.get_capability(cap)
+
+    def SetCapability(self, cap, type_id, value):
+        warnings.warn("SetCapability is deprecated, use set_capability instead", DeprecationWarning)
+        return self.set_capability(cap, type_id, value)
+
+    def ResetCapability(self, cap):
+        warnings.warn("ResetCapability is deprecated, use reset_capability instead", DeprecationWarning)
+        self.reset_capability(cap)
+
+    def SetImageLayout(self, frame, document_number=1, page_number=1, frame_number=1):
+        warnings.warn("SetImageLayout is deprecated, use set_image_layout instead", DeprecationWarning)
+        self.set_image_layout(frame, document_number, page_number, frame_number)
+
+    def GetImageLayout(self):
+        warnings.warn("GetImageLayout is deprecated, use get_image_layout instead", DeprecationWarning)
+        return self.get_image_layout()
+
+    def GetDefaultImageLayout(self):
+        warnings.warn("GetDefaultImageLayout is deprecated, use get_default_image_layout instead", DeprecationWarning)
+        return self.get_image_layout_default()
+
+    def ResetImageLayout(self):
+        warnings.warn("ResetImageLayout is deprecated, use reset_image_layout instead", DeprecationWarning)
+        self.reset_image_layout()
+
+    def RequestAcquire(self, show_ui, modal_ui):
+        warnings.warn("RequestAcquire is deprecated, use reset_acquire instead", DeprecationWarning)
+        self.request_acquire(show_ui, modal_ui)
+
+    def ModalLoop(self):
+        warnings.warn("ModalLoop is deprecated, use modal_loop instead", DeprecationWarning)
+        self.modal_loop()
+
+    def HideUI(self):
+        warnings.warn("HideUI is deprecated, use hide_ui instead", DeprecationWarning)
+        self.hide_ui()
+
     def SetXferFileName(self, path, format):
-        self.file_xfer_params = path, format 
+        warnings.warn("SetXferFileName is deprecated, use file_xfer_params instead", DeprecationWarning)
+        self.file_xfer_params = (path, format)
+
     def GetXferFileName(self):
+        warnings.warn("GetXferFileName is deprecated, use file_xfer_params property instead", DeprecationWarning)
         return self.file_xfer_params
+
     def GetImageInfo(self):
+        warnings.warn("GetImageInfo is deprecated, use image_info property instead", DeprecationWarning)
         return self.image_info
 
+    def XferImageNatively(self):
+        warnings.warn("XferImageNatively is deprecated, use xfer_image_natively instead", DeprecationWarning)
+        return self.xfer_image_natively()
+
+    def XferImageByFile(self):
+        warnings.warn("XferImageByFile is deprecated, use xfer_image_by_file instead", DeprecationWarning)
+        return self.xfer_image_by_file()
+
+
+def _get_dsm(dsm_name=None):
+    if _is_windows():
+        try:
+            if dsm_name:
+                return ctypes.WinDLL(dsm_name)
+            else:
+                dsm_name = 'twaindsm.dll'
+                try:
+                    return ctypes.WinDLL(dsm_name)
+                except WindowsError:
+                    dsm_name = 'twain_32.dll'
+                    return ctypes.WinDLL(dsm_name)
+        except WindowsError as e:
+            raise excSMLoadFileFailed(e)
+    else:
+        return ctypes.CDLL('/System/Library/Frameworks/TWAIN.framework/TWAIN')
+
+
 class SourceManager(object):
-    '''Represents a Data Source Manager connection'''
+    """Represents a Data Source Manager connection"""
     def __init__(self,
-                 parent_window,
-                 MajorNum = 1,
-                 MinorNum = 0,
-                 Language = TWLG_USA,
-                 Country  = TWCY_USA,
-                 Info   = "",
-                 ProductName  = "TWAIN Python Interface",
-                 ProtocolMajor = TWON_PROTOCOLMAJOR,
-                 ProtocolMinor = TWON_PROTOCOLMINOR,
-                 SupportedGroups =  DG_IMAGE | DG_CONTROL,
-                 Manufacturer =  "Kevin Gill",
-                 ProductFamily = "TWAIN Python Interface",
+                 parent_window=None,
+                 MajorNum=1,
+                 MinorNum=0,
+                 Language=TWLG_USA,
+                 Country=TWCY_USA,
+                 Info="",
+                 ProductName="TWAIN Python Interface",
+                 ProtocolMajor=TWON_PROTOCOLMAJOR,
+                 ProtocolMinor=TWON_PROTOCOLMINOR,
+                 SupportedGroups=DG_IMAGE | DG_CONTROL,
+                 Manufacturer="Kevin Gill",
+                 ProductFamily="TWAIN Python Interface",
                  dsm_name = None):
-        '''Constructor for a TWAIN Source Manager Object. This
+        """Constructor for a TWAIN Source Manager Object. This
         constructor has one position argument, parent_window, which
-        should contain Tk, Wx or Gtk window object or the windows
-        handle of the main window.
-        
-        The following are the named parameters
-         parent_window         mandatory
-         MajorNum   default = 1
-         MinorNum   default = 0
-         Language   default = TWLG_USA
-         Country    default = TWCY_USA
-         Info       default = 'TWAIN Python Interface 1.0.0.0  10/02/2002'
-         ProductName  default = 'TWAIN Python Interface'
-         ProtocolMajor default = TWON_PROTOCOLMAJOR
-         ProtocolMinor default = TWON_PROTOCOLMINOR
-         SupportedGroups default =  DG_IMAGE | DG_CONTROL
-         Manufacturer    default =  'Kevin Gill'
-         ProductFamily default = 'TWAIN Python Interface'
-         
-        '''
+        should contain .
+
+        :param parent_window: can contain Tk, Wx or Gtk window object or the windows
+            handle of the main window
+        :keyword MajorNum:   default = 1
+        :keyword MinorNum:   default = 0
+        :keyword Language:   default = TWLG_USA
+        :keyword Country:    default = TWCY_USA
+        :keyword Info:       default = 'TWAIN Python Interface 1.0.0.0  10/02/2002'
+        :keyword ProductName:  default = 'TWAIN Python Interface'
+        :keyword ProtocolMajor: default = TWON_PROTOCOLMAJOR
+        :keyword ProtocolMinor: default = TWON_PROTOCOLMINOR
+        :keyword SupportedGroups: default =  DG_IMAGE | DG_CONTROL
+        :keyword Manufacturer:    default =  'Kevin Gill'
+        :keyword ProductFamily: default = 'TWAIN Python Interface'
+
+        """
         self._sources = weakref.WeakSet()
         self._cb = None
         self._state = 'closed'
         self._parent_window = parent_window
-        if hasattr(parent_window, 'winfo_id'):
-            # tk window
-            self._hwnd = parent_window.winfo_id()
-        elif hasattr(parent_window, 'GetHandle'):
-            # wx window
-            self._hwnd = parent_window.GetHandle()
-        elif hasattr(parent_window, 'window') and hasattr(parent_window.window, 'handle'):
-            # gtk window
-            self._hwnd = parent_window.window.handle
-        else:
-            self._hwnd = int(parent_window)
-        try:
-            if dsm_name:
-                twain_dll = WinDLL(dsm_name)
+        self._hwnd = 0
+        if _is_windows():
+            if hasattr(parent_window, 'winfo_id'):
+                # tk window
+                self._hwnd = parent_window.winfo_id()
+            elif hasattr(parent_window, 'GetHandle'):
+                # wx window
+                self._hwnd = parent_window.GetHandle()
+            elif hasattr(parent_window, 'window') and hasattr(parent_window.window, 'handle'):
+                # gtk window
+                self._hwnd = parent_window.window.handle
+            elif parent_window is None:
+                self._hwnd = 0
             else:
-                dsm_name = 'twaindsm.dll'
-                try:
-                    twain_dll = WinDLL(dsm_name)
-                except WindowsError:
-                    dsm_name = 'twain_32.dll'
-                    twain_dll = WinDLL(dsm_name)
-        except WindowsError as e:
-            raise excSMLoadFileFailed(e)
+                self._hwnd = int(parent_window)
+        twain_dll = _get_dsm(dsm_name)
         try:
-            self._entry = twain_dll[1]
+            self._entry = twain_dll['DSM_Entry']
         except AttributeError as e:
             raise excSMGetProcAddressFailed(e)
         self._entry.restype = c_uint16
         self._entry.argtypes = (POINTER(TW_IDENTITY),
-                              POINTER(TW_IDENTITY),
-                              c_uint32,
-                              c_uint16,
-                              c_uint16,
-                              c_void_p)
+                                POINTER(TW_IDENTITY),
+                                c_uint32,
+                                c_uint16,
+                                c_uint16,
+                                c_void_p)
         
         self._app_id = TW_IDENTITY(Version=TW_VERSION(MajorNum=MajorNum,
                                                       MinorNum=MinorNum,
@@ -2045,14 +2257,7 @@ class SourceManager(object):
                                    Manufacturer=Manufacturer.encode('utf8'),
                                    ProductFamily=ProductFamily.encode('utf8'),
                                    ProductName=ProductName.encode('utf8'))
-        rv = self._entry(self._app_id,
-                         None,
-                         DG_CONTROL,
-                         DAT_PARENT,
-                         MSG_OPENDSM,
-                         byref(c_void_p(self._hwnd)))
-        if rv != TWRC_SUCCESS:
-            raise excSMOpenFailed("[%s], return code %d" % (dsm_name, rv))
+        self._call(None, DG_CONTROL, DAT_PARENT, MSG_OPENDSM, byref(c_void_p(self._hwnd)))
         self._version2 = bool(self._app_id.SupportedGroups & DF_DSM2)
         if self._version2:
             entrypoint = TW_ENTRYPOINT(Size=sizeof(TW_ENTRYPOINT))
@@ -2082,25 +2287,33 @@ class SourceManager(object):
         self._state = 'open'
         
     def __del__(self):
+        if self._state == 'open':
+            self._close_dsm()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
-            
+
+    def _close_dsm(self):
+        self._call(None,
+                   DG_CONTROL,
+                   DAT_PARENT,
+                   MSG_CLOSEDSM,
+                   byref(c_void_p(self._hwnd)))
+
     def close(self):
-        '''This method is used to force the SourceManager to close down.
+        """This method is used to force the SourceManager to close down.
         It is provided for finer control than letting garbage collection drop the connections.
-        '''
+        """
         while self._sources:
             self._sources.pop().close()
         if self._state == 'open':
-            self._call(None,
-                       DG_CONTROL,
-                       DAT_PARENT,
-                       MSG_CLOSEDSM,
-                       byref(c_void_p(self._hwnd)))
+            self._close_dsm()
             self._state = 'closed'
-            
-    destroy = close
 
-    def _call(self, dest_id, dg, dat, msg, buf, expected_returns=[]):
+    def _call(self, dest_id, dg, dat, msg, buf, expected_returns=()):
         rv = self._entry(self._app_id, dest_id, dg, dat, msg, buf)
         if rv == TWRC_SUCCESS or rv in expected_returns:
             return rv
@@ -2111,7 +2324,7 @@ class SourceManager(object):
                              DG_CONTROL,
                              DAT_STATUS,
                              MSG_GET,
-                             byref(status));
+                             byref(status))
             if rv != TWRC_SUCCESS:
                 raise Exception('DG_CONTROL DAT_STATUS MSG_GET returned non success code, rv = %d' % rv)
             code = status.ConditionCode
@@ -2149,44 +2362,51 @@ class SourceManager(object):
                    byref(ds_id))
 
     def open_source(self, product_name=None):
-        '''Open a TWAIN Source.
-        
-        Returns a Source Object, which can be used to communicate with the source
-        There is one optional string parameter, which allows the application
-        to name the source to be opened, i.e. to open from application configuration
-        '''
-        if not product_name:
+        """Open a TWAIN Source.
+
+        Returns a :class:`Source` Object, which can be used to communicate with the source or None if user cancelled
+        source selection dialog.
+
+        :keyword product_name: source to be opened, if not specified or value is None user will be prompted for
+                               source selection
+        """
+        if product_name:
+            ds_id = TW_IDENTITY(ProductName=self._encode(product_name))
+        else:
             ds_id = self._user_select()
             if not ds_id:
                 return None
-        else:
-            ds_id = TW_IDENTITY(ProductName=product_name)
         self._open_ds(ds_id)
-        source = _Source(self, ds_id)
+        source = Source(self, ds_id)
         self._sources.add(source)
         return source
 
     @property
     def identity(self):
-        '''This function is used to retrieve the identity of our application.
+        """This property is used to retrieve the identity of our application.
         The information is returned in a dictionary.
-        '''
+        """
         res = _struct2dict(self._app_id, self._decode)
         res.update(_struct2dict(self._app_id.Version, self._decode))
         return res
 
     @property
     def source_list(self):
-        '''Returns a list containing the names of the available source.'''
+        """Returns a list containing the names of the available source."""
         names = []
         ds_id = TW_IDENTITY()
-        rv = self._call(None,
-                   DG_CONTROL,
-                   DAT_IDENTITY,
-                   MSG_GETFIRST,
-                   byref(ds_id),
-                   (TWRC_SUCCESS, TWRC_ENDOFLIST))
-        while (rv != TWRC_ENDOFLIST):
+        try:
+            rv = self._call(None,
+                            DG_CONTROL,
+                            DAT_IDENTITY,
+                            MSG_GETFIRST,
+                            byref(ds_id),
+                            (TWRC_SUCCESS, TWRC_ENDOFLIST))
+        except excTWCC_NODS:
+            # there are no data sources
+            return names
+
+        while rv != TWRC_ENDOFLIST:
             names.append(self._decode(ds_id.ProductName))
             rv = self._call(None,
                             DG_CONTROL,
@@ -2196,26 +2416,41 @@ class SourceManager(object):
                             (TWRC_SUCCESS, TWRC_ENDOFLIST))
         return names
     
-    def SetCallback(self, cb):
-        '''Register a python function to be used for notification that the
+    def set_callback(self, cb):
+        """Register a python function to be used for notification that the
         transfer is ready, etc.
-        '''
+        """
         self._cb = cb
 
     def is_twain2(self):
         return self._version2
 
-    OpenSource = open_source
+    # backward compatible aliases
+    def destroy(self):
+        warnings.warn("destroy is deprecated, use close instead", DeprecationWarning)
+        self.close()
+
+    def SetCallback(self, cb):
+        warnings.warn("SetCallback is deprecated, use set_callback instead", DeprecationWarning)
+        return self.set_callback(cb)
+
+    def OpenSource(self, product_name=None):
+        warnings.warn("OpenSource is deprecated, use open_source instead", DeprecationWarning)
+        return self.open_source(product_name)
+
     def GetIdentity(self):
+        warnings.warn("GetIdentity is deprecated, use identity property instead", DeprecationWarning)
         return self.identity
+
     def GetSourceList(self):
+        warnings.warn("GetSourceList is deprecated, use source_list property instead", DeprecationWarning)
         return self.source_list
 
+
 def version():
-    '''Retrieve the version of the Python Twain Interface'''
+    """Retrieve the version of the module"""
     return '2.0'
 
-Version = version
 
 class BITMAPINFOHEADER(Structure):
     _pack_ = 4
@@ -2231,6 +2466,7 @@ class BITMAPINFOHEADER(Structure):
                 ('biClrUsed', c_uint32),
                 ('biClrImportant', c_uint32)]
 
+
 def _dib_write(handle, path, lock, unlock):
     file_header_size = 14
     ptr = lock(handle)
@@ -2242,16 +2478,18 @@ def _dib_write(handle, path, lock, unlock):
             raise excImageFormat(msg)
         bits_offset = file_header_size + bih.biSize + bih.biClrUsed * 4
         if bih.biSizeImage == 0:
-            row_bytes = (((bih.biWidth * bih.biBitCount) + 31) & ~31) / 8;
+            row_bytes = (((bih.biWidth * bih.biBitCount) + 31) & ~31) // 8
             bih.biSizeImage = row_bytes * bih.biHeight
         dib_size = bih.biSize + bih.biClrUsed * 4 + bih.biSizeImage 
         file_size = dib_size + file_header_size
+
         def _write_bmp(f):
             import struct
             f.write(b'BM')
             f.write(struct.pack('LHHL', file_size, 0, 0, bits_offset))
             for i in range(dib_size):
                 f.write(char_ptr[i])
+
         if path:
             f = open(path, 'wb')
             try:
@@ -2260,7 +2498,7 @@ def _dib_write(handle, path, lock, unlock):
                 f.close()
         else:
             import io
-            f = io.StringIO(file_size)
+            f = io.BytesIO()
             try:
                 _write_bmp(f)
                 return f.getvalue()
@@ -2269,42 +2507,59 @@ def _dib_write(handle, path, lock, unlock):
     finally:
         unlock(handle)
 
-def DIBToBMFile(handle, path=None):
-    '''Convert a DIB (Device Independent Bitmap) to a windows
+def dib_to_bm_file(handle, path=None):
+    """Convert a DIB (Device Independent Bitmap) to a windows
     bitmap file format. The BitMap file is either returned as
     a string, or written to a file with the name given in the
     second argument.
-    Can only be used with twain 1.x sources
-    '''
+
+    .. note::
+
+        Can only be used with twain 1.x sources
+    """
     return _dib_write(handle, path, _GlobalLock, _GlobalUnlock)
 
-def DIBToXBMFile(handle, path=None):
-    '''Convert a DIB (Device Independent Bitmap) to an X-Windows
+
+def dib_to_xbm_file(handle, path=None):
+    """Convert a DIB (Device Independent Bitmap) to an X-Windows
     bitmap file (XBM format). The XBM file is either returned as
     a string, or written to a file with the name given in the
     third argument.
-    Parameters: a handle to a global area containing a DIB,
-        a prefix to be used for the name and an optional filename
+    Parameters:
+
+    :param handle: Handle to a global area containing a DIB,
+    :param path: Path prefix to be used for the name and an optional filename
         for file only output.
-    Can only be used with twain 1.x sources
-    '''
+
+    .. note::
+
+        Can only be used with twain 1.x sources
+    """
     import tempfile
     import os
     handle, bmppath = tempfile.mkstemp('.bmp')
     os.close(handle)
-    DIBToBMFile(handle, bmppath)
-    from PIL import Image
+    dib_to_bm_file(handle, bmppath)
+    try:
+        import Image
+    except ImportError:
+        from PIL import Image
     Image.open(bmppath).save(path, 'xbm')
     os.remove(bmppath)
 
-def GlobalHandleGetBytes(handle, offset, count):
-    '''Read a specified number of bytes from a global handle.
-    The following parameters are required
-     Handle - a global handle
-     Offset - an index into the handle data
-     Count - The number of bytes to be returned
-    Can only be used with twain 1.x sources
-    '''
+
+def global_handle_get_bytes(handle, offset, count):
+    """Read a specified number of bytes from a global handle.
+
+    Parameters:
+    :param handle: Global handle
+    :param offset: An index into the handle data
+    :param count: The number of bytes to be returned
+
+    .. note::
+
+        Can only be used with twain 1.x sources
+    """
     size = _GlobalSize(handle)
     ptr = _GlobalLock(handle)
     try:
@@ -2313,15 +2568,21 @@ def GlobalHandleGetBytes(handle, offset, count):
     finally:
         _GlobalUnlock(handle)
 
-def GlobalHandlePutBytes(handle, offset, count, data):
-    '''Write a specified number of bytes to a global handle.
-    The following parameters are required
-     Handle - a global handle
-     Offset - an index into the handle data
-     Count - The number of bytes to be returned
-     Data - String of data to be written
-    Can only be used with twain 1.x sources
-    '''
+
+def global_handle_put_bytes(handle, offset, count, data):
+    """Write a specified number of bytes to a global handle.
+
+    Parameters:
+
+    :param handle: Global handle
+    :param offset: An index into the handle data
+    :param count: The number of bytes to update
+    :param data: String of data to be written
+
+    .. note::
+
+        Can only be used with twain 1.x sources
+    """
     size = _GlobalSize(handle)
     ptr = _GlobalLock(handle)
     try:
@@ -2335,19 +2596,34 @@ def GlobalHandlePutBytes(handle, offset, count, data):
     finally:
         _GlobalUnlock(handle)
 
-'''Allocate a specified number of bytes via a global handle.
-The following parameters are required
- Size - The number of bytes to be allocated
-Can only be used with twain 1.x sources
-'''
-GlobalHandleAllocate = _GlobalAlloc
 
-'''Free an allocated heap section via the global handle.
-The following parameters are required
- handle - The number of bytes to be allocated
-Can only be used with twain 1.x sources
-'''
-GlobalHandleFree = _GlobalFree
+def global_handle_allocate(flags, size):
+    """Allocate a specified number of bytes via a global handle.
+
+    Parameters:
+
+    :param size: The number of bytes to be allocated
+
+    .. note::
+
+        Can only be used with twain 1.x sources
+    """
+    return _GlobalAlloc(flags, size)
+
+
+def global_handle_free(handle):
+    """Free an allocated heap section via the global handle.
+
+    Parameters:
+
+    :param handle: Handle to memory to be freed
+
+    .. note::
+
+        Can only be used with twain 1.x sources
+    """
+    return _GlobalFree(handle)
+
 
 def acquire(path,
             ds_name=None,
@@ -2358,30 +2634,28 @@ def acquire(path,
             parent_window=None,
             show_ui=False,
             dsm_name=None):
-    '''Acquires single image into file
-    Required argument:
-        path -- path where to save image
-    Keyword arguments:
-        ds_name -- name of twain data source, if not provided user will be presented with selection dialog
-        dpi -- resolution in dots per inch
-        pixel_type -- can be 'bw', 'gray', 'color'
-        bpp -- bits per pixel
-        frame -- tuple (left, top, right, bottom) scan area in inches
-        parent_window -- can be Tk, Wx, Gtk window object or Win32 window handle
-        show_ui -- if True source's UI dialog will be presented to user
+    """Acquires single image into file
+
+    :param path: Path where to save image
+    :keyword ds_name: name of twain data source, if not provided user will be presented with selection dialog
+    :keyword dpi: resolution in dots per inch
+    :keyword pixel_type: can be 'bw', 'gray', 'color'
+    :keyword bpp: bits per pixel
+    :keyword frame: tuple (left, top, right, bottom) scan area in inches
+    :keyword parent_window: can be Tk, Wx, Gtk window object or Win32 window handle
+    :keyword show_ui: if True source's UI dialog will be presented to user
+
     Returns a dictionary describing image, or None if scanning was cancelled by user
-    
-    '''
+
+    """
     if pixel_type:
         pixel_type_map = {'bw': TWPT_BW,
                           'gray': TWPT_GRAY,
                           'color': TWPT_RGB}
         twain_pixel_type = pixel_type_map[pixel_type]
-    print "start new tk"    
     if not parent_window:
-        from Tkinter import Tk
-        parent_window = Tk()  
-    print "start end tk"          
+        from tkinter import Tk
+        parent_window = Tk()        
     sm = SourceManager(parent_window, dsm_name=dsm_name)
     try:
         sd = sm.open_source(ds_name)
@@ -2401,16 +2675,11 @@ def acquire(path,
                     sd.set_image_layout(frame)
                 except CheckStatus:
                     pass
-            sd.set_capability(ICAP_CONTRAST, TWTY_FIX32, 0)   
-            try:
-                sd.set_capability(ICAP_AUTOMATICROTATE, TWTY_BOOL, True)   
-            except:
-                print "set_capability ICAP_AUTOMATICROTATE error"
+        
             res = []
-            fileNamePre = os.path.join(path,time.strftime('%Y%m%d%H%M%S_'))
             def before(img_info):
                 res.append(img_info)
-                return "%s%d.jpg"%(fileNamePre,len(res))
+                return path
             
             def after(more):
                 if more:
@@ -2424,19 +2693,41 @@ def acquire(path,
             sd.close()
     finally:
         sm.close()
-    return res
-def getDsList(
-            parent_window=None,
-            dsm_name=None):
-    if not parent_window:
-        from Tkinter import Tk
-        parent_window = Tk()    
-    sm = SourceManager(parent_window, dsm_name=dsm_name)
-    try:
-        return sm.GetSourceList()
-    finally:
-        parent_window.destroy()
-        sm.close() 
-if __name__=="__main__":
-    from PIL import Image
-    pass
+    return res[0]
+
+
+# backward compatible aliases
+def DIBToBMFile(handle, path=None):
+    """ Backward compatible alias for :func:`dib_to_bm_file` """
+    warnings.warn("DIBToBMFile is deprecated, use dib_to_bm_file instead", DeprecationWarning)
+    return dib_to_bm_file(handle, path)
+
+
+def DIBToXBMFile(handle, path=None):
+    """ Backward compatible alias for :func:`dib_to_xbm_file` """
+    warnings.warn("DIBToXBMFile is deprecated, use dib_to_xbm_file instead", DeprecationWarning)
+    return dib_to_xbm_file(handle, path)
+
+
+def GlobalHandleGetBytes(handle, offset, count):
+    """ Backward compatible alias for :func:`global_handle_get_bytes` """
+    warnings.warn("GlobalHandleGetBytes is deprecated, use global_handle_get_bytes instead", DeprecationWarning)
+    return global_handle_get_bytes(handle, offset, count)
+
+
+def GlobalHandlePutBytes(handle, offset, count, data):
+    """ Backward compatible alias for :func:`global_handle_put_bytes` """
+    warnings.warn("GlobalHandlePutBytes is deprecated, use global_handle_put_bytes instead", DeprecationWarning)
+    return global_handle_put_bytes(handle, offset, count, data)
+
+
+def GlobalHandleAllocate(flags, size):
+    """ Backward compatible alias for :func:`global_handle_allocate` """
+    warnings.warn("GlobalHandleAllocate is deprecated, use global_handle_allocate instead", DeprecationWarning)
+    return global_handle_allocate(flags, size)
+
+
+def GlobalHandleFree(handle):
+    """ Backward compatible alias for :func:`global_handle_free` """
+    warnings.warn("GlobalHandleFree is deprecated, use global_handle_free instead", DeprecationWarning)
+    return global_handle_free(handle)
