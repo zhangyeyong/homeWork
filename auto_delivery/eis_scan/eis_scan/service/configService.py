@@ -33,14 +33,14 @@ class configure:
             re.compile(str(params.get(configkey.BARCODE_RULE)))
         except:
             traceback.print_exc() 
-            return json.dumps(common.buildFail(_("条码规则语法错误")))
+            return json.dumps(common.buildFail(_(u"条码规则语法错误")))
 #         
 #         session = web.config._session
 #         configs[configkey.COMPANY_CODE + session.user.get("userNum")] = params.get(configkey.COMPANY_CODE + session.user.get("userNum")) 
 #         configs[configkey.SITE_ID + session.user.get("userNum")] = params.get(configkey.SITE_ID + session.user.get("userNum")) 
 #         configs[configkey.OPERATION_TYPE_CODE + session.user.get("userNum")] = params.get(configkey.OPERATION_TYPE_CODE + session.user.get("userNum"))
         
-        rtn = common.buildFail(_("保存失败"))
+        rtn = common.buildFail(_(u"保存失败"))
         try:
             self.configDao.save(configs)
             rtn = common.buildSuccess()

@@ -83,7 +83,7 @@ class dailyScan:
             approx = cv2.approxPolyDP(cnt, 0.01 * epsilon, True)
             areaSum += cv2.contourArea(approx)
         isBlank = areaSum * 100.0 / (h * w) < float(pixerRatio)
-        print "非空白率：----------------------------", areaSum * 100.0 / (h * w)
+        print u"非空白率：----------------------------", areaSum * 100.0 / (h * w)
         return isBlank
     def readBarCode(self, fileName, regexStr):
 #         img = cv2.imread(fileName,0)
@@ -270,7 +270,7 @@ class dailyScan:
                 self.makedirs(curImgHead.get('headNum'))
             if isBlack:
                 # 空白页没有行记录
-                print _("空白页：") + path
+                print _(u"空白页：") + path
                 continue
             # imgLine
             WaterCode += 1
@@ -311,16 +311,16 @@ class dailyScan:
             curImgHead["imgLines"].append(imgLine)
             
         t2 = time.time()
-        print " 保存图片：%d" % k
-        print " barcode 识别：%d" % so
-        print " 处理图片：%d" % (t2 - t1)
+        print u" 保存图片：%d" % k
+        print u" barcode 识别：%d" % so
+        print u" 处理图片：%d" % (t2 - t1)
         # 2、更新头表，插入行表
         allLines = self.imgHeadDao.saveAll(imgHeadList) 
         # 3、识别发票，插入信息
 #         ocrThread = OcrThread(allLines)
 #         ocrThread.start() 
         t3 = time.time()
-        print " 保存数据：%d" % (t3 - t2)         
+        print u" 保存数据：%d" % (t3 - t2)
         # 查询出当前用户的全部展示信息
         retDict["info"] = renderScan2(belongType.DAILY_SCAN)
         if len(allLines) > 0:
@@ -584,7 +584,7 @@ class importImg:
             smallPath = pathJoin(scanPath, imgHead.get('headNum'), "s_" + fileNameP)
             img = cv2.imread(originalPath, -1)
             if img is None:
-                return render.modules.importImg({}, _("无法导入图片：") + fileNameS)
+                return render.modules.importImg({}, _(u"无法导入图片：") + fileNameS)
             h, w = img.shape[:2]
             width = imgWidth
             height = int(imgWidth * 1.0 / w * h)
@@ -780,7 +780,7 @@ class saveUserFormByHead:
         else:        
             tempHead = self.imgHeadDao.findByHeadNum(headNum)
             if tempHead is not None:
-                return json.dumps(common.buildFail(info=_("任务编号：") + headNum + _("已经存在")))
+                return json.dumps(common.buildFail(info=_(u"任务编号：") + headNum + _(u"已经存在")))
             self.imgHeadDao.update(imghead)
             self.imgLineDao.updateImgHeadNum(headId, headNum)
             
@@ -806,7 +806,7 @@ class addTask:
         dbHead = self.imgHeadDao.findByHeadNum(i.headNum)
         if dbHead is not None:
             retDict["isSuccess"] = False
-            retDict["msg"] = _("任务编号：") + i.headNum + _("已经存在")
+            retDict["msg"] = _(u"任务编号：") + i.headNum + _(u"已经存在")
             return json.dumps(retDict)
         session = web.config._session
         userNum = session.user.get("userNum")
@@ -909,7 +909,7 @@ class getTask():
             return json.dumps(retDict)
         else:
             retDict["isSuccess"] = False
-            retDict["msg"] = _("获取任务失败")
+            retDict["msg"] = _(u"获取任务失败")
             return json.dumps(retDict)
     
 class editNum:
@@ -920,7 +920,7 @@ class editNum:
         dbHead = self.imgHeadDao.findByHeadNum(i.headNum)
         if dbHead is not None:
             retDict["isSuccess"] = False
-            retDict["msg"] = _("任务编号：") + i.headNum + _("已经存在")
+            retDict["msg"] = _(u"任务编号：") + i.headNum + _(u"已经存在")
             return json.dumps(retDict)
         self.imgHeadDao.updateImgHeadNum(i.headId, i.headNum)
         oldDir = pathJoin(scanPath, i.oldNum)
@@ -1034,7 +1034,7 @@ class getClientParams:
         if configDict.get("DS_NAME"):
             params += "&ds_name=" + configDict.get("DS_NAME")
         else:
-            return _("请先到系统配置选择扫描仪")
+            return _(u"请先到系统配置选择扫描仪")
 #         params += "&dpi=" + configDict.get("DPI")
 #         params += "&contrast=" + configDict.get("CONTRAST")
         return params
@@ -1086,7 +1086,7 @@ class appraiseTaskAddScan:
         isLogin = self.evsInterface.IsLogin(ticket).get("data")
         # 不是登录状态， 停止定时任务
         if not isLogin:
-            print "未登录或登录 失效，评价任务定时器 关闭~_~!"
+            print u"未登录或登录 失效，评价任务定时器 关闭~_~!"
             return False
         userNum = session.user.get("userNum")
         groupName = getGroupNameByApp(session.currentApp)
@@ -1122,7 +1122,7 @@ class appraiseTaskAddScan:
             ftp = session.get("ftpMap").get(task.get('ftpId'))
             if not ftp:
                 print >> sys.stderr, "connot get ftp info by ftpId:[%s]" % (task.get('ftpId'))
-                return json.dumps(common.buildFail(_("获取FTP信息失败，请确认是否配置FTP信息")))
+                return json.dumps(common.buildFail(_(u"获取FTP信息失败，请确认是否配置FTP信息")))
             # 测试连通性
             testRtn = ftpU.testFtp(ftp.get("ftpIp"), int(ftp.get("port")), ftp.get("userName"), ftp.get("password"))
             if not testRtn or not testRtn.get("isSuccess"):
@@ -1133,7 +1133,7 @@ class appraiseTaskAddScan:
                     fileNames.append(os.path.basename(f))
                 isSuccess = ftpU.download2(ftp.get("userName"), ftp.get("password"), dirPath, remoteFiles, ftp.get("ftpIp"), ftp.get("port"))
                 if not isSuccess:
-                    print >> sys.stderr, _("任务编号："), headNum, _("下载失败")
+                    print >> sys.stderr, _(u"任务编号："), headNum, _(u"下载失败")
                     continue
             # 把下载的文件从临时目录移到目标目录
             filelist = os.listdir(dirPath)
@@ -1242,7 +1242,7 @@ class noTaskAddScan:
 #                       "belong":belongType.NO_TASK,
 #                       }
 #             self.imgHeadDao.update(imgHead)
-        print "无任务处理开始~_~!"
+        print u"无任务处理开始~_~!"
         ticket = session.ticket
         if not session.ticket:
             print "ticket不存在，评价任务定时器 关闭~_~!"
@@ -1250,7 +1250,7 @@ class noTaskAddScan:
         isLogin = self.evsInterface.IsLogin(ticket).get("data")
         # 不是登录状态， 停止定时任务
         if not isLogin:
-            print "未登录或登录 失效，评价任务定时器 关闭~_~!"
+            print u"未登录或登录 失效，评价任务定时器 关闭~_~!"
             return False
         userNum = session.user.get("userNum")
         for task in noTasks:
@@ -1288,7 +1288,7 @@ class noTaskAddScan:
                     fileNames.append(os.path.basename(f))
                 isSuccess = ftpU.download2(ftp.get("userName"), ftp.get("password"), dirPath, remoteFiles, ftp.get("ftpIp"), ftp.get("port"))
                 if not isSuccess:
-                    print _("任务编号："), headNum, _("下载失败")
+                    print _(u"任务编号："), headNum, _(u"下载失败")
                     continue
             # 把下载的文件从临时目录移到目标目录
             filelist = os.listdir(dirPath)
@@ -1342,7 +1342,7 @@ class noTaskAddScan:
             imgHeadList.append(imgHead)
             # 插入信息
             self.imgHeadDao.saveAll(imgHeadList)
-        print "无任务处理结束~_~!"
+        print u"无任务处理结束~_~!"
         return True
 
 class editHead:

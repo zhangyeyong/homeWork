@@ -34,7 +34,7 @@ def startServCmdInfoTimer():
     ocrResultDao = OcrResultDao()
     servCmdInfoTimer = EisTimer(getAppraiseTask, (ticket, userNum, imgHeadDao, ocrResultDao, evsInterface))
     servCmdInfoTimer.start()
-    print "评价任务定时器 启动~_~!"
+    print u"评价任务定时器 启动~_~!"
     return True
 # 定时任务：自动上传
 autoUploadTimer = None
@@ -46,7 +46,7 @@ def startAutoUploadTimer():
     uf = uploadFile()
     autoUploadTimer = EisTimer(uf.auToUpload,(ticket, userNum, session.ftpMap),sleep=60)
     autoUploadTimer.start()
-    print "评价任务定时器 启动~_~!"
+    print u"评价任务定时器 启动~_~!"
     return True
 def formatWidthAndHeight(h, w):
     currentApp = web.config._session.currentApp
@@ -135,14 +135,14 @@ def setUserFormByDict(userForm,valDict):
                             f["value_label"] = item.get("label")
     return userForm
 def getAppraiseTask(ticket, userNum, imgHeadDao, ocrResultDao, evsInterface,session,groupName,pageInfo,jsonParam):
-    print "评价任务处理开始~_~!"
+    print u"评价任务处理开始~_~!"
     if not ticket:
         print "ticket不存在，评价任务定时器 关闭~_~!"
         return False
     isLogin = evsInterface.IsLogin(ticket).get("data")
     # 不是登录状态， 停止定时任务
     if not isLogin:
-        print "未登录或登录 失效，评价任务定时器 关闭~_~!"
+        print u"未登录或登录 失效，评价任务定时器 关闭~_~!"
         return False
     ret = evsInterface.GetServCmdInfo(ticket,taskType.BACKTASK, pageInfo,json.dumps(jsonParam))
     result = ret.get("data")
@@ -184,7 +184,7 @@ def getAppraiseTask(ticket, userNum, imgHeadDao, ocrResultDao, evsInterface,sess
                     fileNames.append(os.path.basename(f))
                 isSuccess = ftpU.download2(ftp.get("userName"), ftp.get("password"), dirPath, remoteFiles, ftp.get("ftpIp"), ftp.get("port"))
                 if not isSuccess:
-                    print _("任务编号："), headNum, _("下载失败")
+                    print _(u"任务编号："), headNum, _(u"下载失败")
                     continue
             # 把下载的文件从临时目录移到目标目录
             filelist = os.listdir(dirPath)
@@ -238,7 +238,7 @@ def getAppraiseTask(ticket, userNum, imgHeadDao, ocrResultDao, evsInterface,sess
             imgHeadList.append(imgHead)
             # 插入信息
             imgHeadDao.saveAll(imgHeadList)
-    print "评价任务处理结束~_~!"
+    print u"评价任务处理结束~_~!"
     return True
 
 class logout:
@@ -263,7 +263,7 @@ class login:
         configs[configkey.EIS_PORT] = params.get(configkey.EIS_PORT) 
         configs[configkey.VIRTUAL_PATH] = params.get(configkey.VIRTUAL_PATH) 
         
-        rtn = common.buildFail(_("保存失败"))
+        rtn = common.buildFail(_(u"保存失败"))
         try:
             self.configDao.save(configs)
             rtn = common.buildSuccess()
@@ -285,8 +285,8 @@ class login:
         except Exception:
             traceback.print_exc()  
         if not client:
-            return common.buildFail(_("连接服务器失败")) 
-        return common.buildSuccess(_("测试成功"))
+            return common.buildFail(_(u"连接服务器失败"))
+        return common.buildSuccess(_(u"测试成功"))
     def nologin(self,params):
         params={}
         params["userCd"]="1000"
@@ -299,7 +299,7 @@ class login:
         ip = configDict.get(configkey.EIS_IP)
         virtual_path = configDict.get(configkey.VIRTUAL_PATH)
         if not ip or ip.strip() == "" or not virtual_path or virtual_path.strip() == "":
-            return common.buildFail("网络配置不正确")
+            return common.buildFail(u"网络配置不正确")
 #         #检查服务器的连通性
 #         rtn = self.evsInterface.checkServer()
 #         if not rtn.get("isSuccess"):
@@ -332,7 +332,7 @@ class login:
             result = rtn.get("data")
         initSession()
         if not result:
-            return common.buildFail(_("登录失败，请确认配置是否正确"))
+            return common.buildFail(_(u"登录失败，请确认配置是否正确"))
         if result.get("code")==interface.CODE_SUCCESS:
             
             # 校验通过
@@ -374,7 +374,7 @@ class login:
             # 登录成功 开启获取评价任务定时器
 #             startServCmdInfoTimer()
 #             startAutoUploadTimer()
-            return common.buildSuccess(_("登录成功"))
+            return common.buildSuccess(_(u"登录成功"))
     def reUpload(self):
         from scanService import uploadFile
         from model.uploadTaskDao import UploadTaskDao 
