@@ -1,0 +1,91 @@
+$def with(imgHeads)
+<form id="userForm" action="/saveUserForm" style="display:none">
+<div class="searchbar" >
+	<div class="fields">
+		<div class="tit">
+			$_("应用"):
+		</div>
+		<div class="cont">
+			<select onchange="scan.changeapp(this.value)" class="myselect" name='appCode' id="appCode"
+				value="$session.currentApp.get('appCode')">
+				$for app in session.appList:
+			  		<option value ="$app.get('appCode')">$app.get('appName')</option>
+			</select>
+		</div>
+	</div>
+	$for f in session.currentApp.get("form"):
+		$if f.get("type")=="hidden":
+				<input type="hidden" class="input_search" name='$f.get("name")'
+					value="$f.get('value')">
+		$elif f.get("type")=="input" and (f.get("groupBy")=="0" or f.get("groupBy")==0) :
+			<div class="fields">
+				<div class="tit">
+					$f.get("label"):
+				</div>
+				<div class="cont">
+					<input type="text" class="input_search" name='$f.get("name")' required='$f.get("required")' label='$f.get("label")'
+						value="$f.get('value')">
+				</div>
+			</div>
+		$elif f.get("type")=="select":
+			<div class="fields">
+				<div class="tit">
+					$f.get("label"):
+				</div>
+				<div class="cont">
+				<select class="myselect" name="$f.get('name')"
+					value="$f.get('value')">
+					$for item in f.get("items"):
+				  		<option value ="$item.get('value')">$item.get("label")</option>
+				</select>
+				</div>
+			</div>
+	<input type="button" onclick="scan.saveUserForm()" value="$_("保存")" />
+</div>	
+</form>	
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		if(top.scan.curMenu=="dailyScanM"){
+			jQuery("#userForm").css("display","block");
+		}
+		var select=jQuery('.myselect');
+		select.each(function() {
+			var val = jQuery(this).attr("value");
+			jQuery(this).find("option").each(function(){
+				if(this.value==val){
+					this.selected = true;
+					return false;
+				}
+			});
+		});
+		
+		//保存配置
+		var autoSaveUserForm = "$session.get('autoSaveUserForm')";
+		if(autoSaveUserForm!="False"){
+			scan.saveUserForm({"type":"autoSaveUserForm"});
+		}
+	});
+</script>
+
+
+$if len(imgHeads) > 0:
+	<p class="opts"><label><input type="checkbox" name="" id="selectAll" onclick="selectAll(this);"> $_("全选")</label></p>
+<ul class="bills_list">
+	$for imgHead in imgHeads:
+		<li>
+			<a href="#;">
+				<label class="check_cont">
+					<input type="checkbox" data="$imgHead.get('headId')" headNum="$imgHead.get('headNum')" imgQty='$imgHead.get("imgQty")'  headStatus='$imgHead.get("headStatus")'
+					 onclick="selectBlock(this);"> $_("选中")
+				</label>
+				<span class="img_cont" onclick="scan.showImages($imgHead.get('headId'));">
+					$if imgHead.get('imgPath'):
+						<img src="$imgHead.get('imgPath')" alt="">
+				</span>
+				<span>
+					$imgHead.get("headNum")
+					(${imgHead.get("imgQty") if imgHead.get("imgQty") else 0})
+				</span>
+			</a>
+		</li>
+</ul>

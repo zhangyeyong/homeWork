@@ -1,0 +1,367 @@
+$def with()
+<div class="scan">
+	<div class="cont">
+		<ul>
+			<li><a href="#;" onclick="commonScan(dailyScan);"><span class="folder"></span>日常扫描</a></li>
+		</ul>
+		<span class="line"></span>
+		<ul>
+			<li><a href="#;" onclick="rescan();"><span class="export"></span>重扫</a></li>
+			<li><a href="#;" onclick="addScan();"><span class="add"></span>补扫</a></li>
+		</ul>
+		<span class="line"></span>
+		<ul>
+			<li>
+				<iframe id="importFrame" src="/importImg" style="display:none;"></iframe>
+				<a href="#;" onclick="importImg();"><span class="import"></span>导入</a>
+			</li>
+			<li><a href="#;" onclick="exportFile();"><span class="export"></span>导出</a></li>
+			<li><a href="#;" onclick="deleteGroup();"><span class="delete"></span>删除</a></li>
+		</ul>
+	</div>
+	<div class="tit">扫描</div>
+</div>
+<div class="upload">
+	<div class="cont">
+		<ul>
+			<li><a href="#;"><span class="up"></span>上传</a></li>
+		</ul>
+	</div>
+	<div class="tit">上传</div>
+</div>
+<div class="pop mbox" id="mbox">
+	<div class="cb">
+		<div class="fields nofloat fix_width">
+			<div class="tit">文件名：</div>
+			<div class="cont">
+				<input type="text" class="input_search" value="" id="fileName">
+			</div>
+		</div>
+		<div class="fields nofloat fix_width">
+			<div class="tit">序号：</div>
+			<div class="cont"><input type="text" class="input_search" value="" id="fileOrd"></div>
+		</div>
+	</div>
+</div>
+<div class="pop photoBox" id="photoDetail">
+	<div class="con_box">
+		<div class="photo_opts">
+		<a href="#;" onclick="rotatePhoto(-90)"><span class="rotate r"></span>右旋转90度</a>
+		<a href="#;" class="last" onclick="rotatePhoto(90)"><span class="rotate l"></span>左旋转90度</a>
+		</div>
+		<img src="/static/images/bill2.jpg" alt="">
+	</div>
+</div>
+<script>
+	function rotatePhoto(angle){
+		jQuery.ajax({
+			url : "/rotatePhoto",
+			type : "post",
+			async : true,
+			data : {
+				"imgPath" : photoDetail.imgPath,
+				"angle" : angle
+			},
+			success : function(imgPath) {
+				$$("#photoDetail img").attr("src",imgPath);
+			}
+		});
+	}
+	function editPhoto(imgPath){
+		$$("#photoDetail img").attr("src",imgPath);
+		photoDetail.imgPath = imgPath;
+		photoDetail.show();
+	}
+	function updateScan3(){
+		jQuery.ajax({
+			url : "/refreshPhoto",
+			type : "post",
+			async : true,
+			data : {
+				"headerId" : $$("#headerId").val()
+			},
+			success : function(d) {
+				$$(".main").html(d);
+			}
+		});
+	}
+	var photoDetail=new Dialog({
+		target:jQuery('#photoDetail'),
+		title:'图片详情',
+		width:820,
+		showYesBtn:false,
+		showNoBtn:true,
+		noBtnText:"关闭",
+		noFn:updateScan3
+	})
+	var mbox= mbox?mbox:new Dialog({
+		target:jQuery('#mbox'),
+		title:'编辑图片',
+		width:360,
+		yesFn:confirmEdit
+	})	
+	function confirmEdit(){
+		var imgName = $$("#fileName").val();
+		var imgOrd = $$("#fileOrd").val();
+		imgOrd = parseInt(imgOrd,10);
+		if(isNaN(imgOrd) || imgOrd<1){
+			alert("序号必须是大于0的整数！");
+			return false;
+		}
+		if(mbox.imgOrd != imgOrd || mbox.imgName != imgName){
+			jQuery.ajax({
+				url : "/sortImg",
+				type : "post",
+				async : true,
+				data : {
+					"imgId" : mbox.imgId,
+					"imgOrd" : mbox.imgOrd == imgOrd ? null : imgOrd,
+					"imgNameS" : mbox.imgName == imgName ? null : imgName + "." + mbox.imgExt
+				},
+				success : function(d) {
+					//clearSortImg();
+					$$(".main").html(d);
+				}
+			});
+		}
+	}
+	
+	function clearSortImg(){
+		$$("#fileName").val("");
+		$$("#fileOrd").val("");
+	}
+	
+	function initSortImg(img){
+		var i = $$(img);
+		mbox.imgId = i.attr("imgId");
+		mbox.imgOrd = i.attr("imgOrd");
+		mbox.imgName = i.attr("imgName");
+		mbox.imgExt = i.attr("imgExt");
+		$$("#fileName").val(mbox.imgName);
+		$$("#fileOrd").val(mbox.imgOrd);
+	}
+	function sortImg(){
+		var imgList = $$(".bill_list input:checked");
+		if(imgList.length == 0){
+			alert("请选择图片！");
+			return false;
+		}
+		if(imgList.length >1){
+			alert("只能选择一张图片！");
+			return false;
+		}
+		initSortImg(imgList[0]);
+		mbox.show();
+	}
+	function deleteGroup(){
+		if(currentPage != "scan2"){
+			return false;
+		}
+		var groups = "";
+		var groupNames = "";
+		$$(".bills_list input:checked").each(function(i,e){
+			groups += "," + $$(e).attr("data");
+			groupNames += "," + $$(e).attr("groupName");
+		});
+		if(groups.length == 0){
+			alert("请选择要删除的资料类型！");
+			return false;
+		}
+		if(!confirm("你确认要删除" + groupNames.substring(1))){
+			return false;
+		}
+		jQuery.ajax({
+			url : "/deleteGroup",
+			type : "post",
+			async : false,
+			data:{
+				"data":groups.substring(1)
+			},
+			success : function(d) {
+				$$(".main").html(d);
+			},
+			error : function(e) {
+				alert(e);
+			}
+		});
+	}
+	
+	function commonScan(fn){
+		var url = "http://127.0.0.1:8001/?"
+			+ UrlEncode("method=scan&ds_name=FUJITSU fi-6140dj #2");
+		jQuery.ajax({
+			type : "get",
+			async : false,
+			url : url,
+			dataType : "jsonp",
+			jsonp : "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+			jsonpCallback : "success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+			success : function(rtn) {
+				if (rtn.isSuccess) {
+					fn.call(this,rtn.data);
+				} else {
+					alert(rtn.info)
+				}
+			},
+			error : function(e){
+			     alert(1);
+			}
+		});
+	}
+	
+	function dailyScan(data) {
+		jQuery.ajax({
+			url : "/dailyScan",
+			type : "post",
+			async : false,
+			data:{
+				"data":JSON.stringify(data)
+			},
+			success : function(d) {
+				d = eval("(" + d + ")");
+				if(d.isSuccess){
+					$$(".main").html(d.info.__body__);
+					currentPage = "scan2";
+				}else{
+					alert(d.msg);
+				}
+			},
+			error : function(e) {
+				alert(e);
+			}
+		});
+	}
+	function rescan(){
+		var headerId;
+		if(currentPage == "scan2"){
+			var groups = $$(".bills_list input:checked");
+			if(groups.length == 0){
+				alert("请选择一种资料类型！");
+				return false;
+			}
+			if(groups.length >1){
+				alert("只能选择一种资料类型！");
+				return false;
+			}
+			headerId = $$(groups[0]).attr("data");
+		}
+		if(currentPage == "scan3"){
+			headerId = $$("#headerId").val();
+		}
+		
+		commonScan(function(data){
+			jQuery.ajax({
+				url : "/rescan",
+				type : "post",
+				async : false,
+				data:{
+					"headerId":headerId,
+					"currentPage":currentPage,
+					"data":JSON.stringify(data)
+				},
+				success : function(d) {
+					$$(".main").html(d);
+				},
+				error : function(e) {
+					alert(e);
+				}
+			});			
+		});
+	}
+	
+	function addScan(){
+		var headerId;
+		if(currentPage == "scan2"){
+			var groups = $$(".bills_list input:checked");
+			if(groups.length == 0){
+				alert("请选择一种资料类型！");
+				return false;
+			}
+			if(groups.length >1){
+				alert("只能选择一种资料类型！");
+				return false;
+			}
+			headerId = $$(groups[0]).attr("data");
+		}
+		if(currentPage == "scan3"){
+			headerId = $$("#headerId").val();
+		}
+		
+		commonScan(function(data){
+			jQuery.ajax({
+				url : "/addScan",
+				type : "post",
+				async : false,
+				data:{
+					"headerId":headerId,
+					"currentPage":currentPage,
+					"data":JSON.stringify(data)
+				},
+				success : function(d) {
+					$$(".main").html(d);
+				},
+				error : function(e) {
+					alert(e);
+				}
+			});			
+		});
+	}
+	function importImg(){
+		var headerId;
+		if(currentPage == "scan2"){
+			var groups = $$(".bills_list input:checked");
+			if(groups.length == 0){
+				alert("请选择一种资料类型！");
+				return false;
+			}
+			if(groups.length >1){
+				alert("只能选择一种资料类型！");
+				return false;
+			}
+			headerId = $$(groups[0]).attr("data");
+		}
+		if(currentPage == "scan3"){
+			headerId = $$("#headerId").val();
+		}
+		var imgFiles = $$("#importFrame").contents().find("#imgFiles");
+		$$("#importFrame").contents().find("#headerId").val(headerId)
+		$$("#importFrame").contents().find("#currentPage").val(currentPage)
+		imgFiles.click();
+	}
+	function exportFile(){
+		var ids = "";
+		if(currentPage == "scan2"){
+			$$(".bills_list input:checked").each(function(i,e){
+				ids += "," + $$(e).attr("data");
+			});
+			if(ids.length == 0){
+				alert("请选择资料类型！");
+				return false;
+			}
+		}
+		else if(currentPage == "scan3"){
+			$$(".bill_list input:checked").each(function(i,e){
+				ids += "," + $$(e).attr("imgId");
+			});
+			if(ids.length == 0){
+				alert("请选择图片！");
+				return false;
+			}
+		}
+		jQuery.ajax({
+			url : "/exportFile",
+			type : "post",
+			async : false,
+			data:{
+				"currentPage":currentPage,
+				"data":ids.substring(1)
+			},
+			success : function(d) {
+				window.location.href = d;
+			},
+			error : function(e) {
+				alert(e);
+			}
+		});	
+	}
+</script>

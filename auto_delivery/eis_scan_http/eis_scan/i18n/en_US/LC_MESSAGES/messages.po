@@ -1,0 +1,690 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2014-10-29 17:33+ Chinese standard time \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: utf-8\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:24
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:13
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:171
+msgid "日常扫描"
+msgstr "Daily Scan"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:25
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:174
+msgid "评价任务"
+msgstr "Assessment Task "
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:26
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:64
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:177
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:233
+msgid "无任务补扫"
+msgstr " Additional Scan without task!"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:43
+msgid "初始状态"
+msgstr " initial state"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:44
+msgid "待上传"
+msgstr " To upload"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:45
+msgid "等待上传"
+msgstr "Wait for upload"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:46
+msgid "正在上传"
+msgstr "Uploading"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:47
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:35
+msgid "上传成功"
+msgstr " Successful uploaded"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:48
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:38
+msgid "上传失败"
+msgstr " Failed to upload"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\config\constants.py:49
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:41
+msgid "退回"
+msgstr "Return"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\libs/ocr\contourU.py:27
+#: D:\work\EIS100B\trunk\Src\gh_eis\libs/ocr\contourU.py:48
+#: D:\work\EIS100B\trunk\Src\gh_eis\libs/ocr\contourU.py:76
+msgid "无法定位发票"
+msgstr " Cannot locate the invoice "
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\libs/ocr\contourU.py:105
+msgid "不是增值税发票"
+msgstr " Not a value-added tax invoice"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\model\interface.py:44
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:239
+msgid "连接服务器失败"
+msgstr " Connect to server failure"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\model\interface.py:90
+msgid "未同步到扫描仪配置"
+msgstr " Not synchronized to the scanner configuration"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\configService.py:29
+msgid "条码规则语法错误"
+msgstr " Bar code rule syntax error"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\configService.py:35
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:220
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:137
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:195
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:101
+msgid "保存失败"
+msgstr "Save failure"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:48
+msgid "获取根目录失败"
+msgstr " Gets the root directory failed"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:154
+msgid "下载失败"
+msgstr " Download failed"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:154
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py:561
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py:642
+msgid "任务编号："
+msgstr " Task Number:"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:240
+msgid "测试完成"
+msgstr " Test completed"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:277
+msgid "登录失败，请确认配置是否正确"
+msgstr " Logon failed, please verify that the configuration is correct"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:279
+msgid "用户名不存在"
+msgstr " The user name does not exist"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:281
+msgid "该用户没有上传权限"
+msgstr " The user does not have permission to upload"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:283
+msgid "此用户已经登录"
+msgstr " This user already login"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:285
+msgid "用户名或密码不正确"
+msgstr " The user name or password is not correct"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:330
+msgid "登录成功"
+msgstr " Login Successful"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\loginService.py:332
+msgid "服务器未定义错误"
+msgstr " The server is not defined error"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py:173
+msgid "空白页："
+msgstr "Blank Page:"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py:481
+msgid "无法导入图片："
+msgstr "Cannot Import Image:"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py:561
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py:642
+msgid "已经存在"
+msgstr "Already Exist"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py:631
+msgid "获取任务失败"
+msgstr "Get Task Error"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py:736
+msgid "请先到系统配置选择扫描仪"
+msgstr " Please select the scanner in the system configuration"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\service\scanService.py:817
+msgid "操作"
+msgstr "Operation"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\service\scanService.py:817
+#: D:\svn\EIS100B\trunk\Src\gh_eis\service\scanService.py:891
+msgid "任务类型"
+msgstr "Task Type"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\service\scanService.py:817
+#: D:\svn\EIS100B\trunk\Src\gh_eis\service\scanService.py:891
+msgid "图像大小"
+msgstr "Image Size"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\Dialog.js:17
+msgid "确定"
+msgstr "Confirm"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\Dialog.js:18
+msgid "取消"
+msgstr "Cancel"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\Dialog.js:21
+msgid "信息提示"
+msgstr "Information Tips"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\Dialog.js:34
+msgid "关闭窗口"
+msgstr "Close"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:7
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:104
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:149
+msgid "扫描客户端未成功启动"
+msgstr "Scan client not running"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:76
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:100
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:131
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:472
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:495
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\importImg.html:34
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\importImg.html:52
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:137
+msgid "未知错误"
+msgstr "Unknow Error"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:156
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:355
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:396
+msgid "请选择扫描组！"
+msgstr " Please select a scanning group!"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:160
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:359
+msgid "只能选择一个扫描组！"
+msgstr " can only select one scanning group! "
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:174
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:208
+msgid "编号不能为空！"
+msgstr " The number can not be empty!"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:273
+msgid "请选择图片！"
+msgstr " Please select a image!"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:277
+msgid "只能选择一张图片！"
+msgstr " Can only select one image!"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:295
+msgid "序号必须是大于0的整数！"
+msgstr " Serial number must be an integer greater than 0!"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:374
+msgid "请选扫描组！"
+msgstr " Please choose scanning group"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\static\js\scan.js:387
+msgid "请选择影像！"
+msgstr " Please select image!"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:2
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\queue.html:10
+msgid "历史记录"
+msgstr "History Record"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:10
+msgid "系统设置"
+msgstr "System Settings"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:13
+msgid "条码规则："
+msgstr "Bar code rules"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:13
+msgid "说明：设置条码规则，格式为正则表达式"
+msgstr " Description: set the bar code rule, the format for the regular expression "
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:15
+msgid "扫描仪："
+msgstr "Scanner"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:15
+msgid "说明：选择一台适合的扫描仪"
+msgstr " Description: Choose a suitable scanner "
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:29
+msgid "结算单位："
+msgstr " Settlement unit "
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:49
+msgid "业务类型："
+msgstr "Service Type"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:70
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:100
+msgid "保存"
+msgstr "Save"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:109
+msgid "扫描仪不能为空"
+msgstr " The scanner can not be empty"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\configure.html:133
+msgid "保存成功"
+msgstr " Successful Saved"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:2
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:30
+msgid "登录"
+msgstr "Login"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:7
+msgid "HFC影像管理平台"
+msgstr " HFC image management platform"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:12
+msgid "用户名:"
+msgstr "User Name:"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:20
+msgid "密 码:"
+msgstr "Password:"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:34
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:99
+msgid "网络配置"
+msgstr "Setting"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:43
+msgid "服务器地址："
+msgstr "Server IP:"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:54
+msgid "端口："
+msgstr "Port:"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:65
+msgid "虚拟目录："
+msgstr "Virtual Path"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:77
+msgid "测试"
+msgstr "Test"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:115
+msgid "用户名不能为空"
+msgstr "User name can not be empty"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:145
+msgid "测试中，请稍后..."
+msgstr "Testting,please wait..."
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:150
+msgid "服务器地址不能为空！"
+msgstr "Server IP can not be empty"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:155
+msgid "虚拟目录不能为空！"
+msgstr "Virtual Path can not be empty"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:167
+msgid "测试成功"
+msgstr "Test successful"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\login.html:173
+msgid "测试失败"
+msgstr "Test failure"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\queue.html:7
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:88
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:242
+msgid "队列管理"
+msgstr " Queue management"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\queue.html:13
+msgid "上传时间段"
+msgstr " Upload time"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:2
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:45
+msgid "识别结果"
+msgstr " recognize result"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:9
+msgid "票据号："
+msgstr "Bill Number"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:16
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:30
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:29
+msgid "全部"
+msgstr "All"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:16
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:33
+msgid "待校验"
+msgstr "To Check"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:16
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:36
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:96
+msgid "已校验"
+msgstr "Checked"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:18
+msgid "状态："
+msgstr "State:"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:40
+msgid "查询"
+msgstr "Query"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:50
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:9
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:62
+msgid "票据号"
+msgstr " Bill Number"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:51
+msgid "发票代码"
+msgstr " Invoice code"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:52
+msgid "发票号"
+msgstr " Invoice number"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:53
+msgid "纳税人识别号-买方"
+msgstr " Taxpayer identification number-buyer "
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:54
+msgid "纳税人识别号-卖方"
+msgstr " Taxpayer identification number-seller"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:55
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:82
+msgid "开票日期"
+msgstr "Invoice Date"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:56
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:88
+msgid "密码区"
+msgstr "password Area"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:57
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:101
+msgid "金额"
+msgstr "Amount"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:58
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:105
+msgid "税率"
+msgstr "Tax Rate"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:59
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:108
+msgid "税额"
+msgstr " Tax Amount"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:60
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:18
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:75
+msgid "状态"
+msgstr "State"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:98
+msgid "未校验"
+msgstr " Unchecked"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognition.html:101
+msgid "详情"
+msgstr "Detail"
+
+#:
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:60
+msgid "完成校验"
+msgstr " Complete check "
+
+#:
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:61
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:3
+msgid "返回"
+msgstr "Return"
+
+#:
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:77
+msgid "购货单位"
+msgstr " Purchase units "
+
+#:
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:78
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:115
+msgid "纳税人识别号"
+msgstr " Taxpayer identification number"
+
+#:
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:100
+msgid "价税合计"
+msgstr " Price including tax"
+
+#:
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\recognitionDetail.html:114
+msgid "销货单位"
+msgstr "Sales Unit"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:2
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:52
+msgid "结果查询"
+msgstr "Query Result"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:32
+msgid "上传中"
+msgstr "Uploading"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:59
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:134
+msgid "序号"
+msgstr "Serial Number"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:65
+msgid "图像页数"
+msgstr "Image Pages"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:68
+msgid "上传时间"
+msgstr "Upload Time"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:70
+msgid "扫描时间"
+msgstr "Scan Time"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\result.html:72
+msgid "描述"
+msgstr "Description"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:3
+msgid "资料扫描"
+msgstr " Re scan"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:20
+msgid "重扫"
+msgstr "Rescan"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:24
+msgid "替扫"
+msgstr "Replace Scan"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:28
+msgid "补扫"
+msgstr "Additional Scan"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:34
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:211
+msgid "编辑图像"
+msgstr "Edit Image"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:39
+msgid "导入图像"
+msgstr "Import Image"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:43
+msgid "删除图像"
+msgstr "Delet Image"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:49
+msgid "扫描"
+msgstr "Scan"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:56
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:193
+msgid "修改编号"
+msgstr "Modify Number"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:60
+msgid "获取任务"
+msgstr "Get Task"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:67
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:202
+msgid "新建任务"
+msgstr "New Task"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:71
+msgid "删除任务"
+msgstr "Delete Task"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:77
+msgid "任务"
+msgstr "Task"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:85
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:93
+msgid "上传"
+msgstr "Upload"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:102
+msgid "编号"
+msgstr "Number"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:114
+msgid "任务编号"
+msgstr "Task Number"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:126
+msgid "文件名"
+msgstr "File Name"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:146
+msgid "右旋转90度"
+msgstr "90 Degree To The Right"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:148
+msgid "左旋转90度"
+msgstr "90 Degree To The Left"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:220
+msgid "图片详情"
+msgstr "Image Detail"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan.html:224
+msgid "关闭"
+msgstr "Close"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan2.html:3
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:38
+msgid "全选"
+msgstr "All"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan2.html:10
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:49
+msgid "选中"
+msgstr "Check"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:5
+msgid "编辑"
+msgstr "Edit"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:6
+msgid "删除"
+msgstr "Delete"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:7
+msgid "移动到"
+msgstr "Move to"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:22
+msgid "名称"
+msgstr "Name"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:26
+msgid "批注"
+msgstr "Annotation"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:30
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:85
+msgid "修改"
+msgstr "Modify"
+
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:32
+#: D:\work\EIS100B\trunk\Src\gh_eis\templates\modules\scan3.html:87
+msgid "添加"
+msgstr "Add"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\templates\widgets\navBar.html:23
+msgid "欢迎您!"
+msgstr "Welcome!"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\templates\widgets\navBar.html:23
+msgid "注销"
+msgstr "Logout"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\templates\widgets\noTaskLov.html:6
+msgid "请输入影像任务编号："
+msgstr "Image Task Number:"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\templates\widgets\noTaskLov.html:12
+msgid "获取"
+msgstr "Search"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\templates\widgets\noTaskLov.html:22
+msgid "影像任务编号"
+msgstr "Image Task Number "
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\templates\widgets\noTaskLov.html:23
+msgid "图像数量"
+msgstr "Image Quantity"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\templates\widgets\noTaskLov.html:45
+#: D:\svn\EIS100B\trunk\Src\gh_eis\templates\widgets\noTaskLov.html:49
+msgid "上一页"
+msgstr "Prev"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\templates\widgets\noTaskLov.html:65
+msgid "下一页"
+msgstr "Next"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\service\scanService.py:964
+msgid "开始时间"
+msgstr "Start Time"
+
+#: D:\svn\EIS100B\trunk\Src\gh_eis\service\scanService.py:964
+msgid "结束时间"
+msgstr "End Time"
