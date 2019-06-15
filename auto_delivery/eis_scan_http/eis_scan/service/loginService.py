@@ -288,8 +288,8 @@ class login:
         return common.buildSuccess(_(u"测试成功"))
     def nologin(self,params):
         params={}
-        params["userCd"]="1000"
-        params["password"]="1"
+        params["userCd"]="10000"
+        params["password"]="zte@1234"
         return self.login(params)
     def login(self, params):
         userCd = params.get("userCd")

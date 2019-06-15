@@ -266,8 +266,8 @@ class GhEvsInterface:
 
                     },
                 "data":[
-                        {"status":"NORMAL","appCode":"eis","remark":"影像不清","form":{"headNum":"B0001","companyCode":"c2"},"imageList":["http://127.0.0.1:8888/static/images/scan/TEST2/10000_20170115170534003.jpg?r=0.0872093924895", "http://127.0.0.1:8888/static/images/scan/TEST2/10000_20170115170534003.jpg?r=0.0872093924895"],"iconList":["zyy/icon/2015/1.jpg", "zyy/icon/2015/2.jpg"]},
-                        {"status":"NORMAL","appCode":"eis","remark":"影像不全","form":{"headNum":"B0002","companyCode":"c1"},"imageList":["http://127.0.0.1:8888/static/images/scan/TEST2/10000_20170115170534003.jpg?r=0.0872093924895", "http://127.0.0.1:8888/static/images/scan/TEST2/10000_20170115170534003.jpg?r=0.0872093924895"],"iconList":["zyy/icon/2015/3.jpg", "zyy/icon/2015/4.jpg"]}
+                        {"status":"NORMAL","appCode":"eis","remark":"影像不清","form":{"headNum":"B0001","companyCode":"c2"},"ftpId":"2000","imageList":["zyy/image/2015/1.jpg", "zyy/image/2015/2.jpg"],"iconList":["zyy/icon/2015/1.jpg", "zyy/icon/2015/2.jpg"]},
+                        {"status":"NORMAL","appCode":"eis","remark":"影像不全","form":{"headNum":"B0002","companyCode":"c1"},"ftpId":"2000","imageList":["zyy/image/2015/3.jpg", "zyy/image/2015/4.jpg"],"iconList":["zyy/icon/2015/3.jpg", "zyy/icon/2015/4.jpg"]}
                     ]
             }
         '''

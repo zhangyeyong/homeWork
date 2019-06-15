@@ -215,7 +215,7 @@ class UploadThread(threading.Thread):  # The timer class is derived from the cla
             rtn.append(imgHead)
             print "update status time :%d" % (t2 - t1)
         endTime = time.time()
-        print "总时间%d" % (endTime - startTime)
+        print u"总时间%d" % (endTime - startTime)
         return rtn
 if __name__ == "__main__":
     pass

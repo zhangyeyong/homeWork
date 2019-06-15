@@ -5,8 +5,11 @@ from libs import web
 from controllers.controller import render, initSession
 from config.config import scanPath
 import time
+import random
+import shutil
 import copy
 from tool import pathJoin
+from model import httpU2
 from model.imgHeadDao import ImgHeadDao
 from model.imgLineDao import ImgLineDao
 from model.configDao import ConfigDao
@@ -30,9 +33,11 @@ import sys
 from model import common
 from model.meidingSerial import MeidingSerial
 # from model.meidingSerial_for_test import MeidingSerial
+from model.huageSerial import HuageSerial
 import os
 import traceback
 from scanService import uploadFile
+import scanService
 from model.uploadThreadByHttp import UploadThread
 
 
@@ -87,7 +92,7 @@ class Scan:
     imgHeadDao = ImgHeadDao()
     imgLineDao = ImgLineDao()
     configDao = ConfigDao()
-
+    evsInterface = GhEvsInterface()
     def __init__(self):
         pass
 
@@ -95,7 +100,7 @@ class Scan:
         configDict = config.getConfigDict()
         serial_port = configDict.get(configkey.SERIAL_PORT)
         serial_baudrate = int(configDict.get(configkey.SERIAL_BAUDRATE))
-        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
+        mds = HuageSerial(port=serial_port, baudrate=int(serial_baudrate))
         rtn = mds.initMachine()
         return json.dumps(rtn)
 
@@ -103,10 +108,146 @@ class Scan:
         configDict = config.getConfigDict()
         serial_port = configDict.get(configkey.SERIAL_PORT)
         serial_baudrate = configDict.get(configkey.SERIAL_BAUDRATE)
-        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
+        mds = HuageSerial(port=serial_port, baudrate=int(serial_baudrate))
         rtn = mds.backPaper()
         return json.dumps(rtn)
+    def taskQuery(self,headNum):
+        session = web.config._session
+        pageNum = 1
+        pageInfo = {
+            "pageNum": pageNum,
+            "pageSize": constants.pageSize
+        }
 
+        userForm = scanService.getUserFormByApp(session.currentApp)
+        userForm[session.currentApp.get("groupFieldName")] = headNum
+        jsonParam = {
+            "appCode": session.currentApp.get("appCode"),
+            "form": userForm
+        }
+
+        ret = self.evsInterface.GetServCmdInfo(session.ticket, taskType.BACKTASK, json.dumps(pageInfo),json.dumps(jsonParam))
+        return ret.get("data")
+    def downloadTasks(self,tasks):
+        import loginService
+        session = web.config._session
+        userNum = session.user.get("userNum")
+        groupName = scanService.getGroupNameByApp(session.currentApp)
+        print "----tasks--------->",tasks
+        for task in tasks:
+            imgHeadList = []
+            headNum = task.get("form").get(groupName)
+            # 查询是否存在，如果存在,且非WAIT状态的评价任务：删除本地存在的此任务及图片;是WAIT状态的评价任务，跳过
+            destPath = pathJoin(scanPath, headNum)
+            cond = {
+                "userNum": userNum,
+                "headNum": headNum
+            }
+            dbImgHead = self.imgHeadDao.getByCond(cond)
+            if dbImgHead:
+                if dbImgHead.get("belong") == belongType.APPRAISE_TASK and dbImgHead.get("status") == headStatus.WAIT:
+                    continue
+                # 删除头和行   删除本地图片
+                self.imgHeadDao.deleteByHeadId(dbImgHead.get("headId"))
+                if not os.path.isdir(destPath):
+                    shutil.rmtree(destPath)
+            if not os.path.isdir(destPath):
+                os.makedirs(destPath)
+            # 下载ftp图片到临时目录,下载失败，就跳过
+            fileNames = []
+            dirPath = pathJoin(scanPath, "downloadTemp", headNum)
+            # 清空文件夹
+            if os.path.isdir(dirPath):
+                shutil.rmtree(dirPath)
+            os.makedirs(dirPath)
+            remoteFiles = task.get("imageList")
+            if remoteFiles:
+                index = 0
+                downloadRtn = None
+                isSuccess = True
+                for url in remoteFiles:
+                    index = index + 1
+                    fileName = str(index) + ".jpg"
+                    fileNames.append(fileName)
+                    downloadRtn = httpU2.download(url, pathJoin(dirPath, fileName))
+                    if not downloadRtn or constants.CODE_SUCCESS != downloadRtn.get("code"):
+                        isSuccess = False
+                        break
+                if not isSuccess:
+                    print >> sys.stderr, _("任务编号："), headNum, _("下载失败")
+                    continue
+            # 把下载的文件从临时目录移到目标目录
+            filelist = os.listdir(dirPath)
+            for f in filelist:
+                filePath = pathJoin(dirPath, f)
+                path = pathJoin(destPath, f)
+                if os.path.isfile(path):
+                    os.remove(path)
+                shutil.move(filePath, destPath)
+                loginService.generateSmallImg(path)
+            if os.path.isdir(dirPath):
+                shutil.rmtree(dirPath, True)
+                # 添加主表信息
+            cond = {
+                "userNum": userNum,
+                "belong": belongType.APPRAISE_TASK
+            }
+            headOrd = self.imgHeadDao.getMaxOrd(cond)
+            userForm = session.currentApp.get("form")
+            loginService.setUserFormByDict(userForm, task.get("form"))
+            imgHead = {
+                "headNum": headNum,
+                "belong": belongType.APPRAISE_TASK,
+                "status": headStatus.WAIT,
+                "remark": task.get('remark', "").decode("utf-8"),
+                "userNum": userNum,
+                "appCode": task.get("appCode"),
+                "headStatus": task.get("status"),
+                "userForm": json.dumps(userForm),
+                "headOrd": headOrd
+            }
+            # 添加行表信息
+            editAble, deleteAble = loginService.getLineStatusByHeadStatus(task.get("status"))
+            lineList = []
+            for fileName in fileNames:
+                imgNameS = os.path.basename(fileName)
+                filePath = pathJoin(destPath, imgNameS)
+                imgLine = {
+                    "headNum": headNum,
+                    "imgType": imgType.ADDED,
+                    "imgNameS": imgNameS,
+                    "imgNameP": imgNameS,
+                    "imgSize": os.path.getsize(filePath),
+                    "isChecked": "0",
+                    "editAble": editAble,
+                    "deleteAble": deleteAble,
+                    "userNum": userNum,
+                }
+                lineList.append(imgLine)
+            imgHead["imgLines"] = lineList
+            imgHeadList.append(imgHead)
+            # 插入信息
+            self.imgHeadDao.saveAll(imgHeadList)
+    def queryAndDownload(self,headNum):
+        try:
+            rtn = self.taskQuery(headNum)
+            if rtn:
+                tasks = rtn.get("data")
+                if tasks and len(tasks)>0:
+                    # 通过 headNum查询， 只能是一条数据，多余的不要
+                    self.downloadTasks([tasks[0]])
+        except ValueError, e:
+            print e.message
+            return json.dumps(common.buildFail(u"查询服务器出错:"))
+    def searchByHeadNum(self,headNum):
+        lines = self.imgLineDao.getByHeadNum(headNum)
+        for line in lines:
+            line['imgPathS'] = pathJoin("/static/images/scan", headNum, "s_" + line.get("imgNameP")) + "?r=" + str(random.random())
+            line['imgPathO'] = pathJoin("/static/images/scan", headNum, line.get("imgNameP")) + "?r=" + str(random.random())
+            fullName = line.get("imgNameS").split(".")
+            line['imgName'] = fullName[0]
+            line['imgExt'] = fullName[1]
+        return json.dumps(common.buildSuccess(data=lines))
     def GET(self):
         return render.modules.delivery.scan()
 
@@ -117,9 +258,18 @@ class Scan:
             return self.initMachine()
         if ("backPaper" == method):
             return self.backPaper()
-        if ("doScan" == method):
-            return self.backPaper()
-
+        if ("searchByHeadNum" == method):
+            i = web.input()
+            headNum = i.get("headNum")
+            if headNum:
+                headNum = headNum.strip()
+            #先查询接口数据
+            try:
+                self.queryAndDownload(headNum)
+            except BaseException,e:
+                print e.message
+                return json.dumps(common.buildFail(u"查询服务器出错:"))
+            return self.searchByHeadNum(headNum)
 
 class Refund:
     boxDao = BoxDao()
@@ -244,7 +394,7 @@ class Edit:
         return json.dumps(common.buildSuccess(data=p_data))
 
     def upload(self):
-        u = uploadFile()
+        # u = uploadFile()
         i = web.input()
         # belong = getBelong(i.belong)
         headId = json.loads(i.headId)
@@ -276,14 +426,7 @@ class Edit:
         configDict = config.getConfigDict()
         serial_port = configDict.get(configkey.SERIAL_PORT)
         serial_baudrate = configDict.get(configkey.SERIAL_BAUDRATE)
-        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
-        # =====================压痕======================================
-        rtn = mds.fixPaper()
-        if not rtn["isSuccess"]:
-            return json.dumps(rtn)
-        #等待压痕完成
-        time.sleep(2)
-        # ======================回收======================================
+        mds = HuageSerial(port=serial_port, baudrate=int(serial_baudrate))
         rtn = mds.recyclePaper()
         if  rtn["isSuccess"]:
             return json.dumps(rtn)
@@ -300,12 +443,12 @@ class Edit:
             shutil.rmtree(headPath)
         return json.dumps(common.buildSuccess(data=head))
 
-    def cancel(self):
+    def backPaper(self):
         # 通知电机退票
         configDict = config.getConfigDict()
         serial_port = configDict.get(configkey.SERIAL_PORT)
         serial_baudrate = configDict.get(configkey.SERIAL_BAUDRATE)
-        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
+        mds = HuageSerial(port=serial_port, baudrate=int(serial_baudrate))
         rtn = mds.backPaper()
         # rtn = common.buildSuccess()
         if rtn["isSuccess"]:
@@ -355,11 +498,34 @@ class Edit:
             return self.editNum()
         if ("submit" == method):
             return self.submit()
-        if ("cancel" == method):
-            return self.cancel()
+        if ("backPaper" == method):
+            return self.backPaper()
 
         pass
 
+class Test:
+    def __init__(self):
+        pass
 
+    def GET(self):
+        return render.modules.delivery.test()
+
+    def POST(self):
+        from model.huageSerial import HuageSerial
+        mds = HuageSerial(port="COM1")
+        i = web.input()
+        method = i.get("method")
+        if method == "initMachine":
+            # ========================初始化====================
+            rtn = mds.initMachine()
+            return json.dumps(rtn)
+        elif method == "recyclePaper":
+            # ========================回收====================
+            rtn = mds.recyclePaper()
+            return json.dumps(rtn)
+        elif method == "backPaper":
+            # ========================退件====================
+            rtn = mds.backPaper()
+            return json.dumps(rtn)
 if __name__ == '__main__':
     pass
