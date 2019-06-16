@@ -125,8 +125,19 @@ class Scan:
             "appCode": session.currentApp.get("appCode"),
             "form": userForm
         }
-
+        belong = belongType.APPRAISE_TASK
         ret = self.evsInterface.GetServCmdInfo(session.ticket, taskType.BACKTASK, json.dumps(pageInfo),json.dumps(jsonParam))
+        print u"评价任务查询结果--->",ret
+        if len(ret.get("data").get("data"))<1:
+            print(u"开始查询无任务")
+            ret = self.evsInterface.GetServCmdInfo(session.ticket, taskType.NOTASK, json.dumps(pageInfo),json.dumps(jsonParam))
+            belong = belongType.NO_TASK
+            print u"无任务查询结果--->",ret
+        tasks = ret.get("data").get("data")
+
+        if len(tasks) > 0:
+            for task in tasks:
+                task['belong'] =belong
         return ret.get("data")
     def downloadTasks(self,tasks):
         import loginService
@@ -137,6 +148,7 @@ class Scan:
         for task in tasks:
             imgHeadList = []
             headNum = task.get("form").get(groupName)
+            belong = task.get("belong")
             # 查询是否存在，如果存在,且非WAIT状态的评价任务：删除本地存在的此任务及图片;是WAIT状态的评价任务，跳过
             destPath = pathJoin(scanPath, headNum)
             cond = {
@@ -145,7 +157,7 @@ class Scan:
             }
             dbImgHead = self.imgHeadDao.getByCond(cond)
             if dbImgHead:
-                if dbImgHead.get("belong") == belongType.APPRAISE_TASK and dbImgHead.get("status") == headStatus.WAIT:
+                if dbImgHead.get("status") == headStatus.WAIT:
                     continue
                 # 删除头和行   删除本地图片
                 self.imgHeadDao.deleteByHeadId(dbImgHead.get("headId"))
@@ -190,16 +202,19 @@ class Scan:
                 # 添加主表信息
             cond = {
                 "userNum": userNum,
-                "belong": belongType.APPRAISE_TASK
+                "belong": belong
             }
             headOrd = self.imgHeadDao.getMaxOrd(cond)
             userForm = session.currentApp.get("form")
             loginService.setUserFormByDict(userForm, task.get("form"))
+            remark = ""
+            if task.get('remark', ""):
+                remark = task.get('remark', "").decode("utf-8")
             imgHead = {
                 "headNum": headNum,
-                "belong": belongType.APPRAISE_TASK,
+                "belong": belong,
                 "status": headStatus.WAIT,
-                "remark": task.get('remark', "").decode("utf-8"),
+                "remark": remark,
                 "userNum": userNum,
                 "appCode": task.get("appCode"),
                 "headStatus": task.get("status"),
@@ -394,12 +409,14 @@ class Edit:
         return json.dumps(common.buildSuccess(data=p_data))
 
     def upload(self):
+        print u"------------------------start to upload---------------------------------------------"
         # u = uploadFile()
         i = web.input()
         # belong = getBelong(i.belong)
         headId = json.loads(i.headId)
         session = web.config._session
         userNum = session.user.get("userNum")
+        print u"-----------------start --update database----------------------------------"
         self.imgHeadDao.update(
             {"headId": headId, "status": headStatus.UPLOADING, "uploadTime": time.strftime('%Y-%m-%d %H:%M:%S')})
         uploadTask = {
@@ -410,12 +427,26 @@ class Edit:
         }
         self.uploadTaskDao.deleteByHeadId(headId)
         self.uploadTaskDao.save(uploadTask)
+        print u"---------------end ----update database----------------------------------"
         uploadUrl = self.configDao.getValueByKey(configkey.HTTP_UPLOAD_URL)
         #         uploadUrl = "http://127.0.0.1:8080/upload/UploadServlet.do"
-        uploadThread = UploadThread([headId], session.ticket, uploadUrl)
-        head_list = uploadThread.run()
-        status = head_list[0].get("status")
-        errorMsg = head_list[0].get("errorMsg")
+        print u"-------------------start call evs  to upload -------------------------------uploadUrl--->",uploadUrl
+        head_list = []
+        try:
+            uploadThread = UploadThread([headId], session.ticket, uploadUrl)
+            head_list = uploadThread.run()
+        except:
+            traceback.print_exc()
+            status = headStatus.FAILURE
+            errorMsg = u"上传失败"
+        print u"-------------------end call evs  to upload -------------------------------"
+        if len(head_list)>0:
+            status = head_list[0].get("status")
+            errorMsg = head_list[0].get("errorMsg")
+        else:
+            status = headStatus.FAILURE
+            errorMsg = u"调用服务器，上传失败"
+        print u"-------------------------------end to upload----------------------------"
         return status, errorMsg
 
     def submit(self):
