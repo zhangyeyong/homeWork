@@ -32,26 +32,15 @@ def cleanFile(dir_clean):
 
 
 def scan(ds_name, paramDict):
-    logger.info(paramDict)
     cleanFile(config.scanPath)
-    cleanFile(config.scanPathSrc)
     res = []
-    imageThread = None
-    imageFormat = paramDict.get("imageFormat", "bmp")
-
-    if "bmp" != imageFormat:
-        fileNamePre = os.path.join(config.scanPathSrc, time.strftime('%Y%m%d%H%M%S_'))
-        #启动转换线程
-        imageThread = ImageThread(config.scanPathSrc, config.scanPath, imageFormat)
-        imageThread.start()
-    else:
-        fileNamePre = os.path.join(config.scanPath, time.strftime('%Y%m%d%H%M%S_'))
-    logger.info("----------------fileNamePre:%s" % fileNamePre)
+    fileNamePre = os.path.join(config.scanPath, time.strftime('%Y%m%d%H%M%S_'))
+    print "----------------fileNamePre:%s" % fileNamePre
+    imageFormat = paramDict.get("imageFormat", "jpg")
     show_ui = paramDict.get("show_ui", False)
 
     def before(img_info):
-        fileName = "%s%d.%s" % (fileNamePre, len(res), "bmp")
-        logger.info("----------------fileName:%s" % fileName)
+        fileName = "%s%d.%s" % (fileNamePre, len(res), imageFormat)
         img_info["path"] = fileName
         res.append(img_info)
         return fileName
@@ -83,26 +72,8 @@ def scan(ds_name, paramDict):
             logger.info(u"SD hasattr close")
             SD.close()
         logger.info(u"end close SD")
-    # 目标图标格式非bmp，则需要转化
-    if "bmp" != imageFormat:
-        imageThread.stop()
-        imageThread.sleepUnilFinish()
     return res
 
-
-# def bmpToOtherType(res, destPath, ext):
-#     from PIL import Image
-#     for bmpInfo in res:
-#         # 判断是否存在,只有存在才操作
-#         bmpPath = bmpInfo.get("path")
-#         if (os.path.exists(bmpPath)):
-#             (filepath, filename) = os.path.split(bmpPath)
-#             (shotname, extension) = os.path.splitext(filename)
-#             destFile = os.path.join(destPath, shotname+"."+ext)
-#             Image.open(bmpPath).save(destFile)
-#             os.remove(bmpPath)
-#             bmpInfo["path"] = destFile
-#     return res
 
 def getSM():
     global SM
