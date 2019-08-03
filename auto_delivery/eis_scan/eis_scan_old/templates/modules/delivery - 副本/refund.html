@@ -1,0 +1,125 @@
+$def with(boxs)
+$var title: $_("欢迎使用退件")
+<script src="/static/js/common.js"></script>
+<script type="text/javascript">
+var endTime = 200;
+var scan =  null;
+function clock()
+{
+	endTime = endTime-1;
+	if(endTime<1){
+	    back();
+	}
+	document.getElementById("endTime").innerText=endTime;
+}
+function back(){
+  window.location.href = "/delivery/index";
+}
+
+
+function init(){
+	clock();
+	var int=self.setInterval("clock()",1000);
+}
+function showPickupCode(boxName,pickupCode){
+var pickupCodeBox = new Dialog({
+		target : jQuery('#pickupCodeBox'),
+		title : _('取件码'),
+		width : 360,
+		height : 100,
+	});
+    jQuery('#boxName').html(boxName);
+    jQuery('#pickupCode').html(pickupCode);
+	pickupCodeBox.show();
+}
+
+function openBox(boxNum,status){
+    showLoading();
+    jQuery.ajax({
+        type : "post",
+        async : false,
+        url : "/delivery/refund",
+        data:{"method":"openBox","boxNum":boxNum},
+        success : function(data) {
+            data = eval("("+data+")");
+            if(data.isSuccess){
+                alert("箱门已打开！");
+            }else{
+                alert(data.info);
+            }
+        },
+        error : function() {
+            alert(_("打开箱子失败，请联系管理员"));
+        },complete : function (){
+            hideLoading();
+        }
+    });
+
+}
+
+</script>
+<script src="/static/js/layer/layer.js" type="text/javascript"></script>
+
+<body onload="init()">
+<div class="delivery_main">
+    <table cellspacing="20" class="tb_main">
+        <tr>
+            <td colspan="2" align="right" valign="bottom" class="top">
+                <table>
+                    <tr>
+                        <td align="center">
+                            <div class="div_bt" onclick='back();'>返回</div>
+                        </td>
+                        <td align="center" width="70%">
+                            <div class="div_font_green">退票页面</div>
+                        </td>
+                        <td align="center">
+                            <div id="endTime" class="div_bt">119</div>
+                        </td>
+                    </tr>
+                </table>
+                <hr class="top"/>
+            </td>
+        </tr>
+        <tr>
+            <td  align="center" width="100%">
+                <table border="1"  width="80%">
+                    $for box in boxs.get("data"):
+                        <tr>
+                            <td align="center">$box.get("boxName")</td>
+                            <td align="center" width="20%">
+                                $if int(box.get("enable"))==0:
+                                    不可用
+                                $else:
+                                    可用
+                            </td>
+                            <td align="center" >
+                                $if int(box.get("status"))==0:
+                                    <button class="button button_green" onclick='openBox($box.get("boxNum"),$box.get("status"))' >打开</button>
+                                $else:
+                                    <button class="button button_gray">打开</button>
+                            </td>
+                            <td align="center" >
+                                <button class="button button_blue" onclick='showPickupCode("$box.get("boxName")","$box.get("pickupCode")")'>获取密码</button>
+                            </td>
+                        </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>
+<div class="pop mbox" id="pickupCodeBox">
+        <div class="cb">
+			<div class="fields nofloat fix_width">
+				<div class="tit">
+                    <span id="boxName">X柜</span>$_("的取件码"):
+				</div>
+				<div class="cont">
+					<font id="pickupCode" color="red"></font>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+

@@ -1,0 +1,35 @@
+$def with(page) 
+$ pageNum = page.get("pageNum")
+$ pageCount = page.get("pageCount")
+<!-- 使用说明：
+	1、传入参数page
+	2、对应表单ID 命名为queryForm
+-->
+ 
+<div class="pagination fr mt10">
+	$if pageNum!=1: 
+		<a class="page-prev" href="javaScript:goPage($(pageNum-1))"><span>&lt; 上一页</span></a> 
+	$else:
+		<a class="page-prev unclick-l"><span>&lt; 上一页</span></a> 
+	$for i in range(pageCount):
+		$if pageNum==i+1: 
+			<span class="page-cur">${i+1}</span>
+		$else:	 
+			<a href="javaScript:goPage($(i+1))">${i+1}</a> 
+<!--	<span class="page-break">... </span> -->
+	$if pageNum==pageCount or pageCount==0:
+		<a class="page-next  unclick-l" href="#"><span>下一页 &gt;</span></a>
+	$else:
+		<a class="page-next" href="javaScript:goPage($(pageNum+1))"><span>下一页 &gt;</span></a>
+</div> 
+<input type="hidden" id="pageNum" name="pageNum"/>
+<script type="text/javascript">
+	function goPage(pageNum){
+		var className = jQuery(this).parent().attr("class");
+		if (className && className.indexOf("active") != -1){
+			return false;
+		}
+		jQuery("#pageNum").val(pageNum);
+		jQuery("#queryForm").submit();
+	}
+</script>

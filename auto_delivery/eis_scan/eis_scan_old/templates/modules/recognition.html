@@ -1,0 +1,110 @@
+$def with(page)
+$var title: $_("识别结果")
+$ cond = page.get('cond') or {}
+<body class="bill_body">
+	$:render.widgets.navBar("recognition")
+	<form id="queryForm" method="POST">
+	<div class="searchbar">
+		<div class="fields">
+			<div class="tit">$_("票据号：")</div>
+			<div class="cont">
+				<input type="hidden" id="pageNum" name="pageNum"/>
+				<input type="text" class="input_search" id="headNum" name="headNum"
+					value="$cond.get('headNum')">
+			</div>
+		</div>
+		<!-- $_('待校验') $_('已校验') $_('全部') -->
+		<div class="fields">
+			<div class="tit">$_("状态：")</div>
+			<div class="cont">
+				<input type="text" class="input_search" readonly="readonly" 
+					$if cond.get('isChecked')=='0':
+						value="$_('待校验')"
+					$elif cond.get('isChecked')=='1':
+						value="$_('已校验')"
+					$else:
+						value="$_('全部')"
+					>
+				<b class="select"></b>
+				<select name="isChecked"  class="myselect">
+					<option value="">$_("全部")</option>
+					<option value="0" 
+					$if cond.get('isChecked')== '0': selected="selected"
+					>$_("待校验")</option>
+					<option value="1" 
+					$if cond.get('isChecked')== '1': selected="selected"
+					>$_("已校验")</option>
+				</select>
+			</div>
+		</div>
+		<button>$_("查询")</button>
+	</div>
+	</form>
+	
+	<div class="main">
+		<h2>$_("识别结果")</h2>
+		<div class="data_table cb">
+			<table>
+				<thead>
+					<tr>
+						<th width="150">$_("票据号")</th>
+						<th width="80">$_("发票代码")</th>
+						<th width="80">$_("发票号")</th>
+						<th width="170">$_("纳税人识别号-买方")</th>
+						<th width="170">$_("纳税人识别号-卖方")</th>
+						<th width="120">$_("开票日期")</th>
+						<th width="60">$_("密码区")</th>
+						<th width="100">$_("金额")</th>
+						<th width="100">$_("税率")</th>
+						<th width="100">$_("税额")</th>
+						<th width="100">$_("状态")</th>
+						<th width="60" align="right"></th>
+					</tr>
+				</thead>
+				<tbody>
+				$for ocrResult in page.data:
+					<tr>
+						<td>$ocrResult.get("headNum")</td>
+						<td><span class="$ocrResult.get('codeC')">$ocrResult.get("code")</span>
+						</td>
+						<td><span
+							class="$ocrResult.get('numC')">$ocrResult.get("num")
+						</span></td>
+						<td><span
+							class="$ocrResult.get('bTaxPayerC')">$ocrResult.get("bTaxPayer")
+						</span></td>
+						<td><span
+							class="$ocrResult.get('sTaxPayerC')">$ocrResult.get("sTaxPayer")
+						</span></td>
+						<td><span
+							class="$ocrResult.get('invDateC')">$ocrResult.get("invDate")
+						</span></td>
+						<td><span
+							class="$ocrResult.get('apwdC')">......
+						</span></td>
+						<td><span
+							class="$ocrResult.get('amountC')">$ocrResult.get("amount")
+						</span></td>
+						<td><span
+							class="$ocrResult.get('taxC')">$ocrResult.get("tax")
+						</span></td>
+						<td><span
+							class="$ocrResult.get('taxAmountC')">$ocrResult.get("taxAmount")
+						</span></td>
+						<td>
+							$if ocrResult.get('isChecked')== '1' :
+								$_("已校验")
+							$else :
+								$_("未校验")
+						</td>
+						<td>
+							<a href="/recognitionDetail/$ocrResult.get('lineId')">$_("详情")</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			$:render.widgets.page(page)
+		</div>
+	</div>
+</body>
+</html>

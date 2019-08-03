@@ -145,6 +145,12 @@ class ImgLineDao:
         if lineId:
             db.query("update imgLine set uploadSize = uploadSize +"+str(uploadSize)+"  where lineId = " + str(lineId))
             db.query("update imgHead  set uploadSize = (select sum(l2.uploadSize) from imgLine l1, imgLine l2 where l1.headId=l2.headId and l1.lineId="+ str(lineId)+")  where headId = (select headId from imgLine where lineId=" + str(lineId)+")")
+    def uploadSize(self, headId,lineId,uploadSize):
+        if lineId:
+            db.query("update imgLine set uploadSize = "+str(uploadSize)+"  where lineId = " + str(lineId))
+        if headId:
+            db.query("update imgHead  set uploadSize = (select sum(uploadSize) from imgLine where headId="+ str(headId)+")  where headId = " + str(headId))
+
 if __name__ == "__main__":
     imgLineDao = ImgLineDao()
     imgLineDao.uploadSize(7,100)

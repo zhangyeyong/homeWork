@@ -1,0 +1,84 @@
+$var title: $_("欢迎使用自动投递")
+<script type="text/javascript">
+var endTime = 200;
+function clock()
+{
+	endTime = endTime-1;
+	document.getElementById("endTime").innerText=endTime;
+}
+
+
+function init(){
+	clock();
+	var int=self.setInterval("clock()",1000);
+}
+
+</script>
+
+<body onload="init()">
+<div class="delivery_main" >
+  <table cellspacing="20"  class="tb_main">
+    <tr>
+      <td colspan="2" align="right" valign="bottom" class="top">
+        <table>
+          <tr>
+            <td align="center"><div class="div_bt">返回</div></td>
+            <td align="center" width="70%"><div class="div_font_green">客户投递</div></td>
+            <td align="center"><div id="endTime" class="div_bt">119</div></td>
+          </tr>
+        </table>
+        <hr class="top"/>
+      </td>
+    </tr>
+    <tr >
+      <td rowspan="3" class="lable" width="50%"><table >
+          <tr>
+            <td valign="bottom">
+			<table>
+			<tr>
+			<td align="center">
+			<table>
+          <tr>
+            <td align="right"><img src="/static/images/first.png" width="160px"/></td>
+            <td align="center" width="20%"><img src="/static/images/to.png"/ width="80px"></td>
+            <td align="left"><img src="/static/images/last.png"/ width="160px"></td>
+          </tr>
+        </table>
+			</td>
+			</tr>
+			<tr>
+			<td>              <div class="div_title"> 温馨提示 </div>
+              <hr style="border:1px dashed #000; height:1px; margin-bottom: -1px;"></td></td>
+			</tr>
+			</table>
+			
+
+          </tr>
+          <tr>
+            <td valign="top"><div class="div_label"> 
+			请确保票据不粘在一起<br/>
+			请确保票据间没有杂物<br/>
+			如：别针、 订书针、 回形针<br/>
+			封面 底页<br/>
+			然后点击【扫描】<br/>
+              </div></td>
+          </tr>
+        </table></td>
+      <td class="yellow" ><table  >
+          <tr>
+            <td width="50%" align="center"><img src="/static/images/scan.png"  width="60%"/></td>
+            <td><div class="div_font_while"> 扫 描<br/>
+                Scan</div></td>
+          </tr>
+        </table></td>
+    </tr>
+    <tr>
+      <td class="edit" >&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="edit">&nbsp;</td>
+    </tr>
+  </table>
+</div>
+</body>
+

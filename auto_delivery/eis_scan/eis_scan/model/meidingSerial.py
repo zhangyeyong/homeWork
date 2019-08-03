@@ -10,6 +10,7 @@ import traceback
 
 class MeidingSerial(ComU):
     def __init__(self, port="COM5", baudrate=19200):
+        print("open com :%s,  baudrate:%d"%(port,baudrate))
         ComU.__init__(self, port, baudrate)
 
     # ======================复位======================================
@@ -18,7 +19,7 @@ class MeidingSerial(ComU):
         rtn = common.buildFail(u"初始设备失败", "")
         try:
             recvData = self.sendAndWaitRecvDate("\x1B\x03\xA0\x00\x00\x1C\xA3")
-            print recvData
+            print str_to_hex(recvData)
             rtn = common.buildSuccess(u"初始设备成功", "")
             # {'isSuccess': True, 'info': '', 'data': '\x1b\x06\xa0\x00\x00\x00\xfe\xff\x1c\xa7'}
             pass
@@ -74,8 +75,8 @@ class MeidingSerial(ComU):
         try:
             recvData = self.sendAndWaitRecvDate("\x1B\x03\xA0\x00\x00\x1C\xA3")
             print str_to_hex(recvData)
-            enableStr = fillChar(bin(int(str_to_hex(recvData[6]), 16))[2:], "0", 8)
-            openStatusStr = fillChar(bin(int(str_to_hex(recvData[8]), 16))[2:], "0", 8)
+            enableStr = fillChar(bin(int(str_to_hex(recvData[5]), 16))[2:], "0", 8)
+            openStatusStr = fillChar(bin(int(str_to_hex(recvData[7]), 16))[2:], "0", 8)
             print enableStr
             print openStatusStr
             boxNum = 0
@@ -97,38 +98,39 @@ class MeidingSerial(ComU):
         return rtn
 
     # ======================打开柜子======================================
-    def openBox(self, orderNum=1):
+    def openBox(self, orderNum="1"):
         '''
         打开柜子
         :param orderNum: 柜号
         :return:
         '''
-        print u"----------------打开%d柜子开始------------" % orderNum
+        orderNum = int(orderNum)
+        print u"----------------打开%s柜子开始------------" % orderNum
         rtn = common.buildFail(u"打开柜子失败", "")
         try:
-            if orderNum == 1:
+            if orderNum ==1:
                 com = "\x1B\x04\xA1\x00\x00\x01\x1C\xA4"
-            elif orderNum == 2:
+            elif orderNum ==2:
                 com = "\x1B\x04\xA1\x00\x00\x11\x1C\xB4"
-            elif orderNum == 3:
+            elif orderNum ==3:
                 com = "\x1B\x04\xA1\x00\x00\x21\x1C\x84"
-            elif orderNum == 4:
+            elif orderNum ==4:
                 com = "\x1B\x04\xA1\x00\x00\x31\x1C\x94"
-            elif orderNum == 5:
+            elif orderNum ==5:
                 com = "\x1B\x04\xA1\x00\x00\x41\x1C\xE4"
-            elif orderNum == 6:
+            elif orderNum ==6:
                 com = "\x1B\x04\xA1\x00\x00\x51\x1C\xF4"
-            elif orderNum == 7:
+            elif orderNum ==7:
                 com = "\x1B\x04\xA1\x00\x00\x61\x1C\xC4"
-            elif orderNum == 8:
+            elif orderNum ==8:
                 com = "\x1B\x04\xA1\x00\x00\x71\x1C\xD4"
             recvData = self.sendAndWaitRecvDate(com)
             print recvData
             print str_to_hex(recvData)
-            rtn = common.buildSuccess(u"打开柜子成功", recvData)
+            rtn = common.buildSuccess(u"打开柜子成功")
         except Exception:
             traceback.print_exc()
-        print u"----------------打开柜子%s结束------------" % orderNum
+        print u"----------------打开柜子%d结束------------" % orderNum
         return rtn
 
     def existPaper(self):
@@ -181,7 +183,7 @@ if __name__ == '__main__':
     s = "\x1b\x06\xa0\x00\x00\x00\xfe\xff\x1c\xa7"
     print(str_to_hex(s))
 
-    # mds = MeidingSerial(port="COM1")
+    mds = MeidingSerial(port="COM2")
     # ========================初始化====================
     # mds.initMachine()
 

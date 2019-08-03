@@ -61,18 +61,7 @@ class Index:
             port = i.get("port", "COM1")
             baudrate = i.get("baudrate", 9600)
             return json.dumps(self.reloadCom(port, baudrate))
-class Login:
-    def __init__(self):
-        pass
 
-    def GET(self):
-        return render.modules.delivery.login()
-class Promit:
-    def __init__(self):
-        pass
-
-    def GET(self):
-        return render.modules.delivery.promit()
 
 class Scan:
     imgLineDao = ImgLineDao()
@@ -131,13 +120,19 @@ class Refund:
         pass
 
     def openBox(self, boxNum):
-        mds = MeidingSerial("COM1")
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = int(configDict.get(configkey.SERIAL_BAUDRATE))
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
         rtn = mds.openBox(boxNum)
         return json.dumps(rtn)
 
     def findAll(self):
         boxs = self.boxDao.findAll()
-        mds = MeidingSerial("COM1")
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = int(configDict.get(configkey.SERIAL_BAUDRATE))
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
         rtn = mds.queryBoxSatus()
         print rtn
         for tmp in rtn.get("data"):
@@ -192,7 +187,10 @@ class PickUp:
         if not box:
             return json.dumps(common.buildFail(u"取件码错误，请重新输入！"))
         # 发送打开柜子指令
-        mds = MeidingSerial()
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = configDict.get(configkey.SERIAL_BAUDRATE)
+        mds = MeidingSerial(port=serial_port, baudrate=int(serial_baudrate))
         rtn = mds.openBox(box.get("boxNum"))
         return json.dumps(rtn)
 
@@ -392,9 +390,12 @@ class Edit:
             shutil.rmtree(headPath)
         return json.dumps(common.buildSuccess(data=head))
 
-    def cancel(self):
+    def backPaper(self):
         # 通知电机退票
-        mds = HuageSerial()
+        configDict = config.getConfigDict()
+        serial_port = configDict.get(configkey.SERIAL_PORT)
+        serial_baudrate = configDict.get(configkey.SERIAL_BAUDRATE)
+        mds = HuageSerial(port=serial_port, baudrate=int(serial_baudrate))
         rtn = mds.backPaper()
         # rtn = common.buildSuccess()
         if rtn["isSuccess"]:
@@ -444,8 +445,8 @@ class Edit:
             return self.editNum()
         if ("submit" == method):
             return self.submit()
-        if ("cancel" == method):
-            return self.cancel()
+        if ("backPaper" == method):
+            return self.backPaper()
 
         pass
 class Test:

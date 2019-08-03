@@ -21,7 +21,7 @@ RECYCLE_OK= str_to_hex("\xA0\x0A\x01\x01\x55")
 BACK_ORDER= "\xA0\x0A\x02\x00\x55"
 BACK_OK= str_to_hex("\xA0\x0A\x02\x01\x55")
 class HuageSerial(ComU):
-    def __init__(self, port="COM5", baudrate=19200):
+    def __init__(self, port="COM1", baudrate=19200):
         ComU.__init__(self, port, baudrate)
 
     # ======================复位======================================

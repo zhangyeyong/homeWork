@@ -169,15 +169,21 @@ class ImgHeadDao:
     def updateStatusByheadId(self, headId, status):
         if headId:
             db.update("imgHead", where="headId=$headId", vars={'headId':headId}, status=status)
+    def updateStatusAndErrorMsgByheadId(self, headId, status,errorMsg):
+        if headId:
+            db.update("imgHead", where="headId=$headId", vars={'headId':headId}, **{"status":status,"errorMsg":errorMsg})
     def update(self, imgHead):
         if imgHead and  imgHead.get("headId"):
             db.update("imgHead", where="headId=$headId", vars={'headId':imgHead.get("headId")}, **imgHead)
     def uploading2FailuerByTimeout(self):
         #24*60=1440
-        db.query("update imgHead set status='FAILURE', errorMsg='超时，任务终止' where status='UPLOADING' and ((uploadSize<1024 and (julianday('now','localtime')-julianday(uploadTime))*1440>1) or (julianday('now','localtime')-julianday(uploadTime))*1440>20)")
+        db.query(u"update imgHead set status='FAILURE', errorMsg='超时 任务终止' where status='UPLOADING' and ((uploadSize<1024 and (julianday('now','localtime')-julianday(uploadTime))*1440>1) or (julianday('now','localtime')-julianday(uploadTime))*1440>20)")
     def addUploadSize(self, headId, uploadSize):
         if headId:
             db.query("update imgHead set uploadSize = uploadSize +"+str(uploadSize)+"  where headId = " + str(headId))
+    def uploadSize(self, headId):
+        if headId:
+            db.query("update imgHead  set uploadSize = (select sum(uploadSize) from imgLine where headId="+ str(headId)+")  where headId = " + str(headId))
     def uploadFail(self, headId, errorMsg):
         if headId:
             db.query("update imgHead set status='FAILURE', errorMsg='"+str(errorMsg)+"'  where headId = " + str(headId))
@@ -208,13 +214,4 @@ class ImgHeadDao:
 if __name__ == "__main__":
     imgHeadDao = ImgHeadDao()
 #     imgHeadDao.update({"headId":8, "status":"UPLOADING","uploadTime": time.strftime('%Y-%m-%d %H:%M:%S')})
-#     imgHeadDao.addUploadSize(1, 1000)
-
-    page = {"pageNum":1,"pageSize":10}        
-    cond = {"userNum":"10000","status":"FAILURE"}
-    page["cond"]=cond
-    pages = imgHeadDao.findByPage(page)
-    headIds = []
-    for head in pages.get("data"):
-        headIds.append(head.get("headId"))
-    print headIds
+    imgHeadDao.addUploadSize(1, 1000)
