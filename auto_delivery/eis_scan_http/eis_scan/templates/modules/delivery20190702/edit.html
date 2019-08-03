@@ -1,0 +1,456 @@
+$def with(head,lines)
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/swiper-3.4.2.min.css">
+    <style>
+    #mask,#layer{position: absolute;z-index: 98;left: 0;top: 0;width: 100%;height: 100%;background: #000;}
+    #layer{background: #fff url(/static/images/load.gif) center center no-repeat;opacity: 0.8;filter:alpha(opacity=80);}
+
+    .boss{
+        position: relative;
+    }
+    .boss #loading{
+        position: absolute;
+        z-index:999;
+        display: none;
+        background: rgba(255, 255, 255, .7) url('/static/images/load.gif') no-repeat center;
+        left: 50%;
+        top: 50%;
+        width: 1920px;
+        height: 1080px;
+        transform: translate(-50%,-50%);
+    }
+    .box{
+        width: 1873px;
+        height: 1040px;
+        padding: 5px;
+        border: 5px solid black;
+        background: rgb(212, 238, 238);
+        margin: 0 auto;
+        display: flex;
+    }
+    .box .left{
+        width: 50%;
+        border-right: 2px solid black;
+        height: 100%;
+    }
+    .box .left .swiper-container{
+        text-align: center;
+        margin-top: 182px;
+        height: 680px;
+        margin-bottom: 10px;
+    }
+    .box .left .swiper-container .swiper-wrapper{
+        text-align: center;
+    }
+    .box .left .swiper-container .swiper-wrapper img{
+        width: 50%;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide{
+        position: relative;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc{
+        position: absolute;
+        right: 100px;
+        top: 5px;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc input[type='checkbox']{
+        height:40px;
+        width:40px;
+    }
+    .box .left .swiper-container .swiper-wrapper .name{
+        text-align: center;
+        height: 70px;
+        line-height: 70px;
+        font-weight: 500;
+        font-size: 55px;
+        margin-top: 40px;
+    }
+    .box .left .swiper-container .swiper-wrapper .inp{
+        margin: 0 auto;
+        width: 600px;
+        height: 70px;
+        margin-top: 40px;
+        display: none;
+    }
+    .box .left .swiper-container .swiper-wrapper .inp input{
+        height: 60px;
+        width: 440px;
+        font-weight: 500;
+        font-size: 55px;
+        outline: none;
+        padding-left: 20px;
+    }
+    .box .left .swiper-container .swiper-wrapper .inp div{
+        font-size: 25px;
+        margin-left: 5px;
+        height: 64px;
+        line-height: 64px;
+        text-align: center;
+        width: 60px;
+        border: 1px solid rgb(169, 169, 169);
+    }
+    .box .left .bot{
+        text-align: right;
+        padding-right: 40px;
+    }
+    .box .left .bot #time{
+        font-size: 70px;
+        font-weight: bold;
+    }
+    .box .left .bot #date{
+        font-size: 50px;
+        font-weight: bold;
+    }
+    .box .right{
+        width: 50%;
+        border-left: 3px solid black;
+        height: 100%;
+        display: flex;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .box .right .one{
+        width: 50%;
+        background: rgb(120, 209, 14);
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-right: 20px;
+    }
+    .box .right .one .tdyq{
+        height: 140px;
+        line-height: 140px;
+        text-align: center;
+        font-weight: bolder;
+        font-size: 80px;
+    }
+    .box .right .one .gg{
+        height: 120px;
+        line-height: 120px;
+        font-weight: bolder;
+        font-size: 60px;
+        text-align: center;
+    }
+    .box .right .one .gg:last-child{
+        font-size: 55px;
+    }
+    .box .right .one .an{
+        height: 100px;
+        width: 220px;
+        font-weight: bolder;
+        font-size: 35px;
+        color: black;
+        border-radius: 20px;
+        background: white;
+        margin: 190px auto 0;
+    }
+    .box .right .one .an .en,.ch{
+        height: 50%;
+        text-align: center;
+        font-size: 40px;
+    }
+    .box .right .two{
+        width: 50%;
+        height: 100%;
+    }
+    .box .right .two .top{
+        height: 35%;
+        display: flex;
+        margin-bottom: 10px;
+        background: rgb(244, 206, 0);
+    }
+    .box .right .two .mid{
+        height: 31%;
+        display: flex;
+        margin-bottom: 10px;
+        background: rgb(100, 208, 228);
+    }
+    .box .right .two .bot{
+        height: 31%;
+        display: flex;
+        background: rgb(100, 208, 228);
+    }
+    .box .right .two .topLeft{
+        width: 45%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topLeft img{
+        width: 150px;
+    }
+    .box .right .two .topRight{
+        width: 55%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topRight .text{
+        font-weight: bolder;
+    }
+    .box .right .two .topRight .text .textTop{
+        font-size: 80px;
+    }
+    .box .right .two .topRight .text .textBot{
+        font-size: 45px;
+    }
+    .box .right .two .topRight .text .textTop,.textBot{
+        text-align: center;
+    }
+    </style>
+    <script src="/static/js/layer/layer.js" type="text/javascript"></script>
+    <script language="javascript">
+    function showtime(){
+        var today,hour,second,minute,year,month,date;
+        var strDate ;
+        today=new Date();
+        var n_day = today.getDay();
+        switch (n_day)
+        {
+            case 0:{
+            strDate = "星期日";
+            }break;
+            case 1:{
+            strDate = "星期一";
+            }break;
+            case 2:{
+            strDate ="星期二";
+            }break;
+            case 3:{
+            strDate = "星期三";
+            }break;
+            case 4:{
+            strDate = "星期四";
+            }break;
+            case 5:{
+            strDate = "星期五";
+            }break;
+            case 6:{
+            strDate = "星期六";
+            }break;
+            case 7:{
+            strDate = "星期日";
+            }break;
+        }
+        year = today.getYear()+1900;
+        month = today.getMonth()+1;
+        date = today.getDate();
+        hour = today.getHours();
+        minute =today.getMinutes();
+        if (month < 10){
+            month = '0' + month
+        }
+        if (date < 10){
+            return date =  '0' + date
+        }
+        if (hour < 10){
+            hour = '0' + hour
+        }
+        if (minute < 10){
+            minute =  '0' + minute
+        }
+        document.getElementById('time').innerHTML = "<div>"+ hour + ":" + minute +"</div>"; //显示时间
+        document.getElementById('date').innerHTML = "<div>"+ month + "月" + date + "日" + strDate +"</div>"; //显示日期
+        setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)
+    }
+
+    // 编辑按钮
+    function toEdit(){
+        jQuery('.swiper-slide-active .name').css('display', 'none');
+        jQuery('.swiper-slide-active .inp').css('display', 'flex');
+    }
+    // 确定
+    function confirm(){
+        <!--jQuery(".swiper-slide-active .name").text(jQuery('.swiper-slide-active input').val());-->
+        <!--jQuery('.swiper-slide-active .name').css('display', 'block');-->
+        <!--jQuery('.swiper-slide-active .inp').css('display', 'none');-->
+        var oldNum = '$head.get("headNum")';
+        var newNum = jQuery("input[name='headNum']").val();
+        showLoading();
+        jQuery.ajax({
+            url : "/delivery/edit",
+            type : "post",
+            async : true,
+            data : {
+                "method":"editNum",
+                "headId" : $head.get("headId"),
+                "headNum" : newNum,
+                "oldNum" : oldNum
+            },
+            success : function(d) {
+                d = eval("(" + d + ")");
+                if (d.isSuccess) {
+                    alert(_('单据编号修改成功!'));
+                    window.location.reload()
+                } else {
+                    alert(d.msg);
+                }
+            },
+            error : function(e) {
+                alert(_("未知错误"));
+            },
+            complete : function() {
+                hideLoading();
+            }
+        });
+    }
+    // 取消
+    function cancle(){
+        jQuery('.swiper-slide-active .name').css('display', 'block');
+        jQuery('.swiper-slide-active .inp').css('display', 'none');
+    }
+    function submit(){
+        showLoading();
+        $$.ajax({
+            url : "/delivery/edit",
+            type : "post",
+            async : true,
+            data : {
+                method:"submit",
+                headId:$head.get("headId"),
+            },
+            success : function(d) {
+                d = eval("(" + d + ")");
+                if (d.isSuccess) {
+                    alert("上传成功");
+                    back();
+                } else {
+                    alert(d.info);
+                }
+             },
+            error : function(e) {
+                alert(_("未知错误"));
+            },
+            complete : function() {
+                hideLoading();
+            }
+        });
+    }
+    function backPaper(){
+        showLoading();
+        jQuery.ajax({
+            url : "/delivery/edit",
+            type : "post",
+            async : true,
+            data : {
+                method:"backPaper",
+                headId:$head.get("headId"),
+            },
+            success : function(d) {
+                d = eval("(" + d + ")");
+
+                if (d.isSuccess) {
+                    alert("退件成功");
+                    back();
+                } else {
+                    alert(d.info);
+                }
+             },
+            error : function(e) {
+                alert(_("未知错误"));
+            },
+            complete : function() {
+                hideLoading();
+            }
+        });
+    }
+    function back(){
+      window.location.href = "/delivery/scan";
+    }
+    function init(){
+        showtime();
+    }
+    </script>
+</head>
+<body onload="init();">
+    <div class="boss">
+    <div id="loading"></div>
+    <div class="box">
+        <div class="left">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                $for image in lines:
+                    <div class="swiper-slide">
+                        <img src='/static/images/scan/$image.get("headNum")/$image.get("imgNameP")'>
+                        <div class="name">$image.get("headNum")-$image.get("imgOrd")</div>
+                        <div class="inp">
+                            <input type="text" name="headNum" value='$image.get("headNum")'>
+                            <div class="confirm" onclick="confirm()">确定</div>
+                            <div class="cancle" onclick="cancle()">取消</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="bot">
+                <div id="time"></div>
+                <div id="date"></div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="one">
+                    <div class="tdyq">提交要求</div>
+                    <div class="gg">单号正确√</div>
+                    <div class="gg">张数正确√</div>
+                    <div class="gg">影像清晰√</div>
+                    <div class="gg">否则退回重扫编辑可改单号</div>
+                <div class="an" onclick="back()">
+                    <div class="en">BACK</div> 
+                    <div class="ch">返回</div>
+                </div>
+            </div>
+            <div class="two">
+                <div class="top" id="Submit" onclick="submit()">
+                    <div class="topLeft">
+                        <div class="imge"><img src="/static/images/submit.png"></div>
+                    </div>
+                    <div class="topRight">
+                        <div class="text">
+                            <div class="textTop">提交</div>
+                            <div class="textBot">Submit</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mid" id="Edit" onclick="toEdit()">
+                    <div class="topLeft">
+                            <div class="imge"><img src="/static/images/edit.png"></div>
+                        </div>
+                        <div class="topRight">
+                            <div class="text">
+                                <div class="textTop">编辑</div>
+                                <div class="textBot">Edit</div>
+                            </div>
+                        </div>
+                </div>
+                <div class="bot" id="Return" onclick="backPaper()">
+                    <div class="topLeft">
+                            <div class="imge"><img src="/static/images/return.png"></div>
+                        </div>
+                        <div class="topRight">
+                            <div class="text">
+                                <div class="textTop">退回</div>
+                                <div class="textBot">Return</div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="/static/js/swiper-3.4.2.min.js"></script>
+
+    <script language="javascript"> 
+        var mySwiper = new Swiper('.swiper-container',{
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        })
+    </script>
+</body>
+</html>

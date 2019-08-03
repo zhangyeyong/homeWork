@@ -7,6 +7,7 @@ curPath = os.path.abspath(os.path.dirname(__file__))
 n = curPath.rindex('config')
 # 根路径
 rootPath = curPath[0:n].decode(sys.getfilesystemencoding())
+scanClientPath = os.path.abspath(os.path.join(rootPath,"../scanClient"))
 pathList = os.path.normpath(rootPath).split("\\")
 temp = ""
 for i in range(1,len(pathList)):

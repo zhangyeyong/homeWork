@@ -45,6 +45,7 @@ urls = (
         '/configure', 'service.configService.configure',
         '/queue', 'service.scanService.queue',
         '/testCom', 'service.testService.testCom',
+        '/delivery/welcome', 'service.deliveryService.Welcome',
         '/delivery/index', 'service.deliveryService.Index',
         '/delivery/login', 'service.deliveryService.Login',
         '/delivery/promit', 'service.deliveryService.Promit',

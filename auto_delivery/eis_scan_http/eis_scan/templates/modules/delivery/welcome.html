@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .box{
+        width: 1920px;
+        height: 1080px;
+        border: 5px solid black;
+        margin: 0 auto;
+        position: relative;
+    }
+    .box .welcome{
+        width: 1920px;
+        height: 1080px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .box .title{
+        width: 960px;
+        height: 440px;
+        position: absolute;
+        right: 40px;
+        top: 60px;
+    }
+    .box .welcomeLanguage{
+        width: 1800px;
+        height: 160px;
+        position: absolute;
+        color: #fff;
+        font-size: 120px;
+        left: 110px;
+        bottom: 370px;
+    }
+    .box .easySend{
+        width: 900px;
+        height: 140px;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        color: rgb(91, 253, 47);
+        font-size: 100px;
+        left: 110px;
+        bottom: 210px;
+    }
+    .box .easySend div{
+       width: 30px;
+       height: 30px;
+       border-radius: 50%;
+       background: rgb(91, 253, 47);
+       margin-right: 30px;
+    }
+    .box .start{
+        width: 500px;
+       height: 85px;
+       font-size: 50px;
+       position: absolute;
+       left: 20px;
+        bottom: 0px;
+       color: rgb(127, 127, 127);
+    }
+    .box .moble{
+        width: 620px;
+       height: 230px;
+       font-size: 50px;
+       position: absolute;
+       right: 0px;
+        bottom: 0px;
+       color: rgb(47, 85, 151);
+    }
+    .box .moble .telephone{
+       display: flex;
+       font-size: 45px;
+    }
+    .box .moble .telephone .imgIpone{
+       display: flex;
+       width: 100px;
+       align-items: center;
+    }
+    </style>
+</head>
+<body>
+    <div class="box">
+     <img src="/static/images/welcome.png" class="welcome">
+     <img src="/static/images/title.png" class="title">
+     <div class="welcomeLanguage">欢迎使用 Auto Delivery</div>
+     <div class="easySend"><div></div>轻松自由投递票据</div>
+     <div class="start">轻触屏幕开始操作 >></div>
+     <div class="moble">
+         <div class="name">南方航空·财务共享中心</div>
+         <div class="telephone">
+            <div class="imgIpone"><img src="/static/images/mobile.png"></div>
+            <div>
+                <div class="outNumber">外线: 020-28289999</div>
+                <div class="inNumber">内线: 89999</div>
+            </div>
+         </div>
+
+     </div>
+    </div>
+    <script src="/static/path/jquery-1.10.1.min.js"></script>
+    <script>
+
+    jQuery(".start").click(function(){
+        window.location.href="/delivery/index";
+    });
+    </script>
+</body>
+</html>

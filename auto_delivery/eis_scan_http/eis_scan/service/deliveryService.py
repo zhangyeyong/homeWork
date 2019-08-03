@@ -67,6 +67,13 @@ def setUserFormValue(userForm, name, value):
     return userForm
 
 
+class Welcome:
+    def __init__(self):
+        pass
+
+    def GET(self):
+        return render.modules.delivery.welcome()
+
 class Index:
     def __init__(self):
         pass
@@ -487,6 +494,8 @@ class Edit:
             i = web.input()
             head_id = i.get("headId")
             rtn = self.deleteTaskByHeadId(head_id)
+        else:
+            rtn = json.dumps(rtn)
         return rtn
 
     def editNum(self):
