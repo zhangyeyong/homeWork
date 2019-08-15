@@ -348,7 +348,7 @@ $def with(head,lines)
         <!--jQuery('.swiper-slide-active .name').css('display', 'block');-->
         <!--jQuery('.swiper-slide-active .inp').css('display', 'none');-->
         var oldNum = '$head.get("headNum")';
-        var newNum = jQuery("input[name='headNum']").val();
+        var newNum = jQuery("#headNum").val();
         showLoading();
         jQuery.ajax({
             url : "/delivery/edit",
