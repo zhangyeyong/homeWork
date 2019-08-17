@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body{
+        margin: 0;
+    }
+    .box{
+        width: 1920px;
+        height: 1080px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        border: 5px solid black;
+        position: relative;
+    }
+    .box .welcome{
+        width: 1910px;
+        height: 1070px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .box .boxIn{
+        width: 1910px;
+        height: 1070px;
+        display: flex;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .box .left{
+        width: 75%;
+        height: 100%;
+    }
+    .box .left .top{
+        height: 600px;
+        text-align: center;
+    }
+    .box .left .bot{
+        height: 470px;
+        display: flex;
+    }
+    .box .left .bot .botLeft{
+        width: 70%;
+        padding: 20px;
+    }
+    .box .left .bot .botLeft div{
+        height: 60px;
+        line-height: 60x;
+        font-size: 40px;
+        color: rgb(0, 32, 96);
+        font-weight: 600;
+    }
+    .box .left .bot .botLeft div span{
+        color: red;
+    }
+    .box .left .bot .botRight{
+        width: 30%;
+        text-align: right;
+        padding-right: 40px;
+        padding-top: 280px;
+    }
+    .box .left .bot .botRight #time{
+        font-size: 70px;
+        font-weight: bold;
+    }
+    .box .left .bot .botRight #date{
+        font-size: 50px;
+        font-weight: bold;
+    }
+    .box .right{
+        width: 25%;
+        border-left: 5px dashed black;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .box .right .two{
+        width: 100%;
+        height: 100%;
+        color: #fff;
+    }
+    .box .right .two .top{
+        height: 30%;
+        display: flex;
+        margin-bottom: 40px;
+        background: rgb(0, 32, 96);
+        border-radius: 50px;
+    }
+    .box .right .two .mid{
+        height: 30%;
+        display: flex;
+        margin-bottom: 20px;
+        background: rgb(0, 32, 96);
+        border-radius: 50px;
+    }
+    .box .right .two .xuxian{
+        height: 0;
+        border-top: 5px dashed black;
+    }
+    .box .right .two .bot{
+        height: 30%;
+        margin-top: 20px;
+        background: rgb(0, 32, 96);
+        border-radius: 50px;
+    }
+    .box .right .two .bot .shiyong{
+        height: 60px;
+        padding-top: 30px;
+        box-sizing: border-box;
+        font-size: 40px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .box .right .two .bot .shiyongBot{
+        height: calc(100% - 60px);
+        display: flex;
+    }
+    .box .right .two .topLeft{
+        width: 45%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topLeft img{
+        width: 150px;
+    }
+    .box .right .two .topRight{
+        width: 55%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topRight .text{
+        font-weight: bolder;
+    }
+    .box .right .two .topRight .text .textTop{
+        font-size: 50px;
+    }
+    .box .right .two .topRight .text .textBot{
+        font-size: 50px;
+    }
+    .box .right .two .topRight .text .textTop,.textBot{
+        text-align: center;
+    }
+    .boss{
+        position: relative;
+    }
+    .boss #bg{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        transform: translate(-50%,-50%);
+        width: 1910px;
+        height: 1070px;
+        background:rgba(221, 230, 229, .7);
+        z-index: 999;
+    }
+    .boss #bg .popupWindow{
+        width: 600px;
+        height: 650px;
+        background: #fff;
+        border-radius: 20px;
+        display: none;
+    }
+    .boss #bg .popupWindow #con1{
+        display: block;
+    }
+    .boss #bg .popupWindow .head{
+        height: 60px;
+        position: relative;
+    }
+    .boss #bg .popupWindow .head div{
+        position: absolute;
+        right: 0;
+        width: 40px;
+        text-align: center;
+        height: 40px;
+        line-height: 30px;
+        font-size: 40px;
+        border-radius: 50%;
+        color: #fff;
+        background: rgb(243, 152, 1);
+    }
+    .boss #bg .popupWindow #con1 .prompt{
+        height: 70px;
+        line-height: 70px;
+        font-weight: 500;
+        font-size: 40px;
+        margin-top: 60px;
+        text-align: center;
+    }
+    .boss #bg .popupWindow #con1 .inp{
+        height: 80px;
+        line-height: 80px;
+        margin-top: 80px;
+        text-align: center;
+    }
+    .boss #bg .popupWindow #con1 .inp input{
+        height: 70px;
+        width: 370px;
+        border-radius: 8px;
+        border: 1px solid rgb(206, 206, 206);
+        outline: none;
+        background: rgb(238, 238, 238);
+        font-weight: 300;
+        font-size: 35px;
+        text-align: center;
+    }
+    .boss #bg .popupWindow #con1 .btn{
+        margin-top: 80px;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+    }
+    .boss #bg .popupWindow #con1 .btn button{
+        width: 370px;
+        height: 72px;
+        color: #fff;
+        outline: none;
+        background: rgb(243, 152, 1);
+        border: none;
+        border-radius: 8px;
+        font-size: 30px;
+    }
+    .boss #bg .popupWindow #con2{
+        height: 500px;
+        line-height: 500px;
+        font-size: 40px;
+        display: none;
+        text-align: center;
+        color: rgb(120, 209, 14);
+    }
+    .boss #bg .popupWindow #con3{
+        display: none;
+    }
+    .boss #bg .popupWindow #con3 .passTitle{
+        height: 70px;
+        line-height: 70px;
+        font-weight: 500;
+        font-size: 40px;
+        margin-top: 60px;
+        text-align: center;
+    }
+    .boss #bg .popupWindow #con3 .userOrpassword{
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+        margin-top: 30px;
+    }
+    .boss #bg .popupWindow #con3 .userOrpassword input{
+        padding-left: 20px;
+        height: 70px;
+        width: 370px;
+        border-radius: 8px;
+        border: 1px solid rgb(206, 206, 206);
+        outline: none;
+        background: rgb(238, 238, 238);
+        font-weight: 300;
+        font-size: 35px;
+    }
+    .boss #bg .popupWindow #con3 .login{
+        margin-top: 50px;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+    }
+    .boss #bg .popupWindow #con3 .login button{
+        width: 370px;
+        height: 72px;
+        color: #fff;
+        outline: none;
+        background: rgb(243, 152, 1);
+        border: none;
+        border-radius: 8px;
+        font-size: 30px;
+    }
+    .boss #bg .boxList{
+        display: block;
+        width: 970px;
+        height: 800px;
+        background: #fff;
+        border-radius: 20px;
+        padding: 10px;
+    }
+    .boss #bg .boxList .oneHead{
+        height: 60px;
+        position: relative;
+    }
+    .boss #bg .boxList .oneHead .clo{
+        position: absolute;
+        right: 0;
+        width: 40px;
+        text-align: center;
+        height: 40px;
+        line-height: 30px;
+        font-size: 40px;
+        border-radius: 50%;
+        color: #fff;
+        background: rgb(243, 152, 1);
+    }
+    .boss #bg .boxList .message{
+        height: 70px;
+        line-height: 70px;
+        display: flex;
+        justify-content: center;
+    }
+    .boss #bg .boxList .message #msg{
+        display: none;
+        height: 50px;
+        line-height: 50px;
+        width: 337px;
+        text-align: center;
+        border-radius: 8px;
+        color: red;
+        font-size: 30px;
+        background: rgb(120, 209, 14);
+    }
+    .boss #bg .boxList .over{
+        height: 670px;
+        overflow-y: auto;
+    }
+    .boss #bg .boxList .boxOne{
+        display: flex;
+        margin-top: 20px;
+        font-size: 30px;
+        height: 70px;
+        line-height: 70px;
+        border-bottom: 1px solid rgb(183, 183, 183)
+    }
+    .boss #bg .boxList .boxOne .col{
+        width: 25%;
+        text-align: center;
+    }
+    .boss #bg .boxList .boxContent{
+        display: flex;
+        font-size: 30px;
+        height: 70px;
+        line-height: 70px;
+        border-bottom: 1px solid rgb(183, 183, 183)
+    }
+    .boss #bg .boxList .boxContent .col{
+        width: 25%;
+        text-align: center;
+    }
+    .boss #bg .boxList .boxContent .col span{
+        background: rgb(243, 152, 1);
+        padding: 5px 20px;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+<body onload="showtime();">
+    <div class="boss">
+    <!-- 音频 -->
+    <audio id="B">
+        <source src="./audio/B.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="C">
+        <source src="./audio/C.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="D">
+        <source src="./audio/D.mp3" type="audio/mpeg">
+    </audio>
+    <div class="box">
+        <img src="./img/welcome.png" class="welcome">
+        <div class="boxIn">
+                <div class="left">
+                    <div class="top">
+                        <video width="1060" height="600" controls="controls">
+                            <source src="./video/Delivery.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="bot">
+                        <div class="botLeft">
+                            <div>注意事项：</div>
+                            <div>1.一次扫描一份报账单【封面+附件】</div>
+                            <div>2.请将单据<span>封面朝下·倒置·整份</span>放入①号口</div>
+                            <div>3.专票绿色抵扣联请直接投入②号口</div>
+                            <div>4<span>补扫替扫</span>请在附件写上原报账单号</div>
+                            <div>5.退回票据请从③号口取出</div>
+                            <div>6.<span>超过30张</span>附件请夹好直接投入④号口</div>
+                        </div>
+                        <div class="botRight">
+                            <div id="time"></div>
+                            <div id="date"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="two">
+                        <div class="top" id="Delivery">
+                            <div class="topLeft">
+                                <div class="imge"><img src="img/delivery.png"></div>
+                            </div>
+                            <div class="topRight">
+                                <div class="text">
+                                    <div class="textTop">我要交单</div>
+                                    <div class="textBot">Delivery</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mid" id="Pickup">
+                            <div class="topLeft">
+                                    <div class="imge"><img src="img/take.png"></div>
+                                </div>
+                                <div class="topRight">
+                                    <div class="text">
+                                        <div class="textTop">我要取件</div>
+                                        <div class="textBot">Pickup</div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="xuxian"></div>
+                        <div class="bot" id="Refund">
+                            <div class="shiyong">仅供归档员使用</div>
+                            <div class="shiyongBot">
+                                <div class="topLeft">
+                                    <div class="imge"><img src="img/refund.png"></div>
+                                </div>
+                                <div class="topRight">
+                                    <div class="text">
+                                        <div class="textTop">退票</div>
+                                        <div class="textBot">Refund</div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+                </div>
+        </div>
+        
+    </div>
+    <div id="bg">
+        <div class="popupWindow">
+            <div class="head"><div id="close">×</div></div>
+            <div id="con1">
+                <div class="prompt">请输入取件码</div>
+                <div class="inp">
+                    <input type="text" value="" id="code">
+                </div>
+                <div class="btn">
+                    <button id="comfirm">确定</button>
+                </div>
+            </div>
+            <div id="con2">
+                <span id="num"></span>号柜门已打开√
+            </div>
+            <div id="con3">
+                <div class="passTitle">密码登录</div>
+                <div class="userOrpassword"><input type="text" value="" placeholder="账户" id="user"></div>
+                <div class="userOrpassword"><input type="text" value="" placeholder="密码" id="password"></div>
+                <div class="login">
+                    <button id="login">登录</button>
+                </div>
+            </div>
+        </div>
+        <div class="boxList">
+            <div class="oneHead"><div class="clo">×</div></div>
+            <div class="message"><div id="msg">本次获取密码: <span id="showPassword"></span></div></div>
+            <div class="over">
+                <div class="boxOne">
+                    <div class="col">柜号</div>
+                    <div class="col">状态</div>
+                    <div class="col">开箱</div>
+                    <div class="col">获取密码</div>
+                </div>
+                <div class="boxContent">
+                    <div class="col">1</div>
+                    <div class="col">可用</div>
+                    <div class="col"><span id="open">打开</span></div>
+                    <div class="col"><span id="getPassWord">获取密码</span></div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    <script src="path/jquery-1.10.1.min.js"></script>
+    <script>
+    function showtime()
+        {
+        var today,hour,minute,year,month,date;
+        var strDate ;
+        today=new Date();
+        var n_day = today.getDay();
+        switch (n_day)
+        {
+            case 0:{
+            strDate = "星期日";
+            }break;
+            case 1:{
+            strDate = "星期一";
+            }break;
+            case 2:{
+            strDate ="星期二";
+            }break;
+            case 3:{
+            strDate = "星期三";
+            }break;
+            case 4:{
+            strDate = "星期四";
+            }break;
+            case 5:{
+            strDate = "星期五";
+            }break;
+            case 6:{
+            strDate = "星期六";
+            }break;
+            case 7:{
+            strDate = "星期日";
+            }break;
+        }
+        year = today.getYear()+1900;
+        month = today.getMonth()+1;
+        date = today.getDate();
+        hour = today.getHours();
+        minute =today.getMinutes();
+        if (month < 10){
+            month = '0' + month
+        }
+        if (date < 10){
+            return date =  '0' + date
+        }
+        if (hour < 10){
+            hour = '0' + hour
+        }
+        if (minute < 10){
+            minute =  '0' + minute
+        }
+        document.getElementById('time').innerHTML = "<div>"+ hour + ":" + minute +"</div>"; //显示时间
+        document.getElementById('date').innerHTML = "<div>"+ month + "月" + date + "日" + strDate +"</div>"; //显示日期
+        setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)
+    }
+    // 投递按钮
+    $("#Delivery").click(function(){
+        B.play();
+        // window.location.href="replace.html";
+    });
+    // 退票按钮
+    $("#Refund").click(function(){
+        D.play();
+        $('.userOrpassword input').val('');
+        $('#bg').css('display', 'flex');
+        $('.popupWindow').css('display', 'block');
+        $('.boxList').css('display', 'none');
+        $('#con1').css('display', 'none');
+        $('#con2').css('display', 'none');
+        $('#con3').css('display', 'block');
+    });
+    // 退票弹窗登录按钮
+    $("#login").click(function(){
+        $.ajax({
+            type: "POST",  
+            url: "",  
+            contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
+            data: {user:$('#user').val(),password:$('#password').val()},
+            dataType: "json",  
+            success: function(data){
+                // // 打开柜子列表
+                $('#bg').css('display', 'flex');
+                $('.popupWindow').css('display', 'none');
+                $('.boxList').css('display', 'block');
+                $('#msg').css('display', 'none');
+            },
+            error:function(e){
+
+            },
+            });
+    });
+    // 柜子打开按钮
+    $("#open").click(function(){
+        $.ajax({
+            type: "POST",  
+            url: "",  
+            contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
+            data: {},
+            dataType: "json",  
+            success: function(data){
+                
+            },
+            error:function(e){
+
+            },
+            });
+    });
+    // 柜子获取密码按钮
+    $("#getPassWord").click(function(){
+        $.ajax({
+            type: "POST",  
+            url: "",  
+            contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
+            data: {},
+            dataType: "json",  
+            success: function(data){
+                // 显示获取的密码
+                $('#showPassword').text(data.passWord);
+                $('#msg').css('display', 'block');
+            },
+            error:function(e){
+
+            },
+            });
+    });
+    // 柜子弹窗关闭按钮
+    $(".clo").click(function(){
+        $('#bg').css('display', 'none');
+    });
+    // 取件按钮
+    $("#Pickup").click(function(){
+        C.play();
+        $('#bg').css('display', 'flex');
+        $('.popupWindow').css('display', 'block');
+        $('.boxList').css('display', 'none');
+        $('#con1').css('display', 'block');
+        $('#con2').css('display', 'none');
+        $('#con3').css('display', 'none');
+        $('#code').val('');
+    });
+    // 取件码弹窗确认按钮
+    $("#comfirm").click(function(){
+        $.ajax({
+            type: "POST",  
+            url: "",  
+            contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
+            data: {code:$('#code').val()},
+            dataType: "json",  
+            success: function(data){
+                // 几号门打开成功
+                $('#num').text(data.num);
+                $('#con1').css('display', 'none');
+                $('#con2').css('display', 'block');
+            },
+            error:function(e){
+
+            },
+            });
+    });
+    // 取件码弹窗关闭按钮
+    $("#close").click(function(){
+        $('#bg').css('display', 'none');
+    });
+    </script>
+</body>
+</html>

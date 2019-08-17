@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="path/swiper-3.4.2.min.css">
+    <style>
+    body{
+        margin: 0;
+    }
+    .boss{
+        position: relative;
+    }
+    .boss #loading{
+        position: absolute;
+        z-index:999;
+        display: none;
+        background: rgba(46, 117, 186, .8);
+        text-align: center;
+        left: 50%;
+        top: 50%;
+        width: 1910px;
+        height: 1070px;
+        line-height: 1080px;
+        color: #fff;
+        font-size: 60px;
+        transform: translate(-50%,-50%);
+    }
+    .box{
+        width: 1920px;
+        height: 1080px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        border: 5px solid black;
+        position: relative;
+    }
+    .box .welcome{
+        width: 1910px;
+        height: 1070px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .box .boxIn{
+        width: 1910px;
+        height: 1070px;
+        display: flex;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .box .left{
+        width: 75%;
+        height: 100%;
+    }
+    .box .left .swiper-container{
+        text-align: center;
+        margin-top: 65px;
+        height: 680px;
+        width: 90%;
+        margin-bottom: 10px;
+    }
+    .box .left .swiper-container .swiper-wrapper{
+        text-align: center;
+    }
+    .box .left .swiper-container .swiper-wrapper img{
+        width: 82%;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide{
+        position: relative;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .name{
+        text-align: center;
+        height: 70px;
+        line-height: 70px;
+        font-weight: 500;
+        font-size: 55px;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc{
+        position: absolute;
+        right: 30px;
+        top: 70px;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc input[type='checkbox']{
+        height:40px;
+        width:40px;
+    }
+    .box .left .bot{
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 130px;
+        text-align: right;
+    }
+    .box .left .bot .timeRight{
+        width: 220px;
+    }
+    .box .left .bot .timeRight #back{
+        margin: 20px auto;
+        font-size: 40px;
+        font-weight: bold;
+        width: 150px;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        border-radius: 10px;
+        color: #fff;
+        background: rgb(255, 192, 0)
+    }
+    .box .left .bot .timeLeft #time{
+        font-size: 70px;
+        font-weight: bold;
+    }
+    .box .left .bot .timeLeft #date{
+        font-size: 50px;
+        font-weight: bold;
+    }
+    .box .right{
+        width: 25%;
+        border-left: 5px dashed black;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .box .right .two{
+        width: 100%;
+        height: 100%;
+        color: #fff;
+    }
+    .box .right .two .top{
+        height: 29%;
+        display: flex;
+        margin-bottom: 10px;
+        background: rgb(0, 32, 96);
+        border-radius: 50px;
+    }
+    .box .right .two .xuxain{
+        height: 0;
+        border-top: 5px dashed black;
+    }
+    .box .right .two .search{
+        height: 7%;
+        text-align: center;
+        margin: 10px 0;
+        position: relative;
+    }
+    .box .right .two .search .search_input{
+        height: 100%;
+        width: 430px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        border: 1px solid rgb(0, 122, 255);
+        text-align: center;
+        font-weight: 500;
+        font-size: 35px;
+    }
+    .box .right .two .search input[type='button']{
+        position: absolute;
+        top: 17px;
+        right: 18px;
+        height: 40px;
+        width: 40px;
+        border: none;
+        background: #fff;
+        background: url('img/search.png') left center no-repeat;
+    }
+    .box .right .two .mid{
+        height: 29%;
+        display: flex;
+        margin-bottom: 20px;
+        background: rgb(0, 32, 96);
+        border-radius: 50px;
+    }
+    .box .right .two .bot{
+        height: 29%;
+        display: flex;
+        background: rgb(0, 32, 96);
+        border-radius: 50px;
+    }
+    .box .right .two .topLeft{
+        width: 45%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topLeft img{
+        width: 140px;
+    }
+    .box .right .two .topRight{
+        width: 55%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topRight .text{
+        font-weight: bolder;
+    }
+    .box .right .two .topRight .text .textTop{
+        font-size: 50px;
+    }
+    .box .right .two .topRight .text .textBot{
+        font-size: 50px;
+    }
+    .box .right .two .topRight .text .textTop,.textBot{
+        text-align: center;
+    }
+    </style>
+</head>
+<body onload="showtime();">
+    <div class="boss">
+    <!-- 音频 -->
+    <audio id="E">
+        <source src="./audio/E.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="F">
+        <source src="./audio/F.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="G">
+        <source src="./audio/G.mp3" type="audio/mpeg">
+    </audio>
+    <div id="loading">正在扫描,请稍后...</div>
+    <div class="box">
+        <img src="./img/welcome.png" class="welcome">
+        <div class="boxIn">
+                <div class="left">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="doc"><input name="document" type="checkbox" value="1"></div>
+                                    <div class="name">EAS1903040001</div>
+                                    <img src="img/1.jpg">
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="doc"><input name="document" type="checkbox" value="2"></div>
+                                    <div class="name">EAS1903040002</div>
+                                    <img src="img/2.jpg">
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="doc"><input name="document" type="checkbox" id="daa" value="3"></div>
+                                    <div class="name">EAS1903040003</div>
+                                    <img src="img/djfm.png">
+                                </div>
+                            </div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                        <div class="bot">
+                            <div class="timeLeft">
+                                <div id="time"></div>
+                                <div id="date"></div>
+                            </div>
+                            <div class="timeRight">
+                               <div id="back">返回</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="two">
+                            <div class="top" id="Scan">
+                                <div class="topLeft">
+                                    <div class="imge"><img src="img/scan.png"></div>
+                                </div>
+                                <div class="topRight">
+                                    <div class="text">
+                                        <div class="textTop">扫描</div>
+                                        <div class="textBot">Scan</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="xuxain"></div>
+                            <div class="search">
+                                <input type="text" class="search_input" placeholder="Search"/>
+                                <input type="button" class="search_btn"/>
+                            </div>     
+                            <div class="mid" id="Add">
+                                <div class="topLeft">
+                                        <div class="imge"><img src="img/add.png"></div>
+                                    </div>
+                                    <div class="topRight">
+                                        <div class="text">
+                                            <div class="textTop">补扫</div>
+                                            <div class="textBot">Add</div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="bot" id="Replace">
+                                <div class="topLeft">
+                                        <div class="imge"><img src="img/replace.png"></div>
+                                    </div>
+                                    <div class="topRight">
+                                        <div class="text">
+                                            <div class="textTop">替扫</div>
+                                            <div class="textBot">Replace</div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        
+    </div>
+</div>
+    <script src="path/jquery-1.10.1.min.js"></script>
+    <script src="path/swiper-3.4.2.min.js"></script>
+    <script>
+    function showtime()
+        {
+        var today,hour,second,minute,year,month,date;
+        var strDate ;
+        today=new Date();
+        var n_day = today.getDay();
+        switch (n_day)
+        {
+            case 0:{
+            strDate = "星期日";
+            }break;
+            case 1:{
+            strDate = "星期一";
+            }break;
+            case 2:{
+            strDate ="星期二";
+            }break;
+            case 3:{
+            strDate = "星期三";
+            }break;
+            case 4:{
+            strDate = "星期四";
+            }break;
+            case 5:{
+            strDate = "星期五";
+            }break;
+            case 6:{
+            strDate = "星期六";
+            }break;
+            case 7:{
+            strDate = "星期日";
+            }break;
+        }
+        year = today.getYear()+1900;
+        month = today.getMonth()+1;
+        date = today.getDate();
+        hour = today.getHours();
+        minute =today.getMinutes();
+        if (month < 10){
+            month = '0' + month
+        }
+        if (date < 10){
+            return date =  '0' + date
+        }
+        if (hour < 10){
+            hour = '0' + hour
+        }
+        if (minute < 10){
+            minute =  '0' + minute
+        }
+        document.getElementById('time').innerHTML = "<div>"+ hour + ":" + minute +"</div>"; //显示时间
+        document.getElementById('date').innerHTML = "<div>"+ month + "月" + date + "日" + strDate +"</div>"; //显示日期
+        setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)
+    } 
+    // 返回按钮
+    $("#back").click(function(){
+        // window.location.href="index.html";
+    });
+    // 扫描按钮
+    $("#Scan").click(function(){
+        E.play();
+        $('#loading').css('display', 'block');
+        $.ajax({
+            type: "POST",  
+            url: "",  
+            contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
+            data: {},  
+            dataType: "json",  
+            success: function(data){
+            },
+            error:function(e){  
+            },
+         });
+    });
+    // 补扫按钮
+    $("input[name='document']:checkbox").click(function(){
+        if(!$(this).attr("checked")){
+            $(this).attr("checked","checked");
+        }else{
+            $(this).removeAttr("checked");
+        }
+    });
+    $("#Add").click(function(){
+        F.play();
+        var ids = [];
+        $("input[name='document']:checkbox").each(function () {
+            if ($(this).attr("checked")) {
+                ids.push($(this).parent('.doc').siblings('.name').text());
+            }
+        });
+    });
+    // 替扫按钮
+    $("#Replace").click(function(){
+        G.play();
+    });
+    </script>
+    <script language="javascript"> 
+        var mySwiper = new Swiper('.swiper-container',{
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        })
+    </script>
+</body>
+</html>

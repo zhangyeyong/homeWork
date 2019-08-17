@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="path/swiper-3.4.2.min.css">
+    <style>
+    body{
+        margin: 0;
+    }
+    .boss{
+        position: relative;
+    }
+    .boss #loading{
+        position: absolute;
+        z-index:999;
+        display: none;
+        background: rgba(46, 117, 186, .8);
+        left: 50%;
+        top: 50%;
+        width: 1910px;
+        height: 1070px;
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: 60px;
+        transform: translate(-50%,-50%);
+    }
+    .boss #loading #sending{
+        display: none;
+    }
+    .boss #loading #finshed{
+        display: none;
+        border: 2px solid #fff;
+        background: rgba(46, 117, 186);
+        border-radius: 50px;
+        width: 500px;
+        height: 350px; 
+    }
+    .boss #loading #finshed .jdOver{
+        height: 200px;
+        line-height: 150px;
+        text-align: center;
+    }
+    .boss #loading #finshed .btn{
+        font-size: 40px;
+        display: flex;
+        justify-content: space-around;
+    }
+    .boss #loading #finshed .btn #continue{
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        width: 150px;
+        border-radius: 10px;
+        background: green;
+        border: 2px solid #fff;
+    }
+    .boss #loading #finshed .btn #over{
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        width: 150px;
+        border-radius: 10px;
+        background: red;
+        border: 2px solid #fff;
+    }
+    .boss #loading #reBack{
+        display: none;
+        border: 2px solid #fff;
+        background: rgba(46, 117, 186);
+        border-radius: 50px;
+        width: 500px;
+        height: 350px; 
+    }
+    .boss #loading #reBack .success{
+        height: 200px;
+        line-height: 180px;
+        text-align: center;
+    }
+    .boss #loading #reBack .tips{
+        text-align: center;
+        font-size: 40px;
+    }
+    .box{
+        width: 1920px;
+        height: 1080px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        border: 5px solid black;
+        position: relative;
+    }
+    .box .welcome{
+        width: 1910px;
+        height: 1070px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .box .boxIn{
+        width: 1910px;
+        height: 1070px;
+        display: flex;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .box .left{
+        width: 60%;
+        border-right: 2px solid black;
+        height: 100%;
+    }
+    .box .left .swiper-container{
+        text-align: center;
+        margin-top: 20px;
+        width: 100%;
+        height: 770px;
+    }
+    .box .left .swiper-container .yxyl{
+        height: 65px;
+        line-height: 65px;
+        font-size: 45px;
+    }
+    .box .left .swiper-container .swiper-wrapper{
+        text-align: center;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .name{
+        text-align: center;
+        height: 70px;
+        margin-bottom: 20px;
+        line-height: 70px;
+        font-weight: 500;
+        font-size: 55px;
+    }
+    .box .left .swiper-container .swiper-wrapper .inp{
+        margin: 0 60px;
+        margin-bottom: 20px;
+        width: 600px;
+        height: 70px;
+        display: none;
+    }
+    .box .left .swiper-container .swiper-wrapper .inp input{
+        height: 60px;
+        width: 400px;
+        font-weight: 500;
+        font-size: 55px;
+        outline: none;
+        padding-left: 20px;
+    }
+    .box .left .swiper-container .swiper-wrapper .inp div{
+        font-size: 25px;
+        margin-left: 5px;
+        height: 64px;
+        line-height: 64px;
+        text-align: center;
+        width: 60px;
+        border: 1px solid rgb(169, 169, 169);
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide img{
+        width: 90%;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide{
+        position: relative;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc{
+        position: absolute;
+        right: 100px;
+        top: 5px;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc input[type='checkbox']{
+        height:40px;
+        width:40px;
+    }
+    .box .left .bot{
+        margin-top: 100px;
+        text-align: right;
+        padding-right: 40px;
+    }
+    .box .left .bot #time{
+        font-size: 70px;
+        font-weight: bold;
+    }
+    .box .left .bot #date{
+        font-size: 50px;
+        font-weight: bold;
+    }
+    .box .right{
+        width: 40%;
+        border-left: 3px solid black;
+        height: 100%;
+        display: flex;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .box .right .one{
+        width: 50%;
+        background: rgb(0, 32, 96);
+        color: #fff;
+        height: 98%;
+        padding: 20px;
+        border-radius: 50px;
+        box-sizing: border-box;
+        margin-right: 20px;
+    }
+    .box .right .one .tdyq{
+        height: 130px;
+        line-height: 130px;
+        text-align: center;
+        font-weight: bolder;
+        font-size: 54px;
+    }
+    .box .right .one .gg{
+        height: 120px;
+        line-height: 120px;
+        font-weight: bolder;
+        font-size: 48px;
+        text-align: center;
+    }
+    .box .right .one .an{
+        height: 100px;
+        width: 220px;
+        font-weight: bolder;
+        font-size: 35px;
+        color: black;
+        border-radius: 20px;
+        background: white;
+        margin: 90px auto 0;
+    }
+    .box .right .one .an .ch{
+        height: 100px;
+        line-height: 100px;
+        border-radius: 20px;
+        color: #fff;
+        text-align: center;
+        background: rgb(255, 192, 0);
+        font-size: 45px;
+    }
+    .box .right .two{
+        width: 50%;
+        height: 100%;
+        color: #fff;
+    }
+    .box .right .two .top{
+        height: 30%;
+        display: flex;
+        margin-bottom: 40px;
+        background: rgb(0, 32, 96);
+        border-radius: 50px;
+    }
+    .box .right .two .mid{
+        height: 30%;
+        display: flex;
+        margin-bottom: 40px;
+        background: rgb(0, 32, 96);
+        border-radius: 50px;
+    }
+    .box .right .two .bot{
+        height: 30%;
+        display: flex;
+        background: rgb(0, 32, 96);
+        border-radius: 50px;
+    }
+    .box .right .two .topLeft{
+        width: 45%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topLeft img{
+        width: 140px;
+    }
+    .box .right .two .topRight{
+        width: 55%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topRight .text{
+        font-weight: bolder;
+    }
+    .box .right .two .topRight .text .textTop{
+        font-size: 50px;
+    }
+    .box .right .two .topRight .text .textBot{
+        font-size: 50px;
+    }
+    .box .right .two .topRight .text .textTop,.textBot{
+        text-align: center;
+    }
+    </style>
+</head>
+<body onload="showtime();">
+    <div class="boss">
+    <!-- 音频 -->
+    <audio id="H">
+        <source src="./audio/H.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="I">
+        <source src="./audio/I.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="J">
+        <source src="./audio/J.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="K">
+        <source src="./audio/K.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="L">
+        <source src="./audio/L.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="M">
+        <source src="./audio/M.mp3" type="audio/mpeg">
+    </audio>
+    <div id="loading">
+        <div id="sending">正在上传...</div>
+        <div id="finshed">
+            <div class="jdOver">交单完成</div>
+            <div class="btn">
+                <div id="continue">继续</div>
+                <div id="over">结束</div>
+            </div>
+        </div>
+        <div id="reBack">
+            <div class="success">退回成功</div>
+            <div class="tips">请在③口取回单据</div>
+        </div>
+    </div>
+    <div class="box">
+        <img src="./img/welcome.png" class="welcome">
+        <div class="boxIn">
+                <div class="left">
+                        <div class="swiper-container">
+                            <div class="yxyl">影像预览</div>
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="name">EAS1903040001</div>
+                                    <div class="inp"><input type="text"><div class="confirm">确定</div><div class="cancle">取消</div></div>
+                                    <img src="img/djfm.png">
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="name">EAS1903040002</div>
+                                    <div class="inp"><input type="text"><div class="confirm">确定</div><div class="cancle">取消</div></div>
+                                    <img src="img/djfm.png">
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="name">EAS1903040003</div>
+                                    <div class="inp"><input type="text"><div class="confirm">确定</div><div class="cancle">取消</div></div>
+                                    <img src="img/djfm.png">
+                                </div>
+                            </div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                        <div class="bot">
+                            <div id="time"></div>
+                            <div id="date"></div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="one">
+                                <div class="tdyq">请核实:</div>
+                                <div class="gg">单号正确√</div>
+                                <div class="gg">张数正确√</div>
+                                <div class="gg">影像清晰√</div>
+                                <div class="gg">否则退回重扫</div>
+                                <div class="gg">编辑可改单号</div>
+                            <div class="an">
+                                <div class="ch">返回</div>
+                            </div>
+                        </div>
+                        <div class="two">
+                            <div class="top" id="Submit">
+                                <div class="topLeft">
+                                    <div class="imge"><img src="img/submit.png"></div>
+                                </div>
+                                <div class="topRight">
+                                    <div class="text">
+                                        <div class="textTop">提交</div>
+                                        <div class="textBot">Submit</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mid" id="Edit">
+                                <div class="topLeft">
+                                        <div class="imge"><img src="img/edit.png"></div>
+                                    </div>
+                                    <div class="topRight">
+                                        <div class="text">
+                                            <div class="textTop">编辑</div>
+                                            <div class="textBot">Edit</div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="bot" id="Return">
+                                <div class="topLeft">
+                                        <div class="imge"><img src="img/return.png"></div>
+                                    </div>
+                                    <div class="topRight">
+                                        <div class="text">
+                                            <div class="textTop">退回</div>
+                                            <div class="textBot">Return</div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+</div>
+    <script src="path/jquery-1.10.1.min.js"></script>
+    <script src="path/swiper-3.4.2.min.js"></script>
+    <script>
+    function showtime()
+        {
+        var today,hour,second,minute,year,month,date;
+        var strDate ;
+        today=new Date();
+        var n_day = today.getDay();
+        switch (n_day)
+        {
+            case 0:{
+            strDate = "星期日";
+            }break;
+            case 1:{
+            strDate = "星期一";
+            }break;
+            case 2:{
+            strDate ="星期二";
+            }break;
+            case 3:{
+            strDate = "星期三";
+            }break;
+            case 4:{
+            strDate = "星期四";
+            }break;
+            case 5:{
+            strDate = "星期五";
+            }break;
+            case 6:{
+            strDate = "星期六";
+            }break;
+            case 7:{
+            strDate = "星期日";
+            }break;
+        }
+        year = today.getYear()+1900;
+        month = today.getMonth()+1;
+        date = today.getDate();
+        hour = today.getHours();
+        minute =today.getMinutes();
+        if (month < 10){
+            month = '0' + month
+        }
+        if (date < 10){
+            return date =  '0' + date
+        }
+        if (hour < 10){
+            hour = '0' + hour
+        }
+        if (minute < 10){
+            minute =  '0' + minute
+        }
+        document.getElementById('time').innerHTML = "<div>"+ hour + ":" + minute +"</div>"; //显示时间
+        document.getElementById('date').innerHTML = "<div>"+ month + "月" + date + "日" + strDate +"</div>"; //显示日期
+        setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)
+    } 
+    // 提交按钮
+    $("#Submit").click(function(){
+        I.play();
+        $('#loading').css('display', 'flex');
+        $('#sending').css('display', 'block');
+        $('#finshed').css('display', 'none');
+        $('#reBack').css('display', 'none');
+        $.ajax({
+             type: "POST",  
+             url: "",  
+             contentType: 'application/x-www-form-urlencoded;charset=utf-8',  
+             data: {},  
+             dataType: "json",  
+             success: function(data){  
+                J.play();
+                $('#sending').css('display', 'none');
+                $('#reBack').css('display', 'none');
+                $('#finshed').css('display', 'block');
+                setTimeout(function() {
+                    window.location.href="index.html"; 
+                }, 1500)
+             },
+             error:function(e){
+             },
+         });
+    });
+    // 继续按钮
+    $("#continue").click(function(){
+       window.location.href="scan.html";
+    });
+    // 结束按钮
+    $("#over").click(function(){
+        K.play();
+        setTimeout(function() {
+         window.location.href="index.html";
+        }, 1500)
+    });
+    // 编辑按钮
+    $("#Edit").click(function(){
+        L.play();
+        $('.swiper-slide-active .name').css('display', 'none');
+        $('.swiper-slide-active .inp').css('display', 'flex');
+    });
+    // 确定
+    $(".confirm").click(function(){
+        $(".swiper-slide-active .name").text($('.swiper-slide-active input').val());
+        $('.swiper-slide-active .name').css('display', 'block');
+        $('.swiper-slide-active .inp').css('display', 'none');
+    });
+    // 取消
+    $(".cancle").click(function(){
+        $('.swiper-slide-active .name').css('display', 'block');
+        $('.swiper-slide-active .inp').css('display', 'none');
+    });
+    // 退回按钮
+    $("#Return").click(function(){
+        M.play();
+        $('#loading').css('display', 'flex');
+        $('#sending').css('display', 'none');
+        $('#finshed').css('display', 'none');
+        $('#reBack').css('display', 'block');
+
+    });
+    </script>
+    <script language="javascript"> 
+        var mySwiper = new Swiper('.swiper-container',{
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        })
+    </script>
+</body>
+</html>
