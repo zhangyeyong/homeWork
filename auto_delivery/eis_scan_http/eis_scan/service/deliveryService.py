@@ -285,6 +285,7 @@ class Scan:
             headNum = i.get("headNum")
             if headNum:
                 headNum = headNum.strip()
+            # 单机测试
             #先查询接口数据
             try:
                 self.queryAndDownload(headNum)
@@ -457,6 +458,9 @@ class Edit:
         return status, errorMsg
 
     def submit(self):
+        # 单机测试
+        # status = headStatus.SUCCESS
+        # errorMsg = u"测试"
         status, errorMsg = self.upload()
         if headStatus.FAILURE == status:
             print("=========== 上传失败 ===========")

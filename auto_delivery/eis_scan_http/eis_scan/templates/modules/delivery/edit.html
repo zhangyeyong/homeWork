@@ -6,6 +6,9 @@ $def with(head,lines)
     <title>Document</title>
     <link rel="stylesheet" href="/static/path/swiper-3.4.2.min.css">
     <style>
+    body{
+        margin: 0;
+    }
     .boss{
         position: relative;
     }
@@ -16,8 +19,8 @@ $def with(head,lines)
         background: rgba(46, 117, 186, .8);
         left: 50%;
         top: 50%;
-        width: 1920px;
-        height: 1080px;
+        width: 1910px;
+        height: 1070px;
         /* display: flex; */
         justify-content: center;
         align-items: center;
@@ -55,6 +58,15 @@ $def with(head,lines)
         background: green;
         border: 2px solid #fff;
     }
+    .boss #loading #finshed .btn #over{
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        width: 150px;
+        border-radius: 10px;
+        background: red;
+        border: 2px solid #fff;
+    }
     .boss #loading #reBack{
         display: none;
         border: 2px solid #fff;
@@ -76,35 +88,35 @@ $def with(head,lines)
         width: 1920px;
         height: 1080px;
         margin: 0 auto;
+        box-sizing: border-box;
         border: 5px solid black;
         position: relative;
     }
     .box .welcome{
-        width: 1920px;
-        height: 1080px;
+        width: 1910px;
+        height: 1070px;
         position: absolute;
         left: 0;
         top: 0;
     }
     .box .boxIn{
-        width: 1920px;
-        height: 1080px;
+        width: 1910px;
+        height: 1070px;
         display: flex;
         position: absolute;
         left: 0;
         top: 0;
     }
     .box .left{
-        width: 48%;
+        width: 60%;
         border-right: 2px solid black;
         height: 100%;
     }
     .box .left .swiper-container{
         text-align: center;
         margin-top: 20px;
-        width: 680px;
-        height: 740px;
-        margin-bottom: 10px;
+        width: 100%;
+        height: 770px;
     }
     .box .left .swiper-container .yxyl{
         height: 65px;
@@ -147,7 +159,7 @@ $def with(head,lines)
         border: 1px solid rgb(169, 169, 169);
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide img{
-        width: 65%;
+        width: 90%;
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide{
         position: relative;
@@ -162,7 +174,7 @@ $def with(head,lines)
         width:40px;
     }
     .box .left .bot{
-        margin-top: 120px;
+        margin-top: 100px;
         text-align: right;
         padding-right: 40px;
     }
@@ -175,7 +187,7 @@ $def with(head,lines)
         font-weight: bold;
     }
     .box .right{
-        width: 52%;
+        width: 40%;
         border-left: 3px solid black;
         height: 100%;
         display: flex;
@@ -183,7 +195,7 @@ $def with(head,lines)
         box-sizing: border-box;
     }
     .box .right .one{
-        width: 48%;
+        width: 50%;
         background: rgb(0, 32, 96);
         color: #fff;
         height: 98%;
@@ -197,13 +209,13 @@ $def with(head,lines)
         line-height: 130px;
         text-align: center;
         font-weight: bolder;
-        font-size: 60px;
+        font-size: 54px;
     }
     .box .right .one .gg{
         height: 120px;
         line-height: 120px;
         font-weight: bolder;
-        font-size: 55px;
+        font-size: 48px;
         text-align: center;
     }
     .box .right .one .an{
@@ -223,10 +235,10 @@ $def with(head,lines)
         color: #fff;
         text-align: center;
         background: rgb(255, 192, 0);
-        font-size: 50px;
+        font-size: 45px;
     }
     .box .right .two{
-        width: 52%;
+        width: 50%;
         height: 100%;
         color: #fff;
     }
@@ -258,7 +270,7 @@ $def with(head,lines)
         align-items: center;
     }
     .box .right .two .topLeft img{
-        width: 150px;
+        width: 140px;
     }
     .box .right .two .topRight{
         width: 55%;
@@ -271,10 +283,10 @@ $def with(head,lines)
         font-weight: bolder;
     }
     .box .right .two .topRight .text .textTop{
-        font-size: 60px;
+        font-size: 50px;
     }
     .box .right .two .topRight .text .textBot{
-        font-size: 60px;
+        font-size: 50px;
     }
     .box .right .two .topRight .text .textTop,.textBot{
         text-align: center;
@@ -337,9 +349,11 @@ $def with(head,lines)
 
     // 编辑按钮
     function toEdit(){
-        L.play();
+        say(L);
         jQuery('.swiper-slide-active .name').css('display', 'none');
         jQuery('.swiper-slide-active .inp').css('display', 'flex');
+        alert('[$head.get("headNum")]');
+        jQuery("#headNum").val('$head.get("headNum")');
         jQuery("input[name='headNum']").select();
     }
     // 确定
@@ -383,7 +397,13 @@ $def with(head,lines)
         jQuery('.swiper-slide-active .inp').css('display', 'none');
     }
     function submit(){
-        showLoading();
+        <!--showLoading();-->
+        say(I);
+        $$('#loading').css('display', 'flex');
+        $$('#sending').css('display', 'block');
+        $$('#finshed').css('display', 'none');
+        $$('#reBack').css('display', 'none');
+
         $$.ajax({
             url : "/delivery/edit",
             type : "post",
@@ -395,8 +415,12 @@ $def with(head,lines)
             success : function(d) {
                 d = eval("(" + d + ")");
                 if (d.isSuccess) {
-                    alert("上传成功");
-                    back();
+                    //alert("上传成功");
+                    //back();
+                    say(J);
+                    $$('#sending').css('display', 'none');
+                    $$('#reBack').css('display', 'none');
+                    $$('#finshed').css('display', 'block');
                 } else {
                     alert(d.info);
                 }
@@ -420,11 +444,9 @@ $def with(head,lines)
                 headId:$head.get("headId"),
             },
             success : function(d) {
-                alert(d);
                 d = eval("(" + d + ")");
-
                 if (d.isSuccess) {
-                    M.play();
+                    say(M);
                     alert("退件成功");
                     back();
                 } else {
@@ -439,6 +461,12 @@ $def with(head,lines)
             }
         });
     }
+    function over(){
+        say(K);
+        setTimeout(function() {
+         window.location.href="/delivery/index";
+        }, 1500)
+    }
     function back(){
       window.location.href = "/delivery/scan";
     }
@@ -452,6 +480,13 @@ $def with(head,lines)
     function stopAudioById(id){
         var obj = document.getElementById(id);
         aStop(obj);
+    }
+    function say(obj){
+        $$("audio").each(function(index,element){
+            element.currentTime = 0;
+            element.pause();
+        });
+        obj.play();
     }
     </script>
 </head>
@@ -481,8 +516,8 @@ $def with(head,lines)
         <div id="finshed">
             <div class="jdOver">交单完成</div>
             <div class="btn">
-                <div id="continue">继续</div>
-                <div id="over">结束</div>
+                <div id="continue" onclick="back()">继续</div>
+                <div id="over" onclick="over()">结束</div>
             </div>
         </div>
         <div id="reBack">
@@ -499,8 +534,8 @@ $def with(head,lines)
                             <div class="swiper-wrapper">
                             $for image in lines:
                                 <div class="swiper-slide">
-                                    <div class="name">$image.get("headNum")-$image.get("imgOrd")</div>
-                                    <div class="inp"><input type="text" name="headNum" id="headNum" value='$image.get("headNum")'><div class="confirm"  onclick="confirm()">确定</div><div class="cancle" onclick="cancle()">取消</div></div>
+                                    <div class="name">$image.get("headNum")-[$image.get("imgOrd")/$len(lines)]</div>
+                                    <div class="inp"><input type="text" name="headNum" id="headNum" ><div class="confirm"  onclick="confirm()">确定</div><div class="cancle" onclick="cancle()">取消</div></div>
                                     <img src='/static/images/scan/$image.get("headNum")/$image.get("imgNameP")'>
                                 </div>
                             </div>

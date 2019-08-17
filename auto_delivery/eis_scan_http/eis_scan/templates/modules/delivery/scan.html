@@ -7,6 +7,9 @@ $var jsfiles : /static/js/scan.js
     <title>Document</title>
     <link rel="stylesheet" href="/static/path/swiper-3.4.2.min.css">
     <style>
+    body{
+        margin: 0;
+    }
     .boss{
         position: relative;
     }
@@ -18,8 +21,8 @@ $var jsfiles : /static/js/scan.js
         text-align: center;
         left: 50%;
         top: 50%;
-        width: 1920px;
-        height: 1080px;
+        width: 1910px;
+        height: 1070px;
         line-height: 1080px;
         color: #fff;
         font-size: 60px;
@@ -29,41 +32,41 @@ $var jsfiles : /static/js/scan.js
         width: 1920px;
         height: 1080px;
         margin: 0 auto;
+        box-sizing: border-box;
         border: 5px solid black;
         position: relative;
     }
     .box .welcome{
-        width: 1920px;
-        height: 1080px;
+        width: 1910px;
+        height: 1070px;
         position: absolute;
         left: 0;
         top: 0;
     }
     .box .boxIn{
-        width: 1920px;
-        height: 1080px;
+        width: 1910px;
+        height: 1070px;
         display: flex;
         position: absolute;
         left: 0;
         top: 0;
     }
     .box .left{
-        width: 70%;
+        width: 75%;
         height: 100%;
     }
     .box .left .swiper-container{
         text-align: center;
         margin-top: 65px;
         height: 680px;
-        width: 800px;
-        margin-left: 80px;
+        width: 90%;
         margin-bottom: 10px;
     }
     .box .left .swiper-container .swiper-wrapper{
         text-align: center;
     }
     .box .left .swiper-container .swiper-wrapper img{
-        width: 55%;
+        width: 82%;
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide{
         position: relative;
@@ -77,7 +80,7 @@ $var jsfiles : /static/js/scan.js
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide .doc{
         position: absolute;
-        right: 100px;
+        right: 30px;
         top: 70px;
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide .doc input[type='checkbox']{
@@ -114,7 +117,7 @@ $var jsfiles : /static/js/scan.js
         font-weight: bold;
     }
     .box .right{
-        width: 30%;
+        width: 25%;
         border-left: 5px dashed black;
         height: 100%;
         padding: 20px;
@@ -144,7 +147,7 @@ $var jsfiles : /static/js/scan.js
     }
     .box .right .two .search .search_input{
         height: 100%;
-        width: 500px;
+        width: 430px;
         border-radius: 10px;
         box-sizing: border-box;
         border: 1px solid rgb(0, 122, 255);
@@ -183,7 +186,7 @@ $var jsfiles : /static/js/scan.js
         align-items: center;
     }
     .box .right .two .topLeft img{
-        width: 150px;
+        width: 140px;
     }
     .box .right .two .topRight{
         width: 55%;
@@ -196,10 +199,10 @@ $var jsfiles : /static/js/scan.js
         font-weight: bolder;
     }
     .box .right .two .topRight .text .textTop{
-        font-size: 60px;
+        font-size: 50px;
     }
     .box .right .two .topRight .text .textBot{
-        font-size: 60px;
+        font-size: 50px;
     }
     .box .right .two .topRight .text .textTop,.textBot{
         text-align: center;
@@ -287,7 +290,7 @@ $var jsfiles : /static/js/scan.js
                         var imagesHtml = "";
                         for(var i=0,l=lines.length;i<l;i++){
                             //imagesObj.append(createImgHtml(lines[i]));
-                            imagesHtml = imagesHtml+createImgHtml(lines[i]);
+                            imagesHtml = imagesHtml+createImgHtml(l,lines[i]);
                         }
                         imagesObj.html(imagesHtml);
                         showImages();
@@ -302,11 +305,11 @@ $var jsfiles : /static/js/scan.js
                 }
             });
         }
-    function createImgHtml(line){
+    function createImgHtml(size,line){
         var imgHtml = '<div class="swiper-slide">'
                         +'	<div class="doc"><input name="lineIds" type="checkbox" value="'+line.lineId+'"></div>'
+                        +'	<div class="name">'+line.headNum+'-['+line.imgOrd+'/'+size+']</div>'
                         +'	<img src="'+line.imgPathO+'">'
-                        +'	<div class="name">'+line.headNum+'-'+line.imgOrd+'</div>'
                         +'</div>';
         return imgHtml;
     }
@@ -318,9 +321,8 @@ $var jsfiles : /static/js/scan.js
     }
     function doScan(scanCallback){
         //扫描之前先检查 机器是否初始化成功
-        //showLoading();
-        E.play();
-        $$('#loading').css('display', 'block');
+        say(E);
+        showLoadingAyy();
         $$.ajax({
             url : "/delivery/scan",
             type : "post",
@@ -329,7 +331,6 @@ $var jsfiles : /static/js/scan.js
                 method:"initMachine"
             },
             success : function(d) {
-                alert("---------->"+d);
                 d = eval("(" + d + ")");
                 if (d.isSuccess) {
                     //alert(d.info);
@@ -339,15 +340,12 @@ $var jsfiles : /static/js/scan.js
                 } else {
                     alert(d.info);
                 }
-                $$('#loading').css('display', 'block');
              },
             error : function(e) {
                 alert(_("未知错误"));
             },
             complete : function() {
-                alert("扫描完成");
-                //hideLoading();
-                $$('#loading').css('display', 'block');
+                hideLoadingAyy();
             }
         });
 
@@ -364,7 +362,7 @@ $var jsfiles : /static/js/scan.js
         window.location.href = "/delivery/index";
     }
     function backPaper(){
-        showLoading();
+        showLoadingAyy();
         $$.ajax({
             url : "/delivery/scan",
             type : "post",
@@ -386,7 +384,7 @@ $var jsfiles : /static/js/scan.js
                 alert(_("未知错误"));
             },
             complete : function() {
-                hideLoading();
+                hideLoadingAyy();
             }
         });
     }
@@ -417,7 +415,7 @@ $var jsfiles : /static/js/scan.js
         });
     }
     function dailyScanCallBack(data) {
-        showLoading();
+        showLoadingAyy();
         var cond = {}
         cond.data = JSON.stringify(data);
 
@@ -438,18 +436,16 @@ $var jsfiles : /static/js/scan.js
             error : function(e) {
                 alert(_("未知错误"));
             },
-            complete : function() {
-                hideLoading();
+           complete : function() {
+                hideLoadingAyy();
             }
         });
     }
     function dailyScan(){
-        B.pause();
-        //showLoading();
         doScan(dailyScanCallBack);
     }
     function replaceScanCallBack(data){
-        showLoading();
+        showLoadingAyy();
         var cond = {}
         var lineIds = [];
         jQuery('input[name="lineIds"]:checked').each(function (index, item) {
@@ -478,12 +474,12 @@ $var jsfiles : /static/js/scan.js
                 alert(_("未知错误"));
             },
             complete : function() {
-                hideLoading();
+                hideLoadingAyy();
             }
         });
     }
     function replaceScan(){
-        G.play();
+        say(G);
         var headId=jQuery("#headId").val();
         if(!headId){
             alert("请先查询需要处理的票据！");
@@ -497,7 +493,7 @@ $var jsfiles : /static/js/scan.js
         doScan(replaceScanCallBack);
     }
     function addScanCallBack(data){
-        showLoading();
+        showLoadingAyy();
         var cond = {}
         cond.data = JSON.stringify(data);
         cond.curPage="groups";
@@ -521,12 +517,12 @@ $var jsfiles : /static/js/scan.js
                 alert(_("未知错误"));
             },
             complete : function() {
-                hideLoading();
+                hideLoadingAyy();
             }
         });
     }
     function addScan(){
-        F.play();
+        say(F);
         var headId=jQuery("#headId").val();
         if(!headId){
             alert("请先查询需要处理的票据！");
@@ -537,7 +533,27 @@ $var jsfiles : /static/js/scan.js
     function back(){
       window.location.href = "/delivery/index";
     }
-
+    function aStop(obj) {
+        obj.currentTime = 0;
+        obj.pause();
+    }
+    function say(obj){
+        $$("audio").each(function(index,element){
+            element.currentTime = 0;
+            element.pause();
+        });
+        obj.play();
+    }
+    function stopAudioById(id){
+        var obj = document.getElementById(id);
+        aStop(obj);
+    }
+    function showLoadingAyy(){
+        $$('#loading').css('display', 'block');
+    }
+    function hideLoadingAyy(){
+        $$('#loading').css('display', 'none');
+    }
     </script>
 </head>
 <body onload="init();">
@@ -561,7 +577,7 @@ $var jsfiles : /static/js/scan.js
         <div class="boxIn">
                 <div class="left">
                         <div class="swiper-container">
-                            <div class="swiper-wrapper">
+                            <div class="swiper-wrapper" id="images">
                                 <div class="swiper-slide">
                                     <div class="doc"><input name="document" type="checkbox" value="1"></div>
                                     <div class="name">xxxxxxxxx</div>
@@ -598,6 +614,7 @@ $var jsfiles : /static/js/scan.js
                             <div class="xuxain"></div>
                             <div class="search">
                                 <input type="text" id="headNum" class="search_input" placeholder="Search"/>
+                                <input type="hidden" id="headId"/>
                                 <input type="button" class="search_btn" onclick="searchByHeadNum()"/>
                             </div>     
                             <div class="mid" id="Add" onclick="addScan()">

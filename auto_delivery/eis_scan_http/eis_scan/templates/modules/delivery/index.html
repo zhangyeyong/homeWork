@@ -4,37 +4,42 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+    body{
+        margin: 0;
+    }
     .box{
-        width: 1873px;
-        height: 1040px;
+        width: 1920px;
+        height: 1080px;
         margin: 0 auto;
+        box-sizing: border-box;
         border: 5px solid black;
         position: relative;
     }
     .box .welcome{
-        width: 1873px;
-        height: 1040px;
+        width: 1910px;
+        height: 1070px;
         position: absolute;
         left: 0;
         top: 0;
     }
     .box .boxIn{
-        width: 1873px;
-        height: 1040px;
+        width: 1910px;
+        height: 1070px;
         display: flex;
         position: absolute;
         left: 0;
         top: 0;
     }
     .box .left{
-        width: 70%;
+        width: 75%;
         height: 100%;
     }
     .box .left .top{
-        height: 580px;
+        height: 600px;
+        text-align: center;
     }
     .box .left .bot{
-        height: 400px;
+        height: 470px;
         display: flex;
     }
     .box .left .bot .botLeft{
@@ -44,7 +49,7 @@
     .box .left .bot .botLeft div{
         height: 60px;
         line-height: 60x;
-        font-size: 35px;
+        font-size: 40px;
         color: rgb(0, 32, 96);
         font-weight: 600;
     }
@@ -66,7 +71,7 @@
         font-weight: bold;
     }
     .box .right{
-        width: 30%;
+        width: 25%;
         border-left: 5px dashed black;
         height: 100%;
         padding: 20px;
@@ -134,10 +139,10 @@
         font-weight: bolder;
     }
     .box .right .two .topRight .text .textTop{
-        font-size: 60px;
+        font-size: 50px;
     }
     .box .right .two .topRight .text .textBot{
-        font-size: 60px;
+        font-size: 50px;
     }
     .box .right .two .topRight .text .textTop,.textBot{
         text-align: center;
@@ -153,8 +158,8 @@
         justify-content: center;
         align-items: center;
         transform: translate(-50%,-50%);
-        width: 1920px;
-        height: 1080px;
+        width: 1910px;
+        height: 1070px;
         background:rgba(221, 230, 229, .7);
         z-index: 999;
     }
@@ -605,7 +610,7 @@
         <div class="boxIn">
                 <div class="left">
                     <div class="top">
-                        <video width="1300px" height="600"  controls="controls" muted autoplay="autoplay" loop="loop" >
+                        <video width="1300px" height="600px"  controls="controls" muted autoplay="autoplay" loop="loop" >
                             <source src="/static/video/Delivery.mp4" type="video/mp4">
                         </video>
                     </div>
