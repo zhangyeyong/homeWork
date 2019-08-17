@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="path/swiper-3.4.2.min.css">
     <style>
     body{
-        margin: 0;
+        margin: 5px;
     }
     .boss{
         position: relative;
@@ -21,8 +21,8 @@
         background: rgba(46, 117, 186, .8);
         left: 50%;
         top: 50%;
-        width: 1910px;
-        height: 1070px;
+        width: 1900px;
+        height: 1060px;
         /* display: flex; */
         justify-content: center;
         align-items: center;
@@ -87,23 +87,23 @@
         font-size: 40px;
     }
     .box{
-        width: 1920px;
-        height: 1080px;
+        width: 1910px;
+        height: 1070px;
         margin: 0 auto;
         box-sizing: border-box;
         border: 5px solid black;
         position: relative;
     }
     .box .welcome{
-        width: 1910px;
-        height: 1070px;
+        width: 1900px;
+        height: 1060px;
         position: absolute;
         left: 0;
         top: 0;
     }
     .box .boxIn{
-        width: 1910px;
-        height: 1070px;
+        width: 1900px;
+        height: 1060px;
         display: flex;
         position: absolute;
         left: 0;
@@ -118,7 +118,7 @@
         text-align: center;
         margin-top: 20px;
         width: 100%;
-        height: 770px;
+        height: 870px;
     }
     .box .left .swiper-container .yxyl{
         height: 65px;
@@ -126,6 +126,7 @@
         font-size: 45px;
     }
     .box .left .swiper-container .swiper-wrapper{
+        height: calc(100% - 65px)!important;
         text-align: center;
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide .name{
@@ -162,6 +163,7 @@
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide img{
         width: 90%;
+        height: calc(100% - 90px);
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide{
         position: relative;
@@ -175,8 +177,10 @@
         height:40px;
         width:40px;
     }
+    .box .left .swiper-container .swiper-button-prev,.swiper-button-next{
+        top: 60%!important;
+    }
     .box .left .bot{
-        margin-top: 100px;
         text-align: right;
         padding-right: 40px;
     }
@@ -317,7 +321,7 @@
         <source src="./audio/M.mp3" type="audio/mpeg">
     </audio>
     <div id="loading">
-        <div id="sending">正在上传...</div>
+        <div id="sending">正在处理...</div>
         <div id="finshed">
             <div class="jdOver">交单完成</div>
             <div class="btn">
@@ -340,12 +344,12 @@
                                 <div class="swiper-slide">
                                     <div class="name">EAS1903040001</div>
                                     <div class="inp"><input type="text"><div class="confirm">确定</div><div class="cancle">取消</div></div>
-                                    <img src="img/djfm.png">
+                                    <img src="img/1.jpg">
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="name">EAS1903040002</div>
                                     <div class="inp"><input type="text"><div class="confirm">确定</div><div class="cancle">取消</div></div>
-                                    <img src="img/djfm.png">
+                                    <img src="img/2.jpg">
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="name">EAS1903040003</div>
