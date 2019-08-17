@@ -7,7 +7,7 @@ $def with(head,lines)
     <link rel="stylesheet" href="/static/path/swiper-3.4.2.min.css">
     <style>
     body{
-        margin: 0;
+        margin: 5px;
     }
     .boss{
         position: relative;
@@ -19,8 +19,8 @@ $def with(head,lines)
         background: rgba(46, 117, 186, .8);
         left: 50%;
         top: 50%;
-        width: 1910px;
-        height: 1070px;
+        width: 1900px;
+        height: 1060px;
         /* display: flex; */
         justify-content: center;
         align-items: center;
@@ -85,23 +85,23 @@ $def with(head,lines)
         font-size: 40px;
     }
     .box{
-        width: 1920px;
-        height: 1080px;
+        width: 1910px;
+        height: 1070px;
         margin: 0 auto;
         box-sizing: border-box;
         border: 5px solid black;
         position: relative;
     }
     .box .welcome{
-        width: 1910px;
-        height: 1070px;
+        width: 1900px;
+        height: 1060px;
         position: absolute;
         left: 0;
         top: 0;
     }
     .box .boxIn{
-        width: 1910px;
-        height: 1070px;
+        width: 1900px;
+        height: 1060px;
         display: flex;
         position: absolute;
         left: 0;
@@ -116,7 +116,7 @@ $def with(head,lines)
         text-align: center;
         margin-top: 20px;
         width: 100%;
-        height: 770px;
+        height: 870px;
     }
     .box .left .swiper-container .yxyl{
         height: 65px;
@@ -124,6 +124,7 @@ $def with(head,lines)
         font-size: 45px;
     }
     .box .left .swiper-container .swiper-wrapper{
+        height: calc(100% - 65px)!important;
         text-align: center;
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide .name{
@@ -160,6 +161,7 @@ $def with(head,lines)
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide img{
         width: 90%;
+        height: calc(100% - 90px);
     }
     .box .left .swiper-container .swiper-wrapper .swiper-slide{
         position: relative;
@@ -173,8 +175,10 @@ $def with(head,lines)
         height:40px;
         width:40px;
     }
+    .box .left .swiper-container .swiper-button-prev,.swiper-button-next{
+        top: 60%!important;
+    }
     .box .left .bot{
-        margin-top: 100px;
         text-align: right;
         padding-right: 40px;
     }
@@ -362,7 +366,7 @@ $def with(head,lines)
         <!--jQuery('.swiper-slide-active .inp').css('display', 'none');-->
         var oldNum = '$head.get("headNum")';
         var newNum = jQuery("#headNum").val();
-        showLoading();
+        showLoadingAyy("sending");
         jQuery.ajax({
             url : "/delivery/edit",
             type : "post",
@@ -386,7 +390,7 @@ $def with(head,lines)
                 alert(_("未知错误"));
             },
             complete : function() {
-                hideLoading();
+                hideLoadingAyy();
             }
         });
     }
@@ -396,12 +400,8 @@ $def with(head,lines)
         jQuery('.swiper-slide-active .inp').css('display', 'none');
     }
     function submit(){
-        <!--showLoading();-->
         say(I);
-        $$('#loading').css('display', 'flex');
-        $$('#sending').css('display', 'block');
-        $$('#finshed').css('display', 'none');
-        $$('#reBack').css('display', 'none');
+        showLoadingAyy("sending");
 
         $$.ajax({
             url : "/delivery/edit",
@@ -417,9 +417,7 @@ $def with(head,lines)
                     //alert("上传成功");
                     //back();
                     say(J);
-                    $$('#sending').css('display', 'none');
-                    $$('#reBack').css('display', 'none');
-                    $$('#finshed').css('display', 'block');
+                    showLoadingAyy("finshed");
                 } else {
                     alert(d.info);
                 }
@@ -428,12 +426,12 @@ $def with(head,lines)
                 alert(_("未知错误"));
             },
             complete : function() {
-                hideLoading();
+                //hideLoading();
             }
         });
     }
     function backPaper(){
-        showLoading();
+        showLoadingAyy("sending");
         jQuery.ajax({
             url : "/delivery/edit",
             type : "post",
@@ -446,8 +444,10 @@ $def with(head,lines)
                 d = eval("(" + d + ")");
                 if (d.isSuccess) {
                     say(M);
-                    alert("退件成功");
-                    back();
+                    showLoadingAyy("reBack")
+                    setTimeout(function() {
+                        back();
+                    }, 1000*30)
                 } else {
                     alert(d.info);
                 }
@@ -456,7 +456,7 @@ $def with(head,lines)
                 alert(_("未知错误"));
             },
             complete : function() {
-                hideLoading();
+                //hideLoadingAyy();
             }
         });
     }
@@ -487,6 +487,25 @@ $def with(head,lines)
         });
         obj.play();
     }
+    function showLoadingAyy(id){
+        $$('#loading').css('display', 'flex');
+        var sendingDisplay = "none";
+        var reBackDisplay = "none";
+        var finshedDisplay = "none";
+        if("sending"==id){
+            sendingDisplay = "block";
+        }else if("reBack"==id){
+            reBackDisplay = "block";
+        }else if("finshed"==id){
+            finshedDisplay = "block";
+        }
+        $$('#sending').css('display', sendingDisplay);
+        $$('#reBack').css('display', reBackDisplay);
+        $$('#finshed').css('display', finshedDisplay);
+    }
+    function hideLoadingAyy(){
+        $$('#loading').css('display', 'none');
+    }
     </script>
 </head>
 <body onload="init();" onclick="stopAudioById('H')">
@@ -511,7 +530,7 @@ $def with(head,lines)
         <source src="/static/audio/M.mp3" type="audio/mpeg">
     </audio>
     <div id="loading">
-        <div id="sending">正在上传...</div>
+        <div id="sending">正在处理...</div>
         <div id="finshed">
             <div class="jdOver">交单完成</div>
             <div class="btn">
@@ -519,7 +538,7 @@ $def with(head,lines)
                 <div id="over" onclick="over()">结束</div>
             </div>
         </div>
-        <div id="reBack">
+        <div id="reBack" onclick="back();">
             <div class="success">退回成功</div>
             <div class="tips">请在③口取回单据</div>
         </div>
