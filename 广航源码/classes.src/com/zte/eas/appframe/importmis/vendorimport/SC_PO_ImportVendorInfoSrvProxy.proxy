@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="SC_PO_ImportVendorInfoSrv_Service.java"/>
+      <url path="runtime/SC_PO_ImportVendorInfoSrv_Service_Impl.java"/>
+      <url path="SC_PO_ImportVendorInfoSrv_PortType.java"/>
+      <url path="SC_PO_ImportVendorInfoSrvProcessRequest.java"/>
+      <url path="SC_PO_ImportVendorInfoSrvProcessResponse.java"/>
+      <url path="runtime/SC_PO_ImportVendorInfoSrvProcessRequest_LiteralSerializer.java"/>
+      <url path="runtime/SC_PO_ImportVendorInfoSrvProcessResponse_LiteralSerializer.java"/>
+      <url path="runtime/SC_PO_ImportVendorInfoSrvBinding_Stub.java"/>
+      <url path="runtime/SC_PO_ImportVendorInfoSrv_Service_SerializerRegistry.java"/>
+      <url path="runtime/SC_PO_ImportVendorInfoSrv_Service_SerializerRegistry12.java"/>
+      <url path="SC_PO_ImportVendorInfoSrvPortClient.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="ATTACHMENT_MIME"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            <value n="WSDL2JAVA_DEFAULT_PACKAGE" v="com.zte.eas.appframe.importmis.vendorimport"/>
+            <value n="WSDL2JAVA_ROOT_VALUE_PACKAGE" v="com.zte.eas.appframe.importmis.vendorimport.types"/>
+            <value n="WSDL2JAVA_UNWRAP_PARAMETERS" v="false"/>
+         </hash>
+      </hash>
+      <value n="PROXY_CREATE_JUNIT_TEST" v="true"/>
+      <value n="PROXY_MAPPING_URL"/>
+      <hash n="PROXY_PORTS">
+         <hash n="SC_PO_ImportVendorInfoSrvPort">
+            <value n="ACCESSES_DOC_WRAPPPED" v="false"/>
+            <value n="CLASS_NAME" v="com.zte.eas.appframe.importmis.vendorimport.SC_PO_ImportVendorInfoSrv_PortType"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="SC_PO_ImportVendorInfoSrvPort"/>
+            <hash n="OPERATIONS">
+               <hash n="process">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS"/>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="http" host="zte637-52cfhnx1" port="80" path="/orabpel/easinvoice/SC_PO_ImportVendorInfoSrv/1.0"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="SC_PO_ImportVendorInfoSrv"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://eas.zte.com.cn/all/SC_PO_ImportVendorInfoSrv"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../../vendorImport.jpr"/>
+      <url n="PROXY_WSDL_URL" protocol="http" host="10.3.12.52" path="/orabpel/easinvoice/SC_PO_ImportVendorInfoSrv/1.0/SC_PO_ImportVendorInfoSrv" query="wsdl"/>
+   </hash>
+</jdevws:WebServiceProxy>

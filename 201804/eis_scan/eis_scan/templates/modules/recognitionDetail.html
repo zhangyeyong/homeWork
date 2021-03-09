@@ -1,0 +1,125 @@
+$def with (ret)
+$ lineId=ret.get('lineId')
+<script>
+	var input = document.createElement("input")
+	input.type="text" ; 
+	input.className='input_text_ed';
+	jQuery(function() {
+		jQuery("p").each(function(i, e) {
+			jQuery(e).dblclick(function() {
+				var p = jQuery(e);
+				var htmlVal = p.text().trim();//原来的值
+				input.value=htmlVal;
+				p.html(input);
+				p.children().focus().select()
+				jQuery(input).keyup(function(event){
+					if (event.keyCode==13){
+						var editVal = jQuery(this).val().trim();
+						if(editVal == ""){
+							editVal="&nbsp;";
+						}
+						p.html(editVal);
+						if(htmlVal != editVal){
+							editResult(editVal,p);
+						}
+					}
+				});
+				jQuery(input).blur(function(){
+					p.html(htmlVal);
+				});
+				return false;
+			});
+		});
+	});
+	function editResult(v,p){
+		var lineId=jQuery("#lineId").val();
+		var resultId=jQuery("#resultId").val();
+		jQuery.ajax({
+			url:"/recognitionDetail/"+lineId,
+     		type:"post",
+			async:true,
+			data:{code: p.attr('id'),resultId:resultId,val:v},
+			success: function(d){
+					p.addClass("label-danger");
+		     		}
+			})
+	}
+</script>
+<style>
+	p{
+		height:28px;
+		line-height: 28px; 
+	}
+</style>
+<body class="bill_body">
+	$:render.widgets.navBar("recognition")
+	<div class="main"> 
+        <div class="opts opts2">
+        	<input type="hidden" name="lineId" value="$ret.get('lineId')" id="lineId"/>
+			<input type="hidden" name="resultId" value="$ret.resultId" id="resultId"/>
+	     	<a class="blueBtn" href="/confirmRecognition/$ret.get('lineId')">$_("完成校验")</a>
+			<a href="/recognition" class="back">$_("返回")</a>
+		
+		</div>
+		<div class="data_tableBorder cb">
+			<table>
+		        <tbody><tr id="invoiceHeader">
+				<td colspan="4" class="col-sm-7"><img
+					src="/static/images/code/v$ret.get('lineId')_code.jpg" />
+					<p id="code" class="$ret.get('codeC')">$ret.get("code")</p>
+				</td>
+				<td colspan="3" class="col-sm-5">NO:<img class="col-sm-offset-1"
+					src="/static/images/num/v$ret.get('lineId')_num.jpg" />
+					<p id="num" class="$ret.get('numC')" class="col-sm-offset-2">$ret.get("num")</p>
+				</td>
+			</tr>
+			<tr>
+				<td>$_("购货单位")</td>
+				<td>$_("纳税人识别号"):</td>
+				<td colspan="2"><img
+					src="/static/images/bTaxPayer/v$ret.get('lineId')_bTaxPayer.jpg" />
+					<p id="bTaxPayer" class="$ret.get('bTaxPayerC')">$ret.get("bTaxPayer")</p></td>
+				<td>$_("开票日期"):</td>
+				<td colspan="2"><img
+					src="/static/images/invDate/v$ret.get('lineId')_invDate.jpg" />
+					<p id="invDate" class="$ret.get('invDateC')">$ret.get("invDate")</p></td>
+			</tr>
+			<tr>
+				<td>$_("密码区")
+				</td>
+				<td colspan="3"><img
+					src="/static/images/apwd/v$ret.get('lineId')_apwd.jpg" /></td>
+				<td colspan="3" class="$ret.get('apwdC')">
+					$if ret.get('apwd'):
+						$for i,p in enumerate(ret.get('apwd').split('\n')): 
+							$if p!="":
+							<p id="apwd$i">$p</p>
+				</td>
+			</tr>
+			<tr>
+				<td>$_("价税合计")</td>
+				<td>$_("金额") :</td>
+				<td><img
+					src="/static/images/amount/v$ret.get('lineId')_amount.jpg" />
+					<p id="amount" class="$ret.get('amountC')">$ret.get("amount")</p></td>
+				<td>$_("税率"):</td>
+				<td><img src="/static/images/tax/v$ret.get('lineId')_tax.jpg" />
+					<p id="tax" class="$ret.get('taxC')">$ret.get("tax")</p></td>
+				<td>$_("税额"):</td>
+				<td><img
+					src="/static/images/taxAmount/v$ret.get('lineId')_taxAmount.jpg" />
+					<p id="taxAmount" class="$ret.get('taxAmountC')">$ret.get("taxAmount")</p></td>
+			</tr>
+			<tr>
+				<td>$_("销货单位"):</td>
+				<td>$_("纳税人识别号") :</td>
+				<td colspan="5"><img
+					src="/static/images/sTaxPayer/v$ret.get('lineId')_sTaxPayer.jpg" />
+					<p id="sTaxPayer" class="$ret.get('sTaxPayerC')">$ret.get("sTaxPayer")</p></td>
+			</tr>
+			</tbody>
+			</table>  
+		</div>
+	</div>
+</body>
+</html>

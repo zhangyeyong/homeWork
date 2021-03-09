@@ -1,0 +1,26 @@
+$def with(curNav)
+<div class="header">
+	<h1 class="logoEnSub"><a href="/scan">$_(session.get('appName'))</a></h1>
+	<div class="nav">
+		<ul>
+			<li 
+			$if curNav == "result":
+				class="current"
+			><a href="/result">$_("结果查询")</a></li>
+			<li 
+			$if curNav == "scan":
+				class="current"
+			><a href="/scan">$_("资料扫描")</a></li>
+			<li
+			$if curNav == "config":
+				class="current"
+			><a href="/configure">$_("系统设置")</a></li>
+		</ul>
+	</div>
+	<div class="user_unit">
+		<span class="i_userface"></span>
+		
+		$_("欢迎您!")&ensp;$session.user.get("userNum")&emsp;<a href="/logout">$_("注销")</a>
+		 
+	</div>
+</div>

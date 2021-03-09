@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="GL_ImportGLInvoiceSrv_Service.java"/>
+      <url path="runtime/GL_ImportGLInvoiceSrv_Service_Impl.java"/>
+      <url path="GL_ImportGLInvoiceSrv_PortType.java"/>
+      <url path="GL_ImportGLInvoiceSrvProcessRequest.java"/>
+      <url path="GL_ImportGLInvoiceSrvProcessResponse.java"/>
+      <url path="runtime/GL_ImportGLInvoiceSrvProcessRequest_LiteralSerializer.java"/>
+      <url path="runtime/GL_ImportGLInvoiceSrvProcessResponse_LiteralSerializer.java"/>
+      <url path="runtime/GL_ImportGLInvoiceSrvBinding_Stub.java"/>
+      <url path="runtime/GL_ImportGLInvoiceSrv_Service_SerializerRegistry.java"/>
+      <url path="runtime/GL_ImportGLInvoiceSrv_Service_SerializerRegistry12.java"/>
+      <url path="GL_ImportGLInvoiceSrvPortClient.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="ATTACHMENT_MIME"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            <value n="WSDL2JAVA_DEFAULT_PACKAGE" v="com.zte.eas.appframe.importmis.gl"/>
+            <value n="WSDL2JAVA_ROOT_VALUE_PACKAGE" v="com.zte.eas.appframe.importmis.gl.types"/>
+            <value n="WSDL2JAVA_UNWRAP_PARAMETERS" v="false"/>
+         </hash>
+      </hash>
+      <value n="PROXY_MAPPING_URL"/>
+      <hash n="PROXY_PORTS">
+         <hash n="GL_ImportGLInvoiceSrvPort">
+            <value n="ACCESSES_DOC_WRAPPPED" v="false"/>
+            <value n="CLASS_NAME" v="com.zte.eas.appframe.importmis.gl.GL_ImportGLInvoiceSrv_PortType"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="GL_ImportGLInvoiceSrvPort"/>
+            <hash n="OPERATIONS">
+               <hash n="process">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS"/>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="http" host="CMITEST" port="7777" path="/orabpel/default/GL_ImportGLInvoiceSrv/1.0"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="GL_ImportGLInvoiceSrv"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://eas.zte.com.cn/all/GL_ImportGLInvoiceSrv"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../../Project1.jpr"/>
+      <url n="PROXY_WSDL_URL" protocol="http" host="10.3.6.102" port="7777" path="/orabpel/default/GL_ImportGLInvoiceSrv/1.0/GL_ImportGLInvoiceSrv" query="wsdl"/>
+   </hash>
+</jdevws:WebServiceProxy>

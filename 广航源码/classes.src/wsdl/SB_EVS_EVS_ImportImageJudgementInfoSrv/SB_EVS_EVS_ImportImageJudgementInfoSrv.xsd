@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+        targetNamespace="http://mss.cmcc.com/SB_EVS_EVS_ImportImageJudgementInfoSrv"
+        xmlns:tns="http://mss.cmcc.com/SB_EVS_EVS_ImportImageJudgementInfoSrv"
+        xmlns:msg="http://mss.cmcc.com/MsgHeader"
+        xmlns:ons="http://mss.cmcc.com/ImportSrvResponse"
+        xmlns="http://www.w3.org/2001/XMLSchema">
+ <import namespace="http://mss.cmcc.com/MsgHeader"
+         schemaLocation="MsgHeader.xsd"/>
+ <import namespace="http://mss.cmcc.com/ImportSrvResponse"
+         schemaLocation="ImportSrvResponse.xsd"/>
+ <element name="SB_EVS_EVS_ImportImageJudgementInfoSrvRequest"
+          type="tns:SB_EVS_EVS_ImportImageJudgementInfoSrvRequest"/>
+ <element name="SB_EVS_EVS_ImportImageJudgementInfoSrvResponse"
+          type="ons:ImportSrvResponse"/>
+
+
+ <complexType name="SB_EVS_EVS_ImportImageJudgementInfoSrvRequest">
+  <sequence>
+   <element name="MsgHeader" type="msg:MsgHeader" nillable="true"/>
+   <element name="ImportImageJudgementInfoSrvInputCollection"
+            type="tns:ImportImageJudgementInfoSrvInputCollection"
+            nillable="true"/>
+  </sequence>
+ </complexType>
+
+
+ <complexType name="ImportImageJudgementInfoSrvInputCollection">
+  <sequence>
+   <element name="ImportImageJudgementInfoSrvInputItem"
+            type="tns:ImportImageJudgementInfoSrvInputItem" minOccurs="0"
+            maxOccurs="unbounded" nillable="true"/>
+  </sequence>
+ </complexType>
+
+
+ <complexType name="ImportImageJudgementInfoSrvInputItem">
+  <sequence>
+   <element name="PRI_KEY" type="string" nillable="true"/>
+   <element name="BATCH_NAME" type="string" nillable="true"/>
+   <element name="BOE_NUM" type="string" nillable="true"/>
+   <element name="JUDGE_TYPE" type="string" nillable="true"/>
+   <element name="PROBLEM" type="string" nillable="true"/>
+   <element name="DETAILS" type="string" nillable="true"/>
+   <element name="EMPLOYEE_NUM" type="string" nillable="true"/>
+   <element name="IRESERVED_1" type="string" nillable="true"/>
+   <element name="IRESERVED_2" type="string" nillable="true"/>
+   <element name="IRESERVED_3" type="string" nillable="true"/>
+   <element name="IRESERVED_4" type="string" nillable="true"/>
+   <element name="IRESERVED_5" type="string" nillable="true"/>
+  </sequence>
+ </complexType>
+
+
+
+ 
+
+
+
+</schema>

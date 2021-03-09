@@ -1,0 +1,254 @@
+$var title: $_("欢迎使用自动投递")
+
+<script type="text/javascript">
+var machineIsOK = false;
+Date.prototype.pattern=function(fmt) {
+  var o = {
+  "M+" : this.getMonth()+1, //月份
+  "d+" : this.getDate(), //日
+  "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时
+  "H+" : this.getHours(), //小时
+  "m+" : this.getMinutes(), //分
+  "s+" : this.getSeconds(), //秒
+  "q+" : Math.floor((this.getMonth()+3)/3), //季度
+  "S" : this.getMilliseconds() //毫秒
+  };
+
+  /*
+
+    "0" : "\u661f\u671f\u65e5",
+  "1" : "\u661f\u671f\u4e00",
+  "2" : "\u661f\u671f\u4e8c",
+  "3" : "\u661f\u671f\u4e09",
+  "4" : "\u661f\u671f\u56db",
+  "5" : "\u661f\u671f\u4e94",
+  "6" : "\u661f\u671f\u516d"
+  */
+  var week = {
+  "0" : "星期日",
+  "1" : "星期一",
+  "2" : "星期二",
+  "3" : "星期三",
+  "4" : "星期四",
+  "5" : "星期五",
+  "6" : "星期六"
+  };
+  if(/(y+)/.test(fmt)){
+    fmt=fmt.replace(RegExp.$$1, (this.getFullYear()+"").substr(4 - RegExp.$$1.length));
+  }
+  if(/(E+)/.test(fmt)){
+    fmt=fmt.replace(RegExp.$$1, ((RegExp.$$1.length>1) ? (RegExp.$$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);
+  }
+  for(var k in o){
+    if(new RegExp("("+ k +")").test(fmt)){
+      fmt = fmt.replace(RegExp.$$1, (RegExp.$$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+    }
+  }
+  return fmt;
+}
+function clock()
+{
+    var d=new Date();
+    var t=d.pattern("hh:mm:ss");
+    var ld = d.pattern("MM月dd日 E");
+    document.getElementById("top_time").innerText=t;
+    document.getElementById("top_date").innerText=ld;
+}
+function login(jumpUrl){
+		showLoading();
+		var userCd = "10000";
+		var password = "1";
+
+		jQuery.ajax({
+			type : "post",
+			async : false,
+			url : "/login",
+			data:{type:"login","userCd":userCd,"password":password},
+			success : function(data) {
+				data = eval("("+data+")");
+				if(data.isSuccess){
+					window.location.href = jumpUrl;
+				}else{
+					alert(data.info);
+				}
+			},
+			error : function() {
+				alert(_("登录失败，请联系管理员"));
+			},complete : function (){
+				hideLoading();
+			}
+		});
+	}
+function gotoDelivery()
+{
+    machineIsOK = false;
+    initMachine();
+    if(machineIsOK){
+        login("/delivery/scan");
+    }
+}
+function gotoRefund()
+{
+    //window.location.href = "/delivery/refund";
+    var loginBox = new Dialog({
+		target : jQuery('#loginBox'),
+		title : _('退件'),
+		width : 360,
+		height : 150,
+		yesFn : function() {
+		    return login("/delivery/refund");
+	    }
+	});
+	loginBox.show();
+
+}
+function toPickup()
+{
+    var pickupCodeBox = new Dialog({
+		target : jQuery('#pickupBox'),
+		title : _('取件'),
+		width : 360,
+		height : 100,
+		yesFn : function() {
+		    return pickup();
+	    }
+	});
+	pickupCodeBox.show();
+}
+function pickup(){
+    var pickupCode = jQuery("#pickupCode").val();
+    showLoading();
+    jQuery.ajax({
+        type : "post",
+        async : false,
+        url : "/delivery/pickup",
+        data:{"method":"pickup","pickupCode":pickupCode},
+        success : function(data) {
+            data = eval("("+data+")");
+            if(data.isSuccess){
+                alert("箱门已打开！");
+            }else{
+                alert(data.info);
+            }
+        },
+        error : function() {
+            alert(_("取件失败，请联系管理员"));
+        },complete : function (){
+            hideLoading();
+        }
+    });
+
+}
+
+function init(){
+	clock();
+	var int=self.setInterval("clock()",1000);
+}
+function initMachine(){
+    //扫描之前先检查 机器是否初始化成功
+    showLoading();
+    $$.ajax({
+        url : "/delivery/scan",
+        type : "post",
+        async : false,
+        data : {
+            method:"initMachine"
+        },
+        success : function(d) {
+            d = eval("(" + d + ")");
+            if (d.isSuccess) {
+                machineIsOK = true;
+                alert(d.info);
+                //scan["scanCallback"]=scanCallback;
+                //scan.execute('dailyScan');
+
+            } else {
+                alert(d.info);
+                window.location.href = "/delivery/machineError"
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            hideLoading();
+        }
+    });
+
+}
+
+
+
+
+</script>
+
+<body onload="init()">
+<div class="delivery_main">
+    <table class="tb_main">
+        <tr>
+            <td width="50%" >
+
+            </td>
+        </tr>
+        <tr>
+            <td width="50%">
+                <table >
+                        <tr>
+                            <td width="50%" >
+333
+                            </td>
+                             <td width="50%">
+33
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%">
+222
+                            </td>
+                        </tr>
+                    <tr>
+                            <td width="50%">
+                                11
+                            </td>
+                        </tr>
+                    </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="pop mbox" id="pickupBox">
+    <div class="cb">
+        <div class="fields nofloat fix_width">
+            <div class="tit">
+                $_("请输入取件码"):&nbsp;
+            </div>
+            <div class="cont">
+                <input type="text" class="input_search" value="" id="pickupCode">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pop mbox" id="loginBox">
+    <div class="cb">
+        <div class="fields nofloat fix_width">
+            <div class="tit">
+                $_("用户名"):&nbsp;
+            </div>
+            <div class="cont">
+                <input type="text" class="input_search" value="" id="username">
+            </div>
+        </div>
+        <div class="fields nofloat fix_width">
+            <div class="tit">
+                $_("密码"):&nbsp;
+            </div>
+            <div class="cont">
+                <input type="password" class="input_search" value="" id="password">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>

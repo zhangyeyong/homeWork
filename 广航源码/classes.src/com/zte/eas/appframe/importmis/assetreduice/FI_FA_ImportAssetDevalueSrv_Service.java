@@ -1,0 +1,17 @@
+package com.zte.eas.appframe.importmis.assetreduice;
+
+import javax.xml.rpc.Service;
+import javax.xml.rpc.ServiceException;
+
+public abstract interface FI_FA_ImportAssetDevalueSrv_Service
+  extends Service
+{
+  public abstract FI_FA_ImportAssetDevalueSrv_PortType getFI_FA_ImportAssetDevalueSrvPort()
+    throws ServiceException;
+}
+
+
+/* Location:           C:\Users\zhangyeyong\Downloads\gdc_evs\evs\webapps\evs\WEB-INF\classes\
+ * Qualified Name:     com.zte.eas.appframe.importmis.assetreduice.FI_FA_ImportAssetDevalueSrv_Service
+ * JD-Core Version:    0.7.0.1
+ */

@@ -1,0 +1,140 @@
+$def with(configDict)
+$var title: $_("系统配置")
+$ scannable = session.get('cust') is not None and session.get('biz') is not None
+$ companyCodeKey='COMPANY_CODE_'+session.user.get('userNum')
+$ siteIdKey='SITE_ID_'+session.user.get('userNum')
+$ operationTypeCodeKey='OPERATION_TYPE_CODE_'+session.user.get('userNum')
+<body class="bill_body">
+	$:render.widgets.navBar("config")
+	<div class="main">
+		<h2>$_("系统设置")</h2>
+		<div class="box con_box cb">
+			<dl class="config_list">
+				<dt class="cb"><h3>$_("是否FTP被动模式：")</h3>&nbsp;&nbsp;<input type="checkbox" 
+				$if configDict.get('IS_PASV')=='true':
+					checked="checked" 
+				id="IS_PASV"/>&nbsp;&nbsp;($_("说明：勾选为被动动模式")) </dt>
+				<dd></dd>
+				<dt class="cb"><h3>$_("条码规则：")</h3>($_("说明：设置条码规则，格式为正则表达式"))</dt>
+				<dd><input type="text" class="input_text" value="$configDict.get('BARCODE_RULE')" id="BARCODE_RULE"></dd>
+				<dt class="cb"><h3>$_("非空白率：")</h3>($_("说明：用于判断图片是否是空白的参数"))</dt>
+				<dd><input type="text" class="input_text" value="$configDict.get('PIXERRATIO','0.5')" id="PIXERRATIO">%</dd>
+				<dt class="cb"><h3>$_("串口名：")</h3>($_("说明：串口通信参数"))</dt>
+				<dd><input type="text" class="input_text" value="$configDict.get('SERIAL_PORT','COM1')" id="SERIAL_PORT"></dd>
+				<dt class="cb"><h3>$_("波特率：")</h3>($_("说明：说明：串口通信参数"))</dt>
+				<dd><input type="text" class="input_text" value="$configDict.get('SERIAL_BAUDRATE','19200')" id="SERIAL_BAUDRATE"></dd>
+				<dt class="cb"><h3>$_("扫描仪：")</h3>($_("说明：选择一台适合的扫描仪"))</dt>
+				<dd>
+					<div class="fields">
+						<div class="cont">
+							<select id="dsList" value="$configDict.get('DS_NAME')">
+<!-- 								<option value="">&nbsp;</option> -->
+							</select>
+							</div>
+					</div>
+				</dd>
+				
+			</dl>
+			<div class="clear"></div>
+			<input type="button" value='$_("保存")' onclick="save()"/>
+			<!-- $_("保存") -->
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var isAlive = false;
+
+	function loadDs(){
+		var url = "http://127.0.0.1:8001/?"
+			+ UrlEncode("method=getDsList");
+		jQuery.getJSON(url + "&callback=?", 
+			    function(rtn){
+					if (rtn.isSuccess) {
+						var dsList = rtn.data;
+						var selector=jQuery('#dsList');  
+						var val = selector.attr("value");
+						for(var i=0;i<dsList.length;i++){
+							if(val==dsList[i]){
+						    	selector.append('<option value="'+dsList[i]+'" selected="selected">'+dsList[i]+'</option>');  
+							}else{
+						    	selector.append('<option value="'+dsList[i]+'">'+dsList[i]+'</option>');  
+								
+							}
+						}
+					} else {
+						alert(rtn.info)
+					}
+			    }
+			);
+	}
+	function checkScanClient(){
+		var url = "http://127.0.0.1:8001/?"
+			+ UrlEncode("method=isAlive");
+		jQuery.getJSON(url + "&callback=?", 
+		    function(rtn){
+				isAlive = true;
+		    }
+		);
+	}
+	function save(){
+		if(!isAlive){
+			alert(_("扫描客户端未成功启动"));
+		}
+		var ds_name = jQuery("#dsList").val();
+		var paramStr = ""
+		if(ds_name==null||ds_name==""){
+			alert(_("扫描仪不能为空"));
+			jQuery("#DS_NAME").focus();
+			return;
+		}
+		var pixer_ratio = jQuery("#PIXERRATIO").val();
+		if(pixer_ratio!=null&&pixer_ratio!=""){
+			var pixer_ratio_float = parseFloat(pixer_ratio);
+			if(isNaN(pixer_ratio_float)||pixer_ratio_float<0||pixer_ratio_float>100){
+				alert(_("非空白率只能是0~100的数字"));
+				jQuery("#PIXERRATIO").focus();
+				return;
+			}
+		}
+		
+		showLoading();
+		jQuery.ajax({
+				type : "post",
+				url : "/configure",
+				data:{
+					"DS_NAME":ds_name,
+					"IS_PASV":String(jQuery("#IS_PASV").is(':checked')==true),
+					"BARCODE_RULE":jQuery("#BARCODE_RULE").val(),
+					"SERIAL_PORT":jQuery("#SERIAL_PORT").val(),
+					"SERIAL_BAUDRATE":jQuery("#SERIAL_BAUDRATE").val(),
+					"PIXERRATIO":pixer_ratio,
+					"$companyCodeKey":jQuery("#$companyCodeKey").val(),
+					"$siteIdKey":jQuery("#"+jQuery("#$companyCodeKey").val()).val(),
+					"$operationTypeCodeKey":jQuery("#$operationTypeCodeKey").val(),
+				},
+				success : function(data) {
+					data = eval("("+data+")");
+					if(!data.isSuccess){
+						alert(data.info);
+						return;
+					}else{
+						alert(_("保存成功"));
+					}
+				},
+				error : function() {
+					alert(_("保存失败"));
+				},
+				complete : function() {
+					hideLoading();
+				}
+			});
+	}
+	checkScanClient();
+	loadDs();
+	setTimeout(function() {
+	    if (!isAlive)
+	    {
+	        alert(_("扫描客户端未成功启动"));
+	    }
+	}, 1000);
+</script>

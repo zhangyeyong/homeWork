@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+function callService(method){
+    //showLoading();
+    jQuery.ajax({
+        url : "/delivery/test",
+        type : "post",
+        async : false,
+        data : {
+            method:method
+        },
+        success : function(d) {
+            alert(d);
+            d = eval("(" + d + ")");
+            if (d.isSuccess) {
+
+            } else {
+
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            //hideLoading();
+        }
+    });
+}
+    </script>
+</head>
+<body >
+<input type="button" value="initMachine" onclick="callService('initMachine')">
+<input type="button" value="recyclePaper" onclick="callService('recyclePaper')">
+<input type="button" value="backPaper" onclick="callService('backPaper')">
+
+</body>
+</html>

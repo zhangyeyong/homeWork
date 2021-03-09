@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>欢迎使用自动投递</title>
+<link rel="stylesheet" type="text/css" href="./css/delivery_base.css" />
+<script src="./js/common.js"></script>
+<script type="text/javascript">
+
+function clock()
+{
+var d=new Date();
+var t=d.pattern("hh:mm:ss");
+var ld = d.pattern("MM月dd日 E");
+document.getElementById("top_time").innerText=t;
+document.getElementById("top_date").innerText=ld;
+}
+
+
+function init(){
+	clock();
+	var int=self.setInterval("clock()",1000);
+}
+
+</script>
+
+</head>
+<body onload="init()">
+  <hr/>
+<div class="main" >
+  <table cellspacing="20"  class="tb_main">
+    <tr>
+      <td colspan="2" align="right" valign="bottom" class="top"><div class="div_time" id="top_time">
+        &nbsp;
+        </div>
+        <div class="div_date" id="top_date">
+        &nbsp;
+        </div>
+        <hr class="top"/>
+      </td>
+    </tr>
+    <tr >
+      <td rowspan="3" class="lable" width="50%"><table  >
+          <tr>
+            <td valign="bottom">
+			<table>
+			<tr>
+			<td align="center"><img src="images/little.png"  width="60%"/></td>
+			</tr>
+			<tr>
+			<td>              <div class="div_title"> 温馨提示 </div>
+              <hr style="border:1px dashed #000; height:1px; margin-bottom: -1px;"></td></td>
+			</tr>
+			</table>
+			
+
+          </tr>
+          <tr>
+            <td valign="top"><div class="div_label"> 只接受A4规格票据<br/>
+                每次只能投递一份<br/>
+                每份最多15张<br/>
+                封面朝下放置<br/>
+              </div></td>
+          </tr>
+        </table></td>
+      <td class="yellow" ><table  >
+          <tr>
+            <td width="50%" align="center"><img src="images/delivery.png"  width="60%"/></td>
+            <td><div class="div_font_while"> 投 递<br/>
+                Delivery </div></td>
+          </tr>
+        </table></td>
+    </tr>
+    <tr>
+      <td class="edit" >&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="edit">&nbsp;</td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

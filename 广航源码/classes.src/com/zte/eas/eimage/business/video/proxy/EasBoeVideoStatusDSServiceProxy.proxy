@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="EasBoeVideoStatusDSService.java"/>
+      <url path="runtime/EasBoeVideoStatusDSService_Impl.java"/>
+      <url path="EasBoeVideoStatusDS.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_cancelVideo_ReqS.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_cancelVideo_RespS.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_registerVideo_ReqS.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_registerVideo_RespS.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_cancelVideo_ReqS_SOAPSerializer.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_cancelVideo_RespS_SOAPSerializer.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_registerVideo_ReqS_SOAPSerializer.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_registerVideo_RespS_SOAPSerializer.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_cancelVideo_ReqS_SOAPBuilder.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_cancelVideo_RespS_SOAPBuilder.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_registerVideo_ReqS_SOAPBuilder.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_registerVideo_RespS_SOAPBuilder.java"/>
+      <url path="runtime/VideoStatusServiceSoapBinding_Stub.java"/>
+      <url path="runtime/EasBoeVideoStatusDSService_SerializerRegistry.java"/>
+      <url path="runtime/EasBoeVideoStatusDSService_SerializerRegistry12.java"/>
+      <url path="VideoStatusServiceClient.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="ATTACHMENT_MIME"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            <value n="WSDL2JAVA_DEFAULT_PACKAGE" v="com.zte.eas.eimage.business.video.proxy"/>
+            <value n="WSDL2JAVA_ROOT_VALUE_PACKAGE" v="com.zte.eas.eimage.business.video.proxy"/>
+            <value n="WSDL2JAVA_UNWRAP_PARAMETERS" v="false"/>
+         </hash>
+      </hash>
+      <value n="PROXY_MAPPING_URL"/>
+      <hash n="PROXY_PORTS">
+         <hash n="VideoStatusService">
+            <value n="ACCESSES_DOC_WRAPPPED" v="false"/>
+            <value n="CLASS_NAME" v="com.zte.eas.eimage.business.video.proxy.EasBoeVideoStatusDS"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="VideoStatusService"/>
+            <hash n="OPERATIONS">
+               <hash n="cancelVideo">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="registerVideo">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS"/>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="http" host="localhost" port="8080" path="/gdyd/services/VideoStatusService"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="EasBoeVideoStatusDSService"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://localhost:8080/gdyd/services/VideoStatusService"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../../../Project1.jpr"/>
+      <url n="PROXY_WSDL_URL" protocol="http" host="localhost" port="8080" path="/gdyd/services/VideoStatusService" query="wsdl"/>
+   </hash>
+</jdevws:WebServiceProxy>

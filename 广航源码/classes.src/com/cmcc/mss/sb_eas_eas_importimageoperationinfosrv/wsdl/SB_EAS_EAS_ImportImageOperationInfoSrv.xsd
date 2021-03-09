@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+        targetNamespace="http://mss.cmcc.com/SB_EAS_EAS_ImportImageOperationInfoSrv"
+        xmlns:tns="http://mss.cmcc.com/SB_EAS_EAS_ImportImageOperationInfoSrv"
+        xmlns:msg="http://mss.cmcc.com/MsgHeader"
+        xmlns:ons="http://mss.cmcc.com/ImportSrvResponse"
+        xmlns="http://www.w3.org/2001/XMLSchema">
+ <import namespace="http://mss.cmcc.com/MsgHeader"
+         schemaLocation="MsgHeader.xsd"/>
+ <import namespace="http://mss.cmcc.com/ImportSrvResponse"
+         schemaLocation="ImportSrvResponse.xsd"/>
+ <element name="SB_EAS_EAS_ImportImageOperationInfoSrvRequest"
+          type="tns:SB_EAS_EAS_ImportImageOperationInfoSrvRequest"/>
+ <element name="SB_EAS_EAS_ImportImageOperationInfoSrvResponse"
+          type="ons:ImportSrvResponse"/>
+
+
+ <complexType name="SB_EAS_EAS_ImportImageOperationInfoSrvRequest">
+  <sequence>
+   <element name="MsgHeader" type="msg:MsgHeader" nillable="true"/>
+   <element name="ImportImageOperationInfoSrvInputCollection"
+            type="tns:ImportImageOperationInfoSrvInputCollection"
+            nillable="true"/>
+  </sequence>
+ </complexType>
+
+
+ <complexType name="ImportImageOperationInfoSrvInputCollection">
+  <sequence>
+   <element name="ImportImageOperationInfoSrvInputItem"
+            type="tns:ImportImageOperationInfoSrvInputItem" minOccurs="0"
+            maxOccurs="unbounded" nillable="true"/>
+  </sequence>
+ </complexType>
+
+
+ <complexType name="ImportImageOperationInfoSrvInputItem">
+  <sequence>
+   <element name="PRI_KEY" type="string" nillable="true"/>
+   <element name="BATCH_NAME" type="string" nillable="true"/>
+   <element name="BOE_NUM" type="string" nillable="true"/>
+   <element name="OPERATION_TYPE" type="string" nillable="true"/>
+   <element name="OPERATION_DATE" type="dateTime" nillable="true"/>
+   <element name="IRESERVED_1" type="string" nillable="true"/>
+   <element name="IRESERVED_2" type="string" nillable="true"/>
+   <element name="IRESERVED_3" type="string" nillable="true"/>
+   <element name="IRESERVED_4" type="string" nillable="true"/>
+   <element name="IRESERVED_5" type="string" nillable="true"/>
+  </sequence>
+ </complexType>
+
+
+
+ 
+
+
+
+</schema>

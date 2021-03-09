@@ -1,0 +1,70 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="../../../../../../../public_html/FI_FA_ImportAssetMassAddtionSrv1/FI_FA_ImportAssetMassAddtionSrv.wsdl"/>
+      <url path="FI_FA_ImportAssetMassAddtionSrv_Service.java"/>
+      <url path="runtime/FI_FA_ImportAssetMassAddtionSrv_Service_Impl.java"/>
+      <url path="FI_FA_ImportAssetMassAddtionSrv_PortType.java"/>
+      <url path="FI_FA_ImportAssetMassAddtionSrvProcessRequest.java"/>
+      <url path="LineIDCollection.java"/>
+      <url path="LineIDItem.java"/>
+      <url path="FI_FA_ImportAssetMassAddtionSrvProcessResponse.java"/>
+      <url path="types/com/oracle/xmlns/pcbpel/adapter/db/getdata/GetDataOutput.java"/>
+      <url path="types/com/oracle/xmlns/pcbpel/adapter/db/getdata/GetDataInput.java"/>
+      <url path="types/com/oracle/xmlns/pcbpel/adapter/db/getdata/GetDataOutputCollection.java"/>
+      <url path="runtime/LineIDItem_LiteralSerializer.java"/>
+      <url path="runtime/LineIDCollection_LiteralSerializer.java"/>
+      <url path="runtime/FI_FA_ImportAssetMassAddtionSrvProcessRequest_LiteralSerializer.java"/>
+      <url path="runtime/FI_FA_ImportAssetMassAddtionSrvProcessResponse_LiteralSerializer.java"/>
+      <url path="types/com/oracle/xmlns/pcbpel/adapter/db/getdata/runtime/GetDataOutput_LiteralSerializer.java"/>
+      <url path="types/com/oracle/xmlns/pcbpel/adapter/db/getdata/runtime/GetDataInput_LiteralSerializer.java"/>
+      <url path="types/com/oracle/xmlns/pcbpel/adapter/db/getdata/runtime/GetDataOutputCollection_LiteralSerializer.java"/>
+      <url path="runtime/FI_FA_ImportAssetMassAddtionSrvBinding_Stub.java"/>
+      <url path="runtime/FI_FA_ImportAssetMassAddtionSrv_Service_SerializerRegistry.java"/>
+      <url path="runtime/FI_FA_ImportAssetMassAddtionSrv_Service_SerializerRegistry12.java"/>
+      <url path="FI_FA_ImportAssetMassAddtionSrvPortClient.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="ATTACHMENT_MIME"/>
+      <list n="custom_schema_urls">
+         <url path="../../../../../../../public_html/FI_FA_ImportAssetDevalueSrv/FI_FA_ImportAssetDevalueSrv.xsd"/>
+         <url path="../../../../../../../public_html/FI_FA_ImportAssetDevalueSrv1/FI_FA_ImportAssetDevalueSrv.xsd"/>
+         <url path="../../../../../../../public_html/FI_FA_ImportAssetDevalueSrv1/GetData.xsd"/>
+         <url path="../../../../../../../public_html/FI_FA_ImportAssetMassAddtionSrv/FI_FA_ImportAssetMassAddtionSrv.xsd"/>
+         <url path="../../../../../../../public_html/FI_FA_ImportAssetRetirmentSrv/FI_FA_ImportAssetRetirmentSrv.xsd"/>
+         <url path="../../../../../../../public_html/FI_FA_ImportAssetTransferInCompanySrv/FI_FA_ImportAssetTransferInCompanySrv.xsd"/>
+         <url path="../../../../../../../public_html/FI_FA_ImportAssetTransferIntercompanysSrv/FI_FA_ImportAssetTransferIntercompanysSrv.xsd"/>
+      </list>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            <value n="WSDL2JAVA_DEFAULT_PACKAGE" v="com.zte.eas.appframe.importmis.assetadd"/>
+            <value n="WSDL2JAVA_ROOT_VALUE_PACKAGE" v="com.zte.eas.appframe.importmis.assetadd.types"/>
+            <value n="WSDL2JAVA_UNWRAP_PARAMETERS" v="false"/>
+         </hash>
+      </hash>
+      <value n="PROXY_CREATE_JUNIT_TEST" v="true"/>
+      <value n="PROXY_MAPPING_URL"/>
+      <hash n="PROXY_PORTS">
+         <hash n="FI_FA_ImportAssetMassAddtionSrvPort">
+            <value n="ACCESSES_DOC_WRAPPPED" v="false"/>
+            <value n="CLASS_NAME" v="com.zte.eas.appframe.importmis.assetadd.FI_FA_ImportAssetMassAddtionSrv_PortType"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="FI_FA_ImportAssetMassAddtionSrvPort"/>
+            <hash n="OPERATIONS">
+               <hash n="process">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS"/>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="http" host="zte637-52cfhnx1" port="80" path="/orabpel/easinvoice/FI_FA_ImportAssetMassAddtionSrv/1.0"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="FI_FA_ImportAssetMassAddtionSrv"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://eas.zte.com.cn/all/FI_FA_ImportAssetMassAddtionSrv"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../../FI_FA_ImportAssetMassAddtionSrv.jpr"/>
+      <url n="PROXY_WSDL_URL" path="../../../../../../../public_html/FI_FA_ImportAssetMassAddtionSrv1/FI_FA_ImportAssetMassAddtionSrv.wsdl"/>
+   </hash>
+</jdevws:WebServiceProxy>

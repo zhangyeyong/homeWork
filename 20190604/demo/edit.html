@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>欢迎使用自动投递</title>
+<link rel="stylesheet" type="text/css" href="./css/delivery_base.css" />
+
+<script src="./js/common.js"></script>
+<script type="text/javascript">
+var endTime = 200;
+function clock()
+{
+	endTime = endTime-1;
+	document.getElementById("endTime").innerText=endTime;
+}
+
+
+function init(){
+	clock();
+	var int=self.setInterval("clock()",1000);
+}
+
+</script>
+</head>
+<body onload="init()">
+<div class="main" >
+  <table cellspacing="20"  class="tb_main">
+    <tr>
+      <td colspan="2" align="right" valign="bottom" class="top">
+        <table>
+          <tr>
+            <td align="center"><div class="div_bt">返回</div></td>
+            <td align="center" width="70%"><div class="div_font_green">客户投递</div></td>
+            <td align="center"><div id="endTime" class="div_bt">119</div></td>
+          </tr>
+        </table>
+        <hr class="top"/>
+      </td>
+    </tr>
+    <tr >
+      <td rowspan="3" class="lable" width="50%"><table >
+          <tr>
+            <td valign="bottom">
+			<table>
+			<tr>
+			<td align="center">
+			<table>
+          <tr>
+            <td align="center"><img src="images/first.png" width="160px"/></td>
+          </tr>
+		  <tr>
+ 			<td align="center"><div id="headnum" class="div_label">EAS16122400001(6)</div></td>
+          </tr>
+        </table>
+			</td>
+			</tr>
+			<tr>
+			<td>              <div class="div_title"> 温馨提示 </div>
+              <hr style="border:1px dashed #000; height:1px; margin-bottom: -1px;"></td></td>
+			</tr>
+			</table>
+			
+
+          </tr>
+          <tr>
+            <td valign="top"><div class="div_label"> 
+			请确保票据不粘在一起<br/>
+			请确保票据间没有杂物<br/>
+			如：别针、 订书针、 回形针<br/>
+			封面 底页<br/>
+			然后点击【扫描】<br/>
+              </div></td>
+          </tr>
+        </table></td>
+      <td class="yellow" ><table  >
+          <tr>
+            <td width="50%" align="center"><img src="images/view.png"  width="40%"/></td>
+            <td><div class="div_font_while"> 预 览<br/>
+                Edit</div></td>
+          </tr>
+        </table></td>
+    </tr>
+    <tr>
+      <td class="edit" ><table  >
+          <tr>
+            <td width="50%" align="center"><img src="images/edit.png"  width="40%"/></td>
+            <td><div class="div_font_while"> 编 辑<br/>
+                Edit</div></td>
+          </tr>
+        </table></td>
+    </tr>
+    <tr>
+      <td class="edit">
+	  <table  >
+          <tr>
+            <td width="50%" align="center"><div class="div_submit"> √<br/>提交</div></td>
+            <td align="center"><div class="div_back"> ×<br/>退票</div></td>
+          </tr>
+        </table>
+	  </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

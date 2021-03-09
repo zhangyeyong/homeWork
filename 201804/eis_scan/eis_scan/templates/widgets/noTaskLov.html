@@ -1,0 +1,76 @@
+$def with(groupFieldValue,pageNum,pageCount,noTasks)
+<!--无任务补扫弹出层-->
+<div class="cb ">
+	<div class="searchbar">
+		<div class="fields">
+			<div class="tit">$session.currentApp.get('groupFieldLabel'):</div>
+			<div class="cont">
+				<input type="text" class="input_search" id="noTaskHeadNum" value="$groupFieldValue">
+			</div>
+		</div>
+
+		<input type="button" value="$_('查询')" onclick="noTaskQuery()"/><!-- _("查询") -->
+	</div>
+
+	<br />
+	<div class="data_table cb">
+		<table>
+			<thead>
+				<tr>
+					<th width="30px;"><input type="checkbox" id="chCheckAll"  onclick="checkAll();"/></th>
+					<th>$_("序号")</th>
+					<th>$session.currentApp.get('groupFieldLabel')</th>
+					<th>$_("图像数量")</th>
+				</tr>
+			</thead>
+			<tbody id="notasks">
+			$for noTask in noTasks:
+				<tr>
+					<td>
+						<input type="checkbox" name="chTask" value="$noTask.get('noTaskValStr')"/>
+					</td>
+					<td>$loop.index</td>
+					<td>$noTask.get('form').get(session.currentApp.get('groupFieldName'))</td>
+					<td>$len(noTask.get("imageList"))</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="pagination fr">
+			$if pageNum == 1:
+				<a class="page-prev unclick-l">
+			$else:
+				<a class="page-prev ">
+			$if pageNum != 1:
+			 	<span onclick='noTaskQuery($(pageNum - 1))'>
+			 		&lt; $_("上一页")
+			 	</span>
+			$else:
+			 	<span>
+			 		&lt; $_("上一页")
+			 	</span>
+			</a> 
+			<a class="page-next
+			$if pageNum == pageCount:
+			 	unclick-l
+			" href="#"><span
+			$if pageNum != pageCount:
+			 	onclick='noTaskQuery($(pageNum + 1))'
+			>$_("下一页") &gt;</span></a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function noTaskQuery(pageNum) {
+			var groupFieldValue = jQuery("#noTaskHeadNum").val();
+			scan.noTaskQuery(groupFieldValue,pageNum);
+		}
+		function checkAll() {
+			var checkedAll = jQuery("#chCheckAll").is(":checked");
+			//jQuery("input[name='chTask']").attr("checked",checkedAll);  
+			var boxes = document.getElementsByName("chTask");
+		    for(i=0;i<boxes.length;i++){
+	        	boxes[i].checked = checkedAll;
+		    }
+		}
+	</script>
+</div>
+<!--无任务补扫结束-->

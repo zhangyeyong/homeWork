@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SB_EVS_EVS_ImportImageJudgementInfoSrv"
+                  targetNamespace="http://mss.cmcc.com/SB_EVS_EVS_ImportImageJudgementInfoSrv"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://mss.cmcc.com/SB_EVS_EVS_ImportImageJudgementInfoSrv">
+
+ <!-- types end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://mss.cmcc.com/SB_EVS_EVS_ImportImageJudgementInfoSrv"
+           schemaLocation="SB_EVS_EVS_ImportImageJudgementInfoSrv.xsd"/>
+  </schema>
+ </wsdl:types>
+ <!-- types end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+
+ <!-- message start ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:message name="SB_EVS_EVS_ImportImageJudgementInfoSrvRequestMessage">
+  <wsdl:part name="payload"
+             element="tns:SB_EVS_EVS_ImportImageJudgementInfoSrvRequest"/>
+ </wsdl:message>
+ <wsdl:message name="SB_EVS_EVS_ImportImageJudgementInfoSrvResponseMessage">
+  <wsdl:part name="payload"
+             element="tns:SB_EVS_EVS_ImportImageJudgementInfoSrvResponse"/>
+ </wsdl:message>
+ <!-- message end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+
+
+ <!-- portType start ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:portType name="SB_EVS_EVS_ImportImageJudgementInfoSrv">
+  <wsdl:operation name="process">
+   <wsdl:input message="tns:SB_EVS_EVS_ImportImageJudgementInfoSrvRequestMessage"/>
+   <wsdl:output message="tns:SB_EVS_EVS_ImportImageJudgementInfoSrvResponseMessage"/>
+  </wsdl:operation>
+ </wsdl:portType>
+<!-- portType end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+
+ <!-- binding start ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:binding name="SB_EVS_EVS_ImportImageJudgementInfoSrvBinding"
+               type="tns:SB_EVS_EVS_ImportImageJudgementInfoSrv">
+  <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:operation name="process">
+   <soap:operation style="document" soapAction="process"/>
+   <wsdl:input>
+    <soap:body use="literal"
+               namespace="http://mss.cmcc.com/SB_EVS_EVS_ImportImageJudgementInfoSrv"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"
+               namespace="http://mss.cmcc.com/SB_EVS_EVS_ImportImageJudgementInfoSrv"/>
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+<!-- binding end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+
+<!-- service start ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:service name="SB_EVS_EVS_ImportImageJudgementInfoSrv">
+  <wsdl:port name="SB_EVS_EVS_ImportImageJudgementInfoSrvPort"
+             binding="tns:SB_EVS_EVS_ImportImageJudgementInfoSrvBinding">
+   <soap:address location="http://10.17.112.168:8080/henyd-evs/services/SB_EVS_EVS_ImportImageJudgementInfoSrv"/>
+  </wsdl:port>
+ </wsdl:service>
+ <!-- service end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+</wsdl:definitions>
+<!-- all end , good luck. design by zhangyuan.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

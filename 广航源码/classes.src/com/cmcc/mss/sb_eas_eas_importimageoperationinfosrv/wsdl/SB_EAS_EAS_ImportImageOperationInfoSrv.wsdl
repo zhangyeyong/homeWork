@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SB_EAS_EAS_ImportImageOperationInfoSrv"
+                  targetNamespace="http://mss.cmcc.com/SB_EAS_EAS_ImportImageOperationInfoSrv"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://mss.cmcc.com/SB_EAS_EAS_ImportImageOperationInfoSrv">
+
+ <!-- types end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://mss.cmcc.com/SB_EAS_EAS_ImportImageOperationInfoSrv"
+           schemaLocation="SB_EAS_EAS_ImportImageOperationInfoSrv.xsd"/>
+  </schema>
+ </wsdl:types>
+ <!-- types end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+
+ <!-- message start ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:message name="SB_EAS_EAS_ImportImageOperationInfoSrvRequestMessage">
+  <wsdl:part name="payload"
+             element="tns:SB_EAS_EAS_ImportImageOperationInfoSrvRequest"/>
+ </wsdl:message>
+ <wsdl:message name="SB_EAS_EAS_ImportImageOperationInfoSrvResponseMessage">
+  <wsdl:part name="payload"
+             element="tns:SB_EAS_EAS_ImportImageOperationInfoSrvResponse"/>
+ </wsdl:message>
+ <!-- message end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+
+
+ <!-- portType start ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:portType name="SB_EAS_EAS_ImportImageOperationInfoSrv">
+  <wsdl:operation name="process">
+   <wsdl:input message="tns:SB_EAS_EAS_ImportImageOperationInfoSrvRequestMessage"/>
+   <wsdl:output message="tns:SB_EAS_EAS_ImportImageOperationInfoSrvResponseMessage"/>
+  </wsdl:operation>
+ </wsdl:portType>
+<!-- portType end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+
+ <!-- binding start ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:binding name="SB_EAS_EAS_ImportImageOperationInfoSrvBinding"
+               type="tns:SB_EAS_EAS_ImportImageOperationInfoSrv">
+  <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:operation name="process">
+   <soap:operation style="document" soapAction="process"/>
+   <wsdl:input>
+    <soap:body use="literal"
+               namespace="http://mss.cmcc.com/SB_EAS_EAS_ImportImageOperationInfoSrv"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal"
+               namespace="http://mss.cmcc.com/SB_EAS_EAS_ImportImageOperationInfoSrv"/>
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+<!-- binding end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+
+<!-- service start ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+ <wsdl:service name="SB_EAS_EAS_ImportImageOperationInfoSrv">
+  <wsdl:port name="SB_EAS_EAS_ImportImageOperationInfoSrvPort"
+             binding="tns:SB_EAS_EAS_ImportImageOperationInfoSrvBinding">
+   <soap:address location="http://10.87.9.37:8011/eas/proxy/SB_EAS_EAS_ImportImageOperationInfoSrv?wsdl"/>
+  </wsdl:port>
+ </wsdl:service>
+ <!-- service end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+</wsdl:definitions>
+<!-- all end , good luck. design by zhangyuan.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

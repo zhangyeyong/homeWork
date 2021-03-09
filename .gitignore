@@ -1,0 +1,16 @@
+/auto_delivery/eis_scan/eis_scan/sessions
+sessions
+*.pyc
+/auto_delivery/eis_scan/scanClient/*.pyc
+/auto_delivery/eis_scan/eis_scan/.idea
+/auto_delivery/eis_scan/scanClient/.idea
+/auto_delivery/eis_scan/eis_scan/static/images/scan
+/auto_delivery/eis_scan/eis_scan/controllers/*.pyc
+/auto_delivery/eis_scan/eis_scan/model/*.pyc
+/auto_delivery/eis_scan_http/scanClient/image
+/auto_delivery/eis_scan_http/eis_scan/static/images/scan
+/auto_delivery/eis_scan_http/eis_scan/.idea/*.iml
+*.xml
+/auto_delivery/eis_scan_http/scanClient/.idea/*.iml
+/auto_delivery/eis_scan/scanClient/logs/*.log
+/auto_delivery/eis_scan_http/scanClient/logs/*.log

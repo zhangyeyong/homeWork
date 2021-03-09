@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="FI_AR_ImportARReciptsSrv_Service.java"/>
+      <url path="runtime/FI_AR_ImportARReciptsSrv_Service_Impl.java"/>
+      <url path="FI_AR_ImportARReciptsSrv_PortType.java"/>
+      <url path="types/com/zte/eas/arimport/fiarimportarreciptssrv/FiArImportARReciptsSrvRequest.java"/>
+      <url path="types/com/zte/eas/arimport/fiarimportarreciptssrv/FiArImportARReciptsSrvResponse.java"/>
+      <url path="types/com/zte/eas/arimport/fiarimportarreciptssrv/runtime/FiArImportARReciptsSrvRequest_LiteralSerializer.java"/>
+      <url path="types/com/zte/eas/arimport/fiarimportarreciptssrv/runtime/FiArImportARReciptsSrvResponse_LiteralSerializer.java"/>
+      <url path="runtime/FI_AR_ImportARReciptsSrvBinding_Stub.java"/>
+      <url path="runtime/FI_AR_ImportARReciptsSrv_Service_SerializerRegistry.java"/>
+      <url path="runtime/FI_AR_ImportARReciptsSrv_Service_SerializerRegistry12.java"/>
+      <url path="FI_AR_ImportARReciptsSrvPortClient.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="ATTACHMENT_MIME"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            <value n="WSDL2JAVA_DEFAULT_PACKAGE" v="com.zte.eas.appframe.importmis.arr"/>
+            <value n="WSDL2JAVA_ROOT_VALUE_PACKAGE" v="com.zte.eas.appframe.importmis.arr.types"/>
+            <value n="WSDL2JAVA_UNWRAP_PARAMETERS" v="false"/>
+         </hash>
+      </hash>
+      <value n="PROXY_MAPPING_URL"/>
+      <hash n="PROXY_PORTS">
+         <hash n="FI_AR_ImportARReciptsSrvPort">
+            <value n="ACCESSES_DOC_WRAPPPED" v="false"/>
+            <value n="CLASS_NAME" v="com.zte.eas.appframe.importmis.arr.FI_AR_ImportARReciptsSrv_PortType"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="FI_AR_ImportARReciptsSrvPort"/>
+            <hash n="OPERATIONS">
+               <hash n="process">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS"/>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="http" host="CMITEST" port="7777" path="/orabpel/default/FI_AR_ImportARReciptsSrv/1.0"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="FI_AR_ImportARReciptsSrv"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://eas.zte.com/ArImport/FI_AR_ImportARReciptsSrv"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../../p1`.jpr"/>
+      <url n="PROXY_WSDL_URL" protocol="http" host="10.3.6.102" port="7777" path="/orabpel/default/FI_AR_ImportARReciptsSrv/1.0/FI_AR_ImportARReciptsSrv" query="wsdl"/>
+   </hash>
+</jdevws:WebServiceProxy>

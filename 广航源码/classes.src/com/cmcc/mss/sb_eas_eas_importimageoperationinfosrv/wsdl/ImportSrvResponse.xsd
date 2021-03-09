@@ -1,0 +1,46 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://mss.cmcc.com/ImportSrvResponse" 
+xmlns:tns="http://mss.cmcc.com/ImportSrvResponse" 
+elementFormDefault="qualified" 
+attributeFormDefault="qualified" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="ErrorItem" type="tns:ErrorItem" nillable="true"/>
+   <xs:element name="ResponseItem" type="tns:ResponseItem" nillable="true"/>
+   <xs:element name="ResponseCollecion" type="tns:ResponseCollecion" nillable="true"/>
+   <xs:element name="ErrorCollection" type="tns:ErrorCollection" nillable="true"/>
+<xs:complexType name="ImportSrvResponse">
+      <xs:sequence>
+       <xs:element name="SERVICE_FLAG" type="xs:string" nillable="true"/>
+       <xs:element name="SERVICE_MESSAGE" type="xs:string" nillable="true"/>
+       <xs:element name="INSTANCE_ID" type="xs:decimal" nillable="true"/>
+       <xs:element name="ErrorCollection" type="tns:ErrorCollection" nillable="true"/>
+       <xs:element name="ResponseCollecion" type="tns:ResponseCollecion" nillable="true"/>   
+       </xs:sequence>
+    </xs:complexType>
+     
+   <xs:complexType name="ErrorCollection">
+    <xs:sequence>
+    	<xs:element name="ErrorItem" type="tns:ErrorItem"  minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ErrorItem">
+    <xs:sequence>
+    	<xs:element name="ENTITY_NAME" type="xs:string" nillable="true"/>
+    	<xs:element name="RECORD_NUMBER" type="xs:string" nillable="true"/>
+    	<xs:element name="ERROR_MESSAGE" type="xs:string" nillable="true"/>
+    </xs:sequence>
+   </xs:complexType>
+   
+   
+   <xs:complexType name="ResponseCollecion">
+    <xs:sequence>
+    	<xs:element name="ResponseItem" type="tns:ResponseItem"  minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ResponseItem">
+    <xs:sequence>
+    	<xs:element name="REQUEST_ID" type="xs:string" nillable="true"/>
+    	<xs:element name="RECORD_NUMBER" type="xs:string" nillable="true"/>    	
+    </xs:sequence>
+   </xs:complexType>
+</xs:schema>

@@ -1,0 +1,119 @@
+.delivery_main {
+	width:80%;
+ 	position: absolute;margin:auto; top: 10;left: 0;right: 0;bottom: 10;
+	border:5px solid;
+	border-color: #00FF00;
+}
+
+.delivery_main table{
+	width:100%;
+	height:100%;
+}
+
+.tb_main{
+	border:1px;
+	cellspacing:20px;
+    borderCollapse:separate;
+    border-spacing:20px;
+
+}
+.tb_label{
+
+}
+hr.top{
+
+background-color:#000000;
+
+
+	height:8px;
+	margin-bottom: -1px;
+	noshade="noshade"
+}
+
+.top{
+	height:120px;
+}
+.top>table{
+	height:90%;
+}
+.lable{
+	background-color:#00FF00;
+}
+.edit{
+	background-color:#00FFFF
+}
+.yellow{
+	height:35%;
+	background-color:#FFFF00;
+}
+.errormsg{
+    font-size: 40px;
+	color:red;
+}
+.div_label{
+	margin-left:10px;
+	font-size: large;
+}
+.div_bt{
+    cursor:pointer;
+	padding:10px; width:200px; height:50px;
+	border: 0px solid #dedede;    -moz-border-radius: 15px;      /* Gecko browsers */
+	-webkit-border-radius: 15px;   /* Webkit browsers */
+	border-radius:15px;            /* W3C syntax */
+	font-size: 40px;
+	color:#FFFFFF;
+	background-color:#00FF00
+}
+.div_title {margin-left: 10px; font-size: 35px; }
+.div_font_green { font-size: 40px; color:#00FF00}
+.div_font_while { font-size:35px; color:#FFFFFF;font-weight:bolder;cursor:pointer;}
+.div_font_while_small { font-size:25px; color:#FFFFFF;font-weight:bolder;}
+.div_time {margin-right: 20px; font-size: 40px; }
+.div_date {margin-right: 20px; font-size: 30px; }
+.div_submit {
+border:5px solid;
+
+border-color:#FFFFFF;
+background-color:#FFFFFF;
+width:100px;
+height:100px;
+ font-size: 30px;
+ font-weight:bolder;
+ cursor:pointer;
+ /*display:table-cell;
+ vertical-align:middle;*/
+ background:url(/static/images/submit.png) no-repeat
+ }
+ .div_back {
+border:5px solid;
+border-color:#FFFFFF;
+/*
+background-color:#FF0000;
+*/
+width:100px;
+height:100px;
+ font-size: 30px;
+ font-weight:bolder;
+ cursor:pointer;
+ background:url(/static/images/cancel.png) no-repeat 100% 100%
+ }
+
+.button {
+    /*background-color: #4CAF50;*/ /* Green */
+    border: none;
+    color: white;
+    width: 200px;
+    border-radius: 8px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button_green {background-color: #4CAF50; } /* Green */
+.button_blue {background-color: #008CBA;} /* Blue */
+.button3 {background-color: #f44336;} /* Red */
+.button_gray {background-color: #e7e7e7; color: black;} /* Gray */
+.button5 {background-color: #555555;} /* Black */

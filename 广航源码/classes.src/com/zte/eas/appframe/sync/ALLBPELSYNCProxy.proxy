@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="ALLBPELSYNC_Service.java"/>
+      <url path="runtime/ALLBPELSYNC_Service_Impl.java"/>
+      <url path="ALLBPELSYNC_PortType.java"/>
+      <url path="ALLBPELSYNCProcessRequest.java"/>
+      <url path="ALLBPELSYNCProcessResponse.java"/>
+      <url path="runtime/ALLBPELSYNCProcessRequest_LiteralSerializer.java"/>
+      <url path="runtime/ALLBPELSYNCProcessResponse_LiteralSerializer.java"/>
+      <url path="runtime/ALLBPELSYNCBinding_Stub.java"/>
+      <url path="runtime/ALLBPELSYNC_Service_SerializerRegistry.java"/>
+      <url path="runtime/ALLBPELSYNC_Service_SerializerRegistry12.java"/>
+      <url path="ALLBPELSYNCPortClient.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="ATTACHMENT_MIME"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            <value n="WSDL2JAVA_DEFAULT_PACKAGE" v="com.zte.eas.appframe.sync"/>
+            <value n="WSDL2JAVA_ROOT_VALUE_PACKAGE" v="com.zte.eas.appframe.sync.types"/>
+            <value n="WSDL2JAVA_UNWRAP_PARAMETERS" v="false"/>
+         </hash>
+      </hash>
+      <value n="PROXY_MAPPING_URL"/>
+      <hash n="PROXY_PORTS">
+         <hash n="ALLBPELSYNCPort">
+            <value n="ACCESSES_DOC_WRAPPPED" v="false"/>
+            <value n="CLASS_NAME" v="com.zte.eas.appframe.sync.ALLBPELSYNC_PortType"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="ALLBPELSYNCPort"/>
+            <hash n="OPERATIONS">
+               <hash n="process">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS"/>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="http" host="CMITEST" port="7777" path="/orabpel/eas_syncData/ALLBPELSYNC/1.0"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="ALLBPELSYNC"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://eas.zte.com.cn/all/ALLBPELSYNC"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../Project2.jpr"/>
+      <url n="PROXY_WSDL_URL" protocol="http" host="10.3.6.102" port="7777" path="/orabpel/eas_syncData/ALLBPELSYNC/1.0/ALLBPELSYNC" query="wsdl"/>
+   </hash>
+</jdevws:WebServiceProxy>

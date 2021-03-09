@@ -1,0 +1,632 @@
+$var title: $_("欢迎使用自动投递")
+$var jsfiles : /static/js/scan.js
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/swiper-3.4.2.min.css">
+    <style>
+    #mask,#layer{position: absolute;z-index: 98;left: 0;top: 0;width: 100%;height: 100%;background: #000;}
+    #layer{background: #fff url(/static/images/load.gif) center center no-repeat;opacity: 0.8;filter:alpha(opacity=80);}
+    .boss{
+        position: relative;
+    }
+    .boss #loading{
+        position: absolute;
+        z-index:999;
+        display: none;
+        background: rgba(255, 255, 255, .9) url('/static/images/load.gif') no-repeat center;
+        left: 50%;
+        top: 50%;
+        width: 1920px;
+        height: 1080px;
+        transform: translate(-50%,-50%);
+    }
+    .box{
+        width: 1873px;
+        height: 1040px;
+        padding: 5px;
+        border: 5px solid black;
+        background: rgb(212, 238, 238);
+        margin: 0 auto;
+        display: flex;
+    }
+    .box .left{
+        width: 50%;
+        border-right: 2px solid black;
+        height: 100%;
+    }
+    .box .left .search{
+        height: 68px;
+        text-align: center;
+        margin: 50px 220px 0;
+        position: relative;
+    }
+    .box .left .search .search_input{
+        height: 70px;
+        width: 500px;
+        border-radius: 10px;
+        border: 1px solid rgb(0, 122, 255);
+        text-align: center;
+        margin: 10px;
+        font-weight: 500;
+        font-size: 35px;
+    }
+    .box .left .search input[type='button']{
+        position: absolute;
+        top: 20px;
+        right: 10px;
+        height: 40px;
+        width: 40px;
+        border: none;
+        background: #fff;
+        background: url('/static/images/search.png') left center no-repeat;
+    }
+    .box .left .swiper-container{
+        text-align: center;
+        margin-top: 65px;
+        height: 680px;
+        margin-bottom: 10px;
+    }
+    .box .left .swiper-container .swiper-wrapper{
+        text-align: center;
+    }
+    .box .left .swiper-container .swiper-wrapper img{
+        height: 80%;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide{
+        position: relative;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc{
+        position: absolute;
+        right: 200px;
+        top: 0px;
+    }
+    .box .left .swiper-container .swiper-wrapper .swiper-slide .doc input[type='checkbox']{
+        height:40px;
+        width:40px;
+    }
+    .box .left .swiper-container .swiper-wrapper .name{
+        text-align: center;
+        height: 70px;
+        line-height: 70px;
+        font-weight: 500;
+        font-size: 55px;
+        margin-top: 40px;
+    }
+    .box .left .bot{
+        text-align: right;
+        padding-right: 40px;
+    }
+    .box .left .bot #time{
+        font-size: 70px;
+        font-weight: bold;
+    }
+    .box .left .bot #date{
+        font-size: 50px;
+        font-weight: bold;
+    }
+    .box .right{
+        width: 50%;
+        border-left: 3px solid black;
+        height: 100%;
+        display: flex;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .box .right .one{
+        width: 50%;
+        background: rgb(120, 209, 14);
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-right: 20px;
+    }
+    .box .right .one .tdyq{
+        height: 140px;
+        line-height: 140px;
+        text-align: center;
+        font-weight: bolder;
+        font-size: 80px;
+    }
+    .box .right .one .gg{
+        height: 120px;
+        line-height: 120px;
+        font-weight: bolder;
+        font-size: 50px;
+        text-align: center;
+    }
+    .box .right .one .zh{
+        font-size: 50px;
+        height: 150px;
+    }
+    .box .right .one .gg span{
+        margin-left: 25px;
+    }
+    .box .right .one .gg span.bt{
+        margin-left: 0;
+        color: red;
+    }
+    .box .right .one .an{
+        height: 100px;
+        width: 220px;
+        font-weight: bolder;
+        font-size: 35px;
+        color: black;
+        border-radius: 20px;
+        background: white;
+        margin: 160px auto 0;
+    }
+    .box .right .one .an .en,.ch{
+        height: 50%;
+        text-align: center;
+        font-size: 40px;
+    }
+    .box .right .two{
+        width: 50%;
+        height: 100%;
+    }
+    .box .right .two .top{
+        height: 35%;
+        display: flex;
+        margin-bottom: 10px;
+        background: rgb(244, 206, 0);
+    }
+    .box .right .two .mid{
+        height: 31%;
+        display: flex;
+        margin-bottom: 10px;
+        background: rgb(100, 208, 228);
+    }
+    .box .right .two .bot{
+        height: 31%;
+        display: flex;
+        background: rgb(100, 208, 228);
+    }
+    .box .right .two .topLeft{
+        width: 45%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topLeft img{
+        width: 150px;
+    }
+    .box .right .two .topRight{
+        width: 55%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box .right .two .topRight .text{
+        font-weight: bolder;
+    }
+    .box .right .two .topRight .text .textTop{
+        font-size: 80px;
+    }
+    .box .right .two .topRight .text .textBot{
+        font-size: 45px;
+    }
+    .box .right .two .topRight .text .textTop,.textBot{
+        text-align: center;
+    }
+    </style>
+
+    <script src="/static/js/swiper-3.4.2.min.js"></script>
+    <script>
+		var scan =  null;
+        function showtime()
+            {
+            var today,hour,second,minute,year,month,date;
+            var strDate ;
+            today=new Date();
+            var n_day = today.getDay();
+            switch (n_day)
+            {
+                case 0:{
+                strDate = "星期日";
+                }break;
+                case 1:{
+                strDate = "星期一";
+                }break;
+                case 2:{
+                strDate ="星期二";
+                }break;
+                case 3:{
+                strDate = "星期三";
+                }break;
+                case 4:{
+                strDate = "星期四";
+                }break;
+                case 5:{
+                strDate = "星期五";
+                }break;
+                case 6:{
+                strDate = "星期六";
+                }break;
+                case 7:{
+                strDate = "星期日";
+                }break;
+            }
+            year = today.getYear()+1900;
+            month = today.getMonth()+1;
+            date = today.getDate();
+            hour = today.getHours();
+            minute =today.getMinutes();
+            if (month < 10){
+                month = '0' + month
+            }
+            if (date < 10){
+                return date =  '0' + date
+            }
+            if (hour < 10){
+                hour = '0' + hour
+            }
+            if (minute < 10){
+                minute =  '0' + minute
+            }
+            document.getElementById('time').innerHTML = "<div>"+ hour + ":" + minute +"</div>"; //显示时间
+            document.getElementById('date').innerHTML = "<div>"+ month + "月" + date + "日" + strDate +"</div>"; //显示日期
+            setTimeout("showtime();", 1000); //设定函数自动执行时间为 1000 ms(1 s)
+        }
+        function searchByHeadNum(){
+            jQuery("#headId").val("");//清空id
+            var headNum = jQuery('#headNum').val();
+            if(jQuery.trim(headNum)==""){
+                alert(_('请输入单据号！'));
+                return;
+            }
+            jQuery('#loading').css('display', 'block');
+            jQuery.ajax({
+                type : "post",
+                async : false,
+                url : "/delivery/scan",
+                data:{"method":"searchByHeadNum","headNum":headNum},
+                success : function(data) {
+                    data = eval("("+data+")");
+                    if(data.isSuccess){
+                        var lines = data.data;
+                        if(null==lines||lines.length<1){
+                            alert("未查询到数据!");
+                            return;
+                         }
+                        var imagesObj = jQuery("#images");
+                        imagesObj.html("");
+                        jQuery("#headId").val(lines[0].headId);//重设headId
+                        var imagesHtml = "";
+                        for(var i=0,l=lines.length;i<l;i++){
+                            //imagesObj.append(createImgHtml(lines[i]));
+                            imagesHtml = imagesHtml+createImgHtml(lines[i]);
+                        }
+                        imagesObj.html(imagesHtml);
+                        showImages();
+                    }else{
+                        alert(data.info);
+                    }
+                },
+                error : function() {
+                    alert(_("查询失败，请联系管理员"));
+                },complete : function (){
+                    jQuery('#loading').css('display', 'none');
+                }
+            });
+        }
+    function createImgHtml(line){
+        var imgHtml = '<div class="swiper-slide">'
+                        +'	<div class="doc"><input name="lineIds" type="checkbox" value="'+line.lineId+'"></div>'
+                        +'	<img src="'+line.imgPathO+'">'
+                        +'	<div class="name">'+line.headNum+'-'+line.imgOrd+'</div>'
+                        +'</div>';
+        return imgHtml;
+    }
+    function showImages(){
+    var mySwiper = new Swiper('.swiper-container',{
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        })
+    }
+    function doScan(scanCallback){
+        //扫描之前先检查 机器是否初始化成功
+        showLoading();
+        $$.ajax({
+            url : "/delivery/scan",
+            type : "post",
+            async : true,
+            data : {
+                method:"initMachine"
+            },
+            success : function(d) {
+                d = eval("(" + d + ")");
+                if (d.isSuccess) {
+                    //alert(d.info);
+                    //scan["scanCallback"]=scanCallback;
+
+                    scan.commonScan(scanCallback);
+                } else {
+                    alert(d.info);
+                }
+             },
+            error : function(e) {
+                alert(_("未知错误"));
+            },
+            complete : function() {
+                hideLoading();
+            }
+        });
+
+    }
+    function toEdit(headId){
+        if(headId){
+            window.location.href = "/delivery/edit?headId="+headId;
+        }else{
+             alert("扫描失败！");
+        }
+    }
+    function back(){
+        //backPaper();
+        window.location.href = "/delivery/index";
+    }
+    function backPaper(){
+        showLoading();
+        $$.ajax({
+            url : "/delivery/scan",
+            type : "post",
+            async : false,
+            data : {
+                method:"backPaper"
+            },
+            success : function(d) {
+                d = eval("(" + d + ")");
+                if (d.isSuccess) {
+                    alert(d.info);
+                    //scan["scanCallback"]=scanCallback;
+                    //scan.execute('dailyScan');
+                } else {
+                    alert(d.info);
+                }
+             },
+            error : function(e) {
+                alert(_("未知错误"));
+            },
+            complete : function() {
+                hideLoading();
+            }
+        });
+    }
+
+
+    function init(){
+        scan = new Scan();
+        showtime();
+        // 补扫按钮
+        jQuery("input[name='document']:checkbox").click(function(){
+            if(!jQuery(this).attr("checked")){
+                jQuery(this).attr("checked","checked");
+            }else{
+                jQuery(this).removeAttr("checked");
+            }
+        });
+        jQuery("#Add").click(function(){
+            var ids = [];
+            jQuery("input[name='document']:checkbox").each(function () {
+                if (jQuery(this).attr("checked")) {
+                    ids.push(jQuery(this).parent('.doc').siblings('.name').text());
+                }
+            });
+        });
+        // 替扫按钮
+        jQuery("#Replace").click(function(){
+
+        });
+    }
+    function dailyScanCallBack(data) {
+        showLoading();
+        var cond = {}
+        cond.data = JSON.stringify(data);
+
+        jQuery.ajax({
+            url : "/dailyScan",
+            type : "post",
+            async : true,
+            data : cond,
+            success : function(d) {
+                d = eval("(" + d + ")");
+                if (d.isSuccess) {
+                    headId = d.headId;
+                    toEdit(headId);
+                } else {
+                    alert(d.msg);
+                }
+            },
+            error : function(e) {
+                alert(_("未知错误"));
+            },
+            complete : function() {
+                hideLoading();
+            }
+        });
+    }
+    function dailyScan(){
+        //showLoading();
+        doScan(dailyScanCallBack);
+    }
+    function replaceScanCallBack(data){
+        showLoading();
+        var cond = {}
+        var lineIds = [];
+        jQuery('input[name="lineIds"]:checked').each(function (index, item) {
+            lineIds.push(jQuery(this).val());
+        });
+        cond.data = JSON.stringify(data);
+        cond.curPage="groups";
+        cond.belong="dailyScanM";
+        cond.headId=jQuery("#headId").val();
+        cond.lineIds = JSON.stringify(lineIds);
+        jQuery.ajax({
+            url : "/replaceScan",
+            type : "post",
+            async : true,
+            data : cond,
+            success : function(d) {
+                d = eval("(" + d + ")");
+                if (d.isSuccess) {
+                    headId = d.headId;
+                    toEdit(headId);
+                } else {
+                    alert(d.msg);
+                }
+            },
+            error : function(e) {
+                alert(_("未知错误"));
+            },
+            complete : function() {
+                hideLoading();
+            }
+        });
+    }
+    function replaceScan(){
+        var headId=jQuery("#headId").val();
+        if(!headId){
+            alert("请先查询需要处理的票据！");
+            return;
+        }
+        var lineIds = [];
+        jQuery('input[name="lineIds"]:checked').each(function (index, item) {
+            lineIds.push(jQuery(this).val());
+        });
+        //alert("lineIds:--------->"+lineIds);
+        doScan(replaceScanCallBack);
+    }
+    function addScanCallBack(data){
+        showLoading();
+        var cond = {}
+        cond.data = JSON.stringify(data);
+        cond.curPage="groups";
+        cond.belong="dailyScanM";
+        cond.headId=jQuery("#headId").val();
+        jQuery.ajax({
+            url : "/addScan",
+            type : "post",
+            async : true,
+            data : cond,
+            success : function(d) {
+                d = eval("(" + d + ")");
+                if (d.isSuccess) {
+                    headId = d.headId;
+                    toEdit(headId);
+                } else {
+                    alert(d.msg);
+                }
+            },
+            error : function(e) {
+                alert(_("未知错误"));
+            },
+            complete : function() {
+                hideLoading();
+            }
+        });
+    }
+    function addScan(){
+        var headId=jQuery("#headId").val();
+        if(!headId){
+            alert("请先查询需要处理的票据！");
+            return;
+        }
+        doScan(addScanCallBack);
+    }
+    function back(){
+      window.location.href = "/delivery/index";
+    }
+
+</script>
+<script src="/static/js/layer/layer.js" type="text/javascript"></script>
+
+</head>
+
+<body onload="init();">
+<input type="hidden" id="headId">
+    <div class="boss">
+    <div id="loading"></div>
+    <div class="box">
+        <div class="left">
+            <div class="search">
+                <input type="text" class="search_input" placeholder="Search" id="headNum"/>
+                <input type="button" class="search_btn" onclick="searchByHeadNum()"/>
+            </div>
+            <div class="swiper-container">
+                <div class="swiper-wrapper" id="images">
+                    <div class="swiper-slide">
+                        <div class="doc"><input name="document" type="checkbox" value="1"></div>
+                        <img src="/static/images/djfm.png">
+                        <div class="name">xxxxxxxxx</div>
+                    </div>
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="bot">
+                <div id="time"></div>
+                <div id="date"></div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="one">
+                    <div class="tdyq">扫描要求</div>
+                    <div class="gg">扫描:<span>正常扫描</span></div>
+                    <div class="gg">补扫:<span>补充附件</span></div>
+                    <div class="gg">替扫:<span>替换附件</span></div>
+                    <div class="gg zh"><span class="bt">补替</span>附件需要在空白处写<span class="bt">原单号</span></div>
+                <div class="an" onclick="back()">
+                    <div class="en">BACK</div>
+                    <div class="ch">返回</div>
+                </div>
+            </div>
+            <div class="two">
+                <div class="top" id="Scan" onclick="dailyScan()">
+                    <div class="topLeft">
+                        <div class="imge"><img src="/static/images/scan.png"></div>
+                    </div>
+                    <div class="topRight">
+                        <div class="text">
+                            <div class="textTop">扫描</div>
+                            <div class="textBot">Scan</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mid" id="Add" onclick="addScan()">
+                    <div class="topLeft">
+                            <div class="imge"><img src="/static/images/add.png"></div>
+                        </div>
+                        <div class="topRight">
+                            <div class="text">
+                                <div class="textTop">补扫</div>
+                                <div class="textBot">Add</div>
+                            </div>
+                        </div>
+                </div>
+                <div class="bot" id="Replace" onclick="replaceScan()">
+                    <div class="topLeft">
+                            <div class="imge"><img src="/static/images/replace.png"></div>
+                        </div>
+                        <div class="topRight">
+                            <div class="text">
+                                <div class="textTop">替扫</div>
+                                <div class="textBot">Replace</div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script language="javascript">
+        var mySwiper = new Swiper('.swiper-container',{
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        })
+    </script>
+</body>

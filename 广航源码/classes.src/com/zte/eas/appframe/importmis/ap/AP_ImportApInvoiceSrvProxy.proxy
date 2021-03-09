@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="AP_ImportApInvoiceSrv_Service.java"/>
+      <url path="runtime/AP_ImportApInvoiceSrv_Service_Impl.java"/>
+      <url path="AP_ImportApInvoiceSrv_PortType.java"/>
+      <url path="AP_ImportApInvoiceSrvProcessRequest.java"/>
+      <url path="AP_ImportApInvoiceSrvProcessResponse.java"/>
+      <url path="runtime/AP_ImportApInvoiceSrvProcessRequest_LiteralSerializer.java"/>
+      <url path="runtime/AP_ImportApInvoiceSrvProcessResponse_LiteralSerializer.java"/>
+      <url path="runtime/AP_ImportApInvoiceSrvBinding_Stub.java"/>
+      <url path="runtime/AP_ImportApInvoiceSrv_Service_SerializerRegistry.java"/>
+      <url path="runtime/AP_ImportApInvoiceSrv_Service_SerializerRegistry12.java"/>
+      <url path="AP_ImportApInvoiceSrvPortClient.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="ATTACHMENT_MIME"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            <value n="WSDL2JAVA_DEFAULT_PACKAGE" v="com.zte.eas.appframe.importmis.ap"/>
+            <value n="WSDL2JAVA_ROOT_VALUE_PACKAGE" v="com.zte.eas.appframe.importmis.ap.types"/>
+            <value n="WSDL2JAVA_UNWRAP_PARAMETERS" v="false"/>
+         </hash>
+      </hash>
+      <value n="PROXY_CREATE_JUNIT_TEST" v="true"/>
+      <value n="PROXY_MAPPING_URL"/>
+      <hash n="PROXY_PORTS">
+         <hash n="AP_ImportApInvoiceSrvPort">
+            <value n="ACCESSES_DOC_WRAPPPED" v="false"/>
+            <value n="CLASS_NAME" v="com.zte.eas.appframe.importmis.ap.AP_ImportApInvoiceSrv_PortType"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="AP_ImportApInvoiceSrvPort"/>
+            <hash n="OPERATIONS">
+               <hash n="process">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS"/>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="http" host="zte-ry03dec1i1v.itdev.zte.com.cn" port="7777" path="/orabpel/easinvoice/AP_ImportApInvoiceSrv/1.0"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="AP_ImportApInvoiceSrv"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://eas.zte.com.cn/all/AP_ImportApInvoiceSrv"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../../ImportApProject.jpr"/>
+      <url n="PROXY_WSDL_URL" protocol="http" host="10.5.12.19" port="7777" path="/orabpel/easinvoice/AP_ImportApInvoiceSrv/1.0/AP_ImportApInvoiceSrv" query="wsdl"/>
+   </hash>
+</jdevws:WebServiceProxy>

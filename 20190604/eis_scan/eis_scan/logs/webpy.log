@@ -1,0 +1,83 @@
+[2014-12-23 14:21:59] __init__.py:86(write): [DEBUG] http://0.0.0.0:8888/
+[2014-12-23 14:31:40] __init__.py:86(write): [DEBUG] True
+[2014-12-23 14:31:43] __init__.py:86(write): [WARNING] Traceback (most recent call last):
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\application.py", line 242, in process
+    return self.handle()
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\application.py", line 233, in handle
+    return self._delegate(fn, self.fvars, args)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\application.py", line 412, in _delegate
+    return handle_class(cls)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\application.py", line 387, in handle_class
+    return tocall(*args)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py", line 41, in GET
+    return render.modules.scan()
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 986, in template
+    return self._base(t(*a, **kw))
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 868, in __call__
+    return BaseTemplate.__call__(self, *a, **kw)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 781, in __call__
+    return self._join_output(out)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 787, in _join_output
+    for name, value in out:
+  File "D:\work\EIS100B\trunk\Src\gh_eis\templates/modules\scan.html", line 5, in __template__
+    $:render.widgets.navBar("scan")
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 868, in __call__
+    return BaseTemplate.__call__(self, *a, **kw)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 781, in __call__
+    return self._join_output(out)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 787, in _join_output
+    for name, value in out:
+  File "D:\work\EIS100B\trunk\Src\gh_eis\templates/widgets\navBar.html", line 23, in __template__
+    $_("欢迎您!")&ensp;$session.user.get("userNum")&emsp;<a href="/logout">$_("注销")</a>
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\utils.py", line 995, in __getattr__
+    return getattr(self._getd(), key)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\utils.py", line 68, in __getattr__
+    raise AttributeError, k
+AttributeError: 'user'
+
+[2014-12-23 14:31:43] __init__.py:86(write): [WARNING] Traceback (most recent call last):
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\application.py", line 242, in process
+    return self.handle()
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\application.py", line 233, in handle
+    return self._delegate(fn, self.fvars, args)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\application.py", line 412, in _delegate
+    return handle_class(cls)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\application.py", line 387, in handle_class
+    return tocall(*args)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\service\scanService.py", line 41, in GET
+    return render.modules.scan()
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 986, in template
+    return self._base(t(*a, **kw))
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 868, in __call__
+    return BaseTemplate.__call__(self, *a, **kw)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 781, in __call__
+    return self._join_output(out)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 787, in _join_output
+    for name, value in out:
+  File "D:\work\EIS100B\trunk\Src\gh_eis\templates/modules\scan.html", line 5, in __template__
+    $:render.widgets.navBar("scan")
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 868, in __call__
+    return BaseTemplate.__call__(self, *a, **kw)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 781, in __call__
+    return self._join_output(out)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\template.py", line 787, in _join_output
+    for name, value in out:
+  File "D:\work\EIS100B\trunk\Src\gh_eis\templates/widgets\navBar.html", line 23, in __template__
+    $_("欢迎您!")&ensp;$session.user.get("userNum")&emsp;<a href="/logout">$_("注销")</a>
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\utils.py", line 995, in __getattr__
+    return getattr(self._getd(), key)
+  File "D:\work\EIS100B\trunk\Src\gh_eis\libs\web\utils.py", line 68, in __getattr__
+    raise AttributeError, k
+AttributeError: 'user'
+
+[2014-12-23 14:31:43] __init__.py:86(write): [WARNING] 127.0.0.1:27185 - - [23/Dec/2014 14:31:43] "HTTP/1.1 GET /scan" - 500 Internal Server Error
+[2014-12-23 14:31:43] __init__.py:86(write): [WARNING] 127.0.0.1:27184 - - [23/Dec/2014 14:31:43] "HTTP/1.1 GET /scan" - 500 Internal Server Error
+[2014-12-23 14:31:43] __init__.py:86(write): [WARNING] 127.0.0.1:27185 - - [23/Dec/2014 14:31:43] "HTTP/1.1 GET /static/js/jquery-1.11.1.min.js" - 200 
+[2014-12-23 14:31:43] __init__.py:86(write): [WARNING] 127.0.0.1:27196 - - [23/Dec/2014 14:31:43] "HTTP/1.1 GET /static/js/common.js" - 200 
+[2014-12-23 14:31:43] __init__.py:86(write): [WARNING] 127.0.0.1:27197 - - [23/Dec/2014 14:31:43] "HTTP/1.1 GET /static/html/500.jpg" - 200 
+[2014-12-23 14:32:44] __init__.py:86(write): [WARNING] 127.0.0.1:27220 - - [23/Dec/2014 14:32:44] "HTTP/1.1 POST /login" - 200 OK
+[2014-12-23 14:32:44] __init__.py:86(write): [WARNING] 127.0.0.1:27220 - - [23/Dec/2014 14:32:44] "HTTP/1.1 GET /logout" - 303 See Other
+[2014-12-23 14:32:44] __init__.py:86(write): [DEBUG] Language:
+[2014-12-23 14:32:44] __init__.py:86(write): [DEBUG] zh_CN
+[2014-12-23 14:32:44] __init__.py:86(write): [WARNING] 0.03 (1): SELECT * FROM config
+[2014-12-23 14:32:44] __init__.py:86(write): [WARNING] 127.0.0.1:27220 - - [23/Dec/2014 14:32:44] "HTTP/1.1 GET /login" - 200 OK

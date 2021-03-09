@@ -1,0 +1,288 @@
+$def with(head,lines)
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>欢迎使用自动投递</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/delivery_base.css?r=2"/>
+
+    <script src="/static/js/common.js"></script>
+    <script type="text/javascript">
+
+function show(){
+/*
+  $$.getJSON('delivery/edit?method=getImages&headId=1&d='+new Date, function(json){
+  layer.photos({
+    photos: json //格式见API文档手册页
+    ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机
+  });*/
+  $$.ajax({
+        url : "/delivery/edit",
+        type : "post",
+        async : true,
+        data : {
+            method:"getImages",
+           headId:$head.get("headId")
+        },
+        success : function(d) {
+            d = eval("(" + d + ")");
+            if (d.isSuccess) {
+                layer.photos({
+                    photos: d.data //格式见API文档手册页
+                    ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机
+                    ,closeBtn:1
+                 });
+            } else {
+                alert(d.info);
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            hideLoading();
+        }
+    });
+}
+function promptHeadNum(){
+jQuery('#headNumTemp').val('$head.get("headNum")');
+var headNumBox = new Dialog({
+		target : jQuery('#promptHeadNum'),
+		title : _('单据编号修改'),
+		width : 360,
+		height : 100,
+		yesFn : function() {
+		    var oldNum = '$head.get("headNum")';
+		    var newNum = jQuery('#headNumTemp').val();
+            jQuery.ajax({
+                url : "/delivery/edit",
+                type : "post",
+                async : true,
+                data : {
+                    "method":"editNum",
+                    "headId" : $head.get("headId"),
+                    "headNum" : newNum,
+                    "oldNum" : oldNum
+                },
+                success : function(d) {
+                    d = eval("(" + d + ")");
+                    if (d.isSuccess) {
+                        alert(_('单据编号修改成功!'));
+                        window.location.reload()
+                    } else {
+                        alert(d.msg);
+                    }
+                }
+            });
+		}
+	});
+	headNumBox.show();
+}
+function submit(){
+    showLoading();
+    $$.ajax({
+        url : "/delivery/edit",
+        type : "post",
+        async : true,
+        data : {
+            method:"submit",
+            headId:$head.get("headId"),
+        },
+        success : function(d) {
+            d = eval("(" + d + ")");
+            if (d.isSuccess) {
+                alert("上传成功");
+                back();
+            } else {
+                alert(d.info);
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            hideLoading();
+        }
+    });
+}
+function cancel(){
+    showLoading();
+    $$.ajax({
+        url : "/delivery/edit",
+        type : "post",
+        async : true,
+        data : {
+            method:"cancel",
+            headId:$head.get("headId"),
+        },
+        success : function(d) {
+            alert(d);
+            d = eval("(" + d + ")");
+
+            if (d.isSuccess) {
+                alert("退件成功");
+                back();
+            } else {
+                alert(d.info);
+            }
+         },
+        error : function(e) {
+            alert(_("未知错误"));
+        },
+        complete : function() {
+            hideLoading();
+        }
+    });
+}
+function back(){
+  window.location.href = "/delivery/scan";
+}
+var endTime = 300;
+function clock()
+{
+	endTime = endTime-1;
+	if(endTime<1){
+	    cancel();
+	}
+	document.getElementById("endTime").innerText=endTime;
+}
+
+
+function init(){
+	clock();
+	var int=self.setInterval("clock()",1000);
+}
+
+
+
+    </script>
+</head>
+<body onload="init()">
+<div class="delivery_main">
+    <table cellspacing="20" class="tb_main">
+        <tr>
+            <td colspan="2" align="right" valign="bottom" class="top">
+                <table>
+                    <tr>
+                        <td align="center">
+                            <div class="div_bt" onclick='back();'>返回</div>
+                        </td>
+                        <td align="center" width="70%">
+                            <div class="div_font_green">客户投递</div>
+                        </td>
+                        <td align="center">
+                            <div id="endTime" class="div_bt">119</div>
+                        </td>
+                    </tr>
+                </table>
+                <hr class="top"/>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="3" class="lable" width="50%">
+                <table>
+                    <tr>
+                        <td valign="bottom">
+                            <table>
+                                <tr>
+                                    <td align="center">
+                                        <table>
+                                            <tr>
+                                                <td align="center"><img src='/static/images/scan/$lines[0].get("headNum")/s_$lines[0].get("imgNameP")' width="160px"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    <div id="headnum" class="div_label">$head.get("headNum")
+                                                        (${head.get("imgQty") if head.get("imgQty") else 0})</div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="div_title"> 温馨提示</div>
+                                        <hr style="border:1px dashed #000; height:1px; margin-bottom: -1px;">
+                                    </td>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <div class="div_label">
+                                请确保票据不粘在一起<br/>
+                                请确保票据间没有杂物<br/>
+                                如：别针、 订书针、 回形针<br/>
+                                封面 底页<br/>
+                                然后点击【扫描】<br/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td class="yellow">
+                <table>
+                    <tr onclick="show()" style="cursor:pointer">
+                        <td width="50%" align="center"><img src="/static/images/view.png" width="40%"/></td>
+                        <td>
+                            <div class="div_font_while"> 预 览<br/>
+                                View
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="edit">
+                <table>
+                    <tr  onclick="promptHeadNum()" style="cursor:pointer;">
+                        <td width="50%" align="center"><img src="/static/images/edit.png" width="40%"/></td>
+                        <td>
+                            <div class="div_font_while"> 编 辑<br/>
+                                Edit
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="edit">
+                <table>
+                    <tr>
+                        <td width="50%" align="center" onclick="submit()" style="cursor:pointer;">
+                            <!--<div class="div_submit" onclick="submit()"> √<br/>提交<br/></div>-->
+                            <img src="/static/images/submit.png"/>
+                            <div class="div_font_while_small"> 提交
+                            </div>
+                        </td>
+                        <td align="center" onclick="cancel()" style="cursor:pointer;">
+                            <img src="/static/images/cancel.png"/>
+                            <div class="div_font_while_small"> 退票
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+	<div class="pop mbox" id="promptHeadNum">
+        <div class="cb">
+			<div class="fields nofloat fix_width">
+				<div class="tit">
+					$_("编号"):
+				</div>
+				<div class="cont">
+					<input type="text" class="input_search" value="" id="headNumTemp">
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
